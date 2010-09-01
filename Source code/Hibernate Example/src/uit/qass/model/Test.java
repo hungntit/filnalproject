@@ -5,17 +5,20 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import uit.qass.util.HibernateUtil;
-import uit.qass.model.Publication;
- 
+
 public class Test {
 
     public static void main(String[] args) {
+        test1();
+    }
+
+    public static void test1() {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
+
         //get Publication with ID = 1
         Publication a = (Publication) session.load(Publication.class, 1);
         System.out.println(a.getTitle());
-//        System.out.println(a.getAuthors().size());
 
         // get author with name = Philip K. Chan
         Query q = session.createQuery("from Author au where au.author = :var");
@@ -29,6 +32,20 @@ public class Test {
             System.out.println("ID: " + pubs.getId());
             System.out.println("Name: " + pubs.getTitle());
             System.out.println("--------------------------");
+        }
+    }
+
+    public static void test2() {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        //get Publication with ID = 1
+        Publication a = (Publication) session.load(Publication.class, 344420);
+        System.out.println(a.getTitle());
+        System.out.println(a.getRefPubs().get(1).getTitle());
+        for (int i = 0; i < a.getRefPubs().size(); i++) {
+            Publication object = a.getRefPubs().get(i);
+            System.out.println("ref: " + object.getTitle());
         }
     }
 }

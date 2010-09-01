@@ -173,12 +173,12 @@ public class Publication {
         this.title = title;
     }
 
-    public Author getAuthors() {
-        return authors;
+    public List<Publication> getRefPubs() {
+        return refPubs;
     }
 
-    public void setAuthors(Author authors) {
-        this.authors = authors;
+    public void setRefPubs(List<Publication> refPubs) {
+        this.refPubs = refPubs;
     }
     
     private int id;
@@ -202,5 +202,5 @@ public class Publication {
     private String titleSignature;
     private String doi;
     private Date mdate;
-    private Author authors;
+    private List<Publication> refPubs;
 }
