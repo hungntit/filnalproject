@@ -19,7 +19,17 @@ public class Test {
         //get Publication with ID = 1
         Publication a = (Publication) session.load(Publication.class, 1);
         System.out.println(a.getTitle());
+        for (int i = 0; i < a.getAuthors().size(); i++) {
+            Author temp = (Author) a.getAuthors().get(i);
+            System.out.println("Author -------------");
+            System.out.println("Name: " + temp.getAuthor());
+            System.out.println("--------------------------");
+        }
+    }
 
+    public static void test2() {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
         // get author with name = Philip K. Chan
         Query q = session.createQuery("from Author au where au.author = :var");
         q.setString("var", "Philip K. Chan");
@@ -35,7 +45,7 @@ public class Test {
         }
     }
 
-    public static void test2() {
+    public static void test3() {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 

@@ -180,6 +180,14 @@ public class Publication {
     public void setRefPubs(List<Publication> refPubs) {
         this.refPubs = refPubs;
     }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
+    }
     
     private int id;
     private String dblp_key;
@@ -203,4 +211,5 @@ public class Publication {
     private String doi;
     private Date mdate;
     private List<Publication> refPubs;
+    private List<Author> authors;
 }

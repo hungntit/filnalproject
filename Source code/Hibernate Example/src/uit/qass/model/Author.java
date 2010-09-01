@@ -4,13 +4,14 @@
  */
 package uit.qass.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author Hoang-PC
  */
-public class Author {
+public class Author implements Serializable{
 
     public String getAuthor() {
         return author;

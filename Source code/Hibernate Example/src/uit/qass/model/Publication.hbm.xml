@@ -29,5 +29,9 @@
             <key column="id" />
             <many-to-many column="dblp_key" unique="true" class="Publication"  property-ref="dblp_key"/>
         </bag>
+        <bag name="authors" table="dblp_author_ref_new" cascade="all">
+            <key column="pub_id"/>
+            <one-to-many class="Author" />
+        </bag>
     </class>
 </hibernate-mapping>
