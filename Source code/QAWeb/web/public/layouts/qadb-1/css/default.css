@@ -110,12 +110,32 @@ a:hover {
 
 .bg2 {
 	background-color: #FFA414;
-	height: 200px;
+	height: 150px;
 }
 
 .bg3 {
 	background: url(images/img1.jpg) repeat-x left top;
 	height: 55px;
+}
+
+.bg3 ul {
+	list-style-type: none;
+        display: block;
+        text-decoration: none;
+        float: left;
+        margin-left: 20%;
+        margin-right: 20%;
+        margin-bottom: 10px;
+        margin-top: 10px;
+}
+.bg3 ul li {
+	display:inline;
+        padding: 20px;
+}
+
+#menu_bg3 ul li a:hover {
+	font-weight: bolder;
+        color: orange;
 }
 
 .bg4 {
