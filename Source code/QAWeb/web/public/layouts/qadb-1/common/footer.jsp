@@ -10,17 +10,9 @@
 
 <%@taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <td>
-    <table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
-        <tr>
-            <td class="text5">&nbsp;</td>
-            <td align="right" class="text5">&nbsp;</td>
-        </tr>
-        <tr>
-            <td width="57%" class="text5">Copyright © 2006 Sitename.com. Designed by <a href="http://www.webpagetemplates.org">Web Page Templates</a></td>
-        </tr>
-        <tr>
-            <td class="text5">&nbsp;</td>
-            <td align="right" class="text5">&nbsp;</td>
-        </tr>
-    </table>
+    <div class="text5">
+        Copyright © 2006 Sitename.com. Designed by
+        <a href="http://www.webpagetemplates.org">
+            Web Page Templates</a>
+    </div>
 </td>

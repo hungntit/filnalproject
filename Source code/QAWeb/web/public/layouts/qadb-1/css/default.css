@@ -68,6 +68,7 @@ a:hover {
 	letter-spacing: -2px;
 	font-size: 36px;
 	color: #FFFFFF;
+        display: block;
 }
 
 .text2 {
@@ -80,6 +81,7 @@ a:hover {
 	text-transform: uppercase;
 	font-size: 11px;
 	color: #FFFFFF;
+        display: block;
 }
 
 .text4 {
@@ -91,8 +93,9 @@ a:hover {
 
 .text5 {
 	text-transform: uppercase;
-	font-size: 9px;
+	font-size: 10px;
 	color: #888888;
+        text-align: center
 }
 
 .style1 {
