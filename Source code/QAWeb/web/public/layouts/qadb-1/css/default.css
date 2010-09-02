@@ -1,0 +1,152 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: #FFFFFF;
+}
+
+form {
+	margin: 0px;
+	padding: 0px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0px;
+}
+
+body, th, td, input, textarea, select {
+	line-height: 18px;
+	font-family: "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #3F3F3F;
+}
+
+p, blockquote, ul, ol, dl {
+	margin-top: 0px;
+	margin-bottom: 1em;
+	text-align: justify;
+}
+
+.input1 {
+	width: 160px;
+}
+
+a {
+	color: #E08700;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.link1 {
+	text-transform: uppercase;
+	text-decoration: none;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+.list1 {
+	margin-left: 0px;
+	padding-left: 0px;
+	list-style: none;
+	line-height: 22px;
+}
+
+.list1 li {
+	padding-left: 14px;
+	background: url(images/img6.gif) no-repeat left center;
+}
+
+.list1 a {
+	text-decoration: none;
+	color: #505151;
+}
+
+.text1 {
+	letter-spacing: -2px;
+	font-size: 36px;
+	color: #FFFFFF;
+}
+
+.text2 {
+	letter-spacing: -2px;
+	font-size: 36px;
+	color: #161616;
+}
+
+.text3 {
+	text-transform: uppercase;
+	font-size: 11px;
+	color: #FFFFFF;
+}
+
+.text4 {
+	text-transform: uppercase;
+	font-size: 14px;
+	font-weight: bold;
+	color: #F49500;
+}
+
+.text5 {
+	text-transform: uppercase;
+	font-size: 9px;
+	color: #888888;
+}
+
+.style1 {
+}
+
+.style1 a {
+}
+
+.style1 a:hover {
+}
+
+.bg1 {
+	background-color: #2C2C2C;
+}
+
+.bg2 {
+	background-color: #FFA414;
+	height: 200px;
+}
+
+.bg3 {
+	background: url(images/img1.jpg) repeat-x left top;
+	height: 55px;
+}
+
+.bg4 {
+	background: #FFFFFF url(images/img2.jpg) repeat-x left top;
+	height: 360px;
+}
+
+.bg5 {
+	background: url(images/img4.jpg) no-repeat left top;
+	width: 370px;
+	height: 61px;
+}
+
+.align-justify { text-align: justify; }
+.align-right { text-align: right; }
+
+img { border: none; }
+
+.img1 {
+	float: left;
+	margin: 3px 15px 0px 0px;
+}
+
+.img2 {
+	float: right;
+	margin: 3px 0px 0px 15px;
+}
+
+hr { display: none; }
+
+.hr1 {
+	height: 1px;
+}
+

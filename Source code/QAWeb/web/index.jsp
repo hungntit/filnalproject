@@ -1,4 +1,5 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 
-<jsp:forward page="Welcome.do"/>
+<%@taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+<tiles:insert definition=".qadb-1" />
