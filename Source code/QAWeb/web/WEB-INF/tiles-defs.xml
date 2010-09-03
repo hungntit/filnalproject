@@ -11,7 +11,7 @@
 
 <tiles-definitions>
 
-<definition name=".qadb-1" path="/public/layouts/qadb-1/layout.jsp">
+    <definition name=".qadb-1" path="/public/layouts/qadb-1/layout.jsp">
         <put name="title"  value="Question answer system base on Database" />
         <put name="keywords"  value="question,answer,database" />
         <put name="description"  value="Question answer system base on Database" />
@@ -19,6 +19,12 @@
         <put name="menu"   value="/public/layouts/qadb-1/common/menu.jsp" />
         <put name="footer" value="/public/layouts/qadb-1//common/footer.jsp" />
         <put name="content"   value="/public/layouts/qadb-1/common/content.jsp" />
+    </definition>
+
+    <definition name=".searchPage" extends=".qadb-1">
+        <put name="title"  value="Question answer system base on Database - Search Page" />
+        <put name="description"  value="Search Page" />
+        <put name="content"   value="/public/jsp/search.jsp" />
     </definition>
     <!-- sample tiles definitions
     <definition name=".mainLayout" path="/common/layouts/classicLayout.jsp">

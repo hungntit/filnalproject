@@ -144,6 +144,16 @@ a:hover {
 .bg4 {
 	background: #FFFFFF url(images/img2.jpg) repeat-x left top;
 	height: 360px;
+        display: block;
+}
+
+.bg4 div{
+        margin-left: 20%;
+        margin-right: 20%;
+        padding: 15px;
+        text-align: center;
+        line-height: 32px;
+        height: 32px;
 }
 
 .bg5 {
