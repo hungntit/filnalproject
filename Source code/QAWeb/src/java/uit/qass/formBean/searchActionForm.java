@@ -21,6 +21,12 @@ public class searchActionForm extends org.apache.struts.action.ActionForm {
     private String keyWord;
     private ImageButtonBean submit;
 
+    public searchActionForm() {
+        type = "";
+        keyWord = "";
+        submit = new ImageButtonBean();
+    }
+
     public String getKeyWord() {
         return keyWord;
     }
@@ -55,12 +61,11 @@ public class searchActionForm extends org.apache.struts.action.ActionForm {
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
         if (getKeyWord() == null || "".equals(getKeyWord())) {
-            errors.add("key word", new ActionMessage("errors.required"));
+            errors.add("key word", new ActionMessage("errors.required",new String[]{"key word"}));
             return errors;
         }
         if (getKeyWord().length() < 5) {
-            errors.add("key word", new ActionMessage("errors.minlength"));
-            errors.add("5", new ActionMessage("errors.minlength"));
+            errors.add("key word", new ActionMessage("errors.minlength",new String[]{"key word","5"}));
             return errors;
         }
         return errors;

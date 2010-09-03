@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package uit.qass.action;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,16 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import uit.qass.formBean.searchActionForm;
 
 /**
  *
  * @author Hoang-PC
  */
 public class searchAction extends org.apache.struts.action.Action {
-    
+
     /* forward name="success" path="" */
     private static final String SUCCESS = "success";
-    
+
     /**
      * This is the action called from the Struts framework.
      * @param mapping The ActionMapping used to select this instance.
@@ -33,7 +33,10 @@ public class searchAction extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
+        searchActionForm searchForm = (searchActionForm) form;
+        if("Author".equals(searchForm.getType())){
+            
+        }
         return mapping.findForward(SUCCESS);
     }
 }

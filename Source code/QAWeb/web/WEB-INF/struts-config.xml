@@ -19,7 +19,9 @@
     </global-forwards>
 
     <action-mappings>
-        <action input="/" name="searchActionForm" path="/search" scope="session" type="uit.qass.action.searchAction"/>
+        <action input=".searchPage" name="searchActionForm" path="/search" scope="request" validate="true" type="uit.qass.action.searchAction">
+            <forward name="success" path=".searchPage"/>
+        </action>
         <action path="/Welcome" forward="/welcomeStruts.jsp"/>
         <action path="/searchPage" forward=".searchPage"/>
     </action-mappings>

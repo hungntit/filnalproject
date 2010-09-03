@@ -5,13 +5,17 @@
 --%>
 <%@taglib uri="http://struts.apache.org/tags-html"  prefix="html"%>
 <td class="bg4">
-    <div>
+    <div>        
         <div>
-            <html:form action="/search" method="POST">
+            <span style="color: red;font-weight: bold">
+            <html:errors header="ERROR" />
+            </span>
+            <html:form action="/search" >
                 <table>
                     <tr style="margin: 5px;">
                         <td>Search :</td>
-                        <td align="left"><html:select property="type">
+                        <td align="left">
+                            <html:select property="type" >
                                 <html:option value="All" />
                                 <html:option value="Author" />
                             </html:select>
