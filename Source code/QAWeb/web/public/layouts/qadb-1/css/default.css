@@ -148,12 +148,16 @@ a:hover {
 }
 
 .bg4 div{
-        margin-left: 20%;
-        margin-right: 20%;
+        margin-left: 10%;
+        margin-right: 10%;
         padding: 15px;
         text-align: center;
-        line-height: 32px;
-        height: 32px;
+}
+
+.bg4 div div{
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        background-color: #FFA414;
 }
 
 .bg5 {
