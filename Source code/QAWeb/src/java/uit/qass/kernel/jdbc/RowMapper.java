@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package uit.qass.jdbc;
+package uit.qass.kernel.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

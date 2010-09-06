@@ -41,25 +41,6 @@ public class CustomSQLUtil {
 		return _instance._customSQL.get(id);
 	}
 
-	public static boolean isVendorDB2() {
-		return _instance._customSQL.isVendorDB2();
-	}
-
-	public static boolean isVendorInformix() {
-		return _instance._customSQL.isVendorInformix();
-	}
-
-	public static boolean isVendorMySQL() {
-		return _instance._customSQL.isVendorMySQL();
-	}
-
-	public static boolean isVendorOracle() {
-		return _instance._customSQL.isVendorOracle();
-	}
-
-	public static boolean isVendorSybase() {
-		return _instance._customSQL.isVendorSybase();
-	}
 
 	public static String[] keywords(String keywords) {
 		return _instance._customSQL.keywords(keywords);

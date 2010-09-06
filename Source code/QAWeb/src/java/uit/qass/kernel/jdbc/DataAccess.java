@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package uit.qass.jdbc;
+package uit.qass.kernel.jdbc;
 
 
 
@@ -33,7 +33,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import javax.sql.DataSource;
-import uit.qass.jndi.JNDIUtil;
+import uit.qass.kernel.jndi.JNDIUtil;
 import uit.qass.util.InfrastructureUtil;
 import uit.qass.util.log.Log;
 import uit.qass.util.log.LogFactoryUtil;

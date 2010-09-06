@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
-import uit.qass.jdbc.DataAccess;
+import uit.qass.kernel.jdbc.DataAccess;
 import uit.qass.util.OrderByComparator;
 import uit.qass.util.StringPool;
 import uit.qass.util.StringUtil;
@@ -55,7 +55,7 @@ import uit.qass.util.log.LogFactoryUtil;
 public class CustomSQL {
 
 
-	public CustomSQL() throws SQLException {
+	public CustomSQL()  {
 		
 	}
 
@@ -63,63 +63,6 @@ public class CustomSQL {
 		return _sqlPool.get(id);
 	}
 
-	/**
-	 * Returns true if Hibernate is connecting to a DB2 database.
-	 *
-	 * @return		true if Hibernate is connecting to a DB2 database
-	 */
-	public boolean isVendorDB2() {
-		return _vendorDB2;
-	}
-
-	/**
-	 * Returns true if Hibernate is connecting to an Informix database.
-	 *
-	 * @return		true if Hibernate is connecting to an Informix database
-	 */
-	public boolean isVendorInformix() {
-		return _vendorInformix;
-	}
-
-	/**
-	 * Returns true if Hibernate is connecting to a MySQL database.
-	 *
-	 * @return		true if Hibernate is connecting to a MySQL database
-	 */
-	public boolean isVendorMySQL() {
-		return _vendorMySQL;
-	}
-
-	/**
-	 * Returns true if Hibernate is connecting to an Oracle database.
-	 *
-	 * Oracle has a nasty bug where it treats '' as a NULL value. See
-	 * http://thedailywtf.com/forums/thread/26879.aspx for more information
-	 * on this nasty bug.
-	 *
-	 * @return		true if Hibernate is connecting to an Oracle database
-	 */
-	public boolean isVendorOracle() {
-		return _vendorOracle;
-	}
-
-	/**
-	 * Returns true if Hibernate is connecting to a PostgreSQL database.
-	 *
-	 * @return		true if Hibernate is connecting to a PostgreSQL database
-	 */
-	public boolean isVendorPostgreSQL() {
-		return _vendorPostgreSQL;
-	}
-
-	/**
-	 * Returns true if Hibernate is connecting to a Sybase database.
-	 *
-	 * @return		true if Hibernate is connecting to a Sybase database
-	 */
-	public boolean isVendorSybase() {
-		return _vendorSybase;
-	}
 
 	public String[] keywords(String keywords) {
 		return keywords(keywords, true);
@@ -180,22 +123,6 @@ public class CustomSQL {
 				andOrConnector, andOrNullCheck
 			});
 
-		if (_vendorPostgreSQL) {
-			sql = StringUtil.replace(
-				sql,
-				new String[] {
-					"Date >= ? AND ? IS NOT NULL",
-					"Date <= ? AND ? IS NOT NULL",
-					"Date >= ? OR ? IS NULL",
-					"Date <= ? OR ? IS NULL"
-				},
-				new String[] {
-					"Date >= ? AND CAST(? AS TIMESTAMP) IS NOT NULL",
-					"Date <= ? AND CAST(? AS TIMESTAMP) IS NOT NULL",
-					"Date >= ? OR CAST(? AS TIMESTAMP) IS NULL",
-					"Date <= ? OR CAST(? AS TIMESTAMP) IS NULL"
-				});
-		}
 
 		sql = replaceIsNull(sql);
 
@@ -289,14 +216,7 @@ public class CustomSQL {
 
 	
 
-	private static Log _log = LogFactoryUtil.getLog(CustomSQL.class);
-
-	private boolean _vendorDB2;
-	private boolean _vendorInformix;
-	private boolean _vendorMySQL;
-	private boolean _vendorOracle;
-	private boolean _vendorPostgreSQL;
-	private boolean _vendorSybase;
+	
 	private String _functionIsNull;
 	private String _functionIsNotNull;
 	private Map<String, String> _sqlPool;

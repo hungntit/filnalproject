@@ -20,35 +20,18 @@
  * SOFTWARE.
  */
 
-package uit.qass.jdbc;
+package uit.qass.kernel.jdbc;
 
-import javax.sql.DataSource;
+import java.util.List;
 
 /**
- * <a href="MappingSqlQueryFactoryUtil.java.html"><b><i>View Source</i></b></a>
+ * <a href="MappingSqlQuery.java.html"><b><i>View Source</i></b></a>
  *
  * @author Brian Wing Shun Chan
  *
  */
-public class MappingSqlQueryFactoryUtil {
+public interface MappingSqlQuery {
 
-	public static MappingSqlQuery getMappingSqlQuery(
-		DataSource dataSource, String sql, int[] types, RowMapper rowMapper) {
-
-		return getMappingSqlQueryFactory().getMappingSqlQuery(
-			dataSource, sql, types, rowMapper);
-	}
-
-	public static MappingSqlQueryFactory getMappingSqlQueryFactory() {
-		return _mappingSqlUpdateFactory;
-	}
-
-	public void setMappingSqlQueryFactory(
-		MappingSqlQueryFactory mappingSqlUpdateFactory) {
-
-		_mappingSqlUpdateFactory = mappingSqlUpdateFactory;
-	}
-
-	private static MappingSqlQueryFactory _mappingSqlUpdateFactory;
+	public List execute(Object[] params);
 
 }

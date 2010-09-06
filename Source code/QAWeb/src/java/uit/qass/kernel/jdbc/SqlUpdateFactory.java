@@ -20,16 +20,19 @@
  * SOFTWARE.
  */
 
-package uit.qass.jdbc;
+package uit.qass.kernel.jdbc;
+
+import javax.sql.DataSource;
 
 /**
- * <a href="SqlUpdate.java.html"><b><i>View Source</i></b></a>
+ * <a href="SqlUpdateFactory.java.html"><b><i>View Source</i></b></a>
  *
  * @author Brian Wing Shun Chan
  *
  */
-public interface SqlUpdate {
+public interface SqlUpdateFactory {
 
-	public int update(Object[] params);
+	public SqlUpdate getSqlUpdate(
+		DataSource dataSource, String sql, int[] types);
 
 }

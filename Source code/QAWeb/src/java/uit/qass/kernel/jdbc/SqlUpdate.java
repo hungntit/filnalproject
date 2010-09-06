@@ -20,19 +20,16 @@
  * SOFTWARE.
  */
 
-package uit.qass.jdbc;
-
-import javax.sql.DataSource;
+package uit.qass.kernel.jdbc;
 
 /**
- * <a href="MappingSqlQueryFactory.java.html"><b><i>View Source</i></b></a>
+ * <a href="SqlUpdate.java.html"><b><i>View Source</i></b></a>
  *
  * @author Brian Wing Shun Chan
  *
  */
-public interface MappingSqlQueryFactory {
+public interface SqlUpdate {
 
-	public MappingSqlQuery getMappingSqlQuery(
-		DataSource dataSource, String sql, int[] types, RowMapper rowMapper);
+	public int update(Object[] params);
 
 }

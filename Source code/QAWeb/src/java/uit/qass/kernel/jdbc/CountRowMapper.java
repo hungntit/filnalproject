@@ -20,19 +20,23 @@
  * SOFTWARE.
  */
 
-package uit.qass.jdbc;
+package uit.qass.kernel.jdbc;
 
-import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
- * <a href="SqlUpdateFactory.java.html"><b><i>View Source</i></b></a>
+ * <a href="CountRowMapper.java.html"><b><i>View Source</i></b></a>
  *
  * @author Brian Wing Shun Chan
  *
  */
-public interface SqlUpdateFactory {
+public class CountRowMapper implements RowMapper {
 
-	public SqlUpdate getSqlUpdate(
-		DataSource dataSource, String sql, int[] types);
+	public Object mapRow(ResultSet rs, int rowNumber) throws SQLException {
+		return new Integer(rs.getInt(_COUNT_VALUE));
+	}
+
+	private static final String _COUNT_VALUE = "COUNT_VALUE";
 
 }

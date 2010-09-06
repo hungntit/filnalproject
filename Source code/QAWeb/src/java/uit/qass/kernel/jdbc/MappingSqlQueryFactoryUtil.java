@@ -20,23 +20,35 @@
  * SOFTWARE.
  */
 
-package uit.qass.jdbc;
+package uit.qass.kernel.jdbc;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.sql.DataSource;
 
 /**
- * <a href="CountRowMapper.java.html"><b><i>View Source</i></b></a>
+ * <a href="MappingSqlQueryFactoryUtil.java.html"><b><i>View Source</i></b></a>
  *
  * @author Brian Wing Shun Chan
  *
  */
-public class CountRowMapper implements RowMapper {
+public class MappingSqlQueryFactoryUtil {
 
-	public Object mapRow(ResultSet rs, int rowNumber) throws SQLException {
-		return new Integer(rs.getInt(_COUNT_VALUE));
+	public static MappingSqlQuery getMappingSqlQuery(
+		DataSource dataSource, String sql, int[] types, RowMapper rowMapper) {
+
+		return getMappingSqlQueryFactory().getMappingSqlQuery(
+			dataSource, sql, types, rowMapper);
 	}
 
-	private static final String _COUNT_VALUE = "COUNT_VALUE";
+	public static MappingSqlQueryFactory getMappingSqlQueryFactory() {
+		return _mappingSqlUpdateFactory;
+	}
+
+	public void setMappingSqlQueryFactory(
+		MappingSqlQueryFactory mappingSqlUpdateFactory) {
+
+		_mappingSqlUpdateFactory = mappingSqlUpdateFactory;
+	}
+
+	private static MappingSqlQueryFactory _mappingSqlUpdateFactory;
 
 }

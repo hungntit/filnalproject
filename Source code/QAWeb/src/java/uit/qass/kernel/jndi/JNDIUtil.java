@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package uit.qass.jndi;
+package uit.qass.kernel.jndi;
 
 
 
