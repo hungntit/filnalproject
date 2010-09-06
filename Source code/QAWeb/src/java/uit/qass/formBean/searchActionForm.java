@@ -4,6 +4,7 @@
  */
 package uit.qass.formBean;
 
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionErrors;
