@@ -5,6 +5,7 @@
 
 package uit.qass.action;
 
+import java.util.Collections;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,6 +40,8 @@ public class showPubsByAuthorAction extends org.apache.struts.action.Action {
             throws Exception {
         String authorName = (String) request.getParameter("authorName");        
         List<Publication> publications = searchAuthor.searchPubsByAuthorName(authorName);
+        Collections.sort(publications);
+        request.setAttribute("totalNums", publications.size());
         request.setAttribute("authorName", authorName);
         request.setAttribute("publications", publications);
         return mapping.findForward(SUCCESS);

@@ -3,7 +3,7 @@ package uit.qass.model;
 import java.util.Date;
 import java.util.List;
 
-public class Publication {
+public class Publication implements Comparable {
 
     public String getCrossref() {
         return crossref;
@@ -212,4 +212,15 @@ public class Publication {
     private Date mdate;
     private List<Publication> refPubs;
     private List<Author> authors;
+
+    @Override
+    public int compareTo(Object o) {
+        Publication temp = (Publication) o;
+        if(temp.year > this.year){
+            return 1;
+        }else if( temp.year < this.year){
+            return -1;
+        }
+        return 0;
+    }
 }

@@ -13,6 +13,9 @@ h1, h2, h3, h4, h5, h6 {
 	margin: 0px;
 }
 
+li{
+    margin: 2px;
+}
 body, th, td, input, textarea, select {
 	line-height: 18px;
 	font-family: "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif;
@@ -32,10 +35,12 @@ p, blockquote, ul, ol, dl {
 
 a {
 	color: #E08700;
+        text-decoration: none;
 }
 
 a:hover {
-	text-decoration: none;
+	font-weight: bold;
+        text-decoration: underline;
 }
 
 .link1 {
@@ -180,9 +185,18 @@ img { border: none; }
 	margin: 3px 0px 0px 15px;
 }
 
-hr { display: none; }
+hr {  }
 
 .hr1 {
 	height: 1px;
 }
 
+#contextmenu {
+	position:absolute;
+	z-index:999;
+	visibility:hidden;
+	border:1px solid #000080;
+	background-color:#4000c0;
+	color:#FFFF00;
+	left:110px;
+}

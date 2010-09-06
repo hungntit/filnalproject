@@ -34,11 +34,17 @@
             </html:form>
         </div>
         <!--Show all authors which you search-->
-        <div style="text-align: left;background-color: transparent">
+        <div style="text-align: left;background-color: transparent;">
             <span style="color: green"><c:out value="${warning}"/></span>
+            <ul>
             <c:forEach var="au" items="${authors}">
-                <li><html:link href="showPubsByAuthor.do?authorName=${au}"><c:out value="${au}"/></html:link></li>
+                <li style="display: inline-block;width: 200px;">
+                    <html:link href="showPubsByAuthor.do?authorName=${au}">
+                        <c:out value="${au}"/>
+                    </html:link>
+                </li>
             </c:forEach>
+            </ul>
         </div>
     </div
 </td>
