@@ -7,7 +7,7 @@
 
 <struts-config>
     <form-beans>
-        <form-bean name="searchActionForm" type="uit.qass.formBean.searchActionForm"/>    
+        <form-bean name="searchActionForm" type="uit.qass.formBean.searchActionForm"/>
     </form-beans>
     
     <global-exceptions>
@@ -23,7 +23,10 @@
             <forward name="success" path=".searchPage"/>
         </action>
         <action path="/showPubsByAuthor" type="uit.qass.action.showPubsByAuthorAction">
-             <forward name="success" path=".pubsOfAuthorPage"/>
+            <forward name="success" path=".pubsOfAuthorPage"/>
+        </action>
+        <action path="/showPubDetail" type="uit.qass.action.showPubDetailAction">
+            <forward name="success" path=".pubsDetail"/>
         </action>
         <action path="/Welcome" forward="/welcomeStruts.jsp"/>
         <action path="/searchPage" forward=".searchPage"/>
@@ -31,10 +34,10 @@
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
 
-    <message-resources parameter="com/myapp/struts/ApplicationResource"/>    
+    <message-resources parameter="com/myapp/struts/ApplicationResource"/>
     
     <plug-in className="org.apache.struts.tiles.TilesPlugin" >
-        <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />      
+        <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />
         <set-property property="moduleAware" value="true" />
     </plug-in>
     

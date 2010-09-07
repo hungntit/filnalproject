@@ -67,7 +67,7 @@
                     </li>
                 </div>
                 <li style="list-style: none">
-                    <a href="#" style="text-decoration: none;" 
+                    <a href="./showPubDetail.do?id=${pub.id}" style="text-decoration: none;"
                        onmouseover="contextMenuClick(event,'pub<%=i%>');"
                        onmouseout="document.getElementById('contextmenu').style.visibility = 'hidden'">
                         <%=i%>. <c:out value="${pub.title}"/> 
