@@ -29,6 +29,10 @@
             <% int i = 1;%>
             <c:forEach var="pub" items="${publications}">
                 <div id="pub<%=i%>" style="visibility: hidden;margin: 0xp;position: fixed">
+                    <h4><bean:message key="text.authors"/></h4>
+                    <c:forEach var="au" items="${pub.authors}">
+                        <c:out value="${au.author}"/>,
+                    </c:forEach>
                     <li>
                         <bean:message key="text.source"/>:
                         <c:out value="${pub.source}" default="NA"/>
