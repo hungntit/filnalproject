@@ -52,6 +52,5 @@ public class searchAuthor {
             pubs.add(mypub);
         }
         return pubs;
-
     }
 }

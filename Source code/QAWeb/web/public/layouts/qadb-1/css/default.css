@@ -196,7 +196,10 @@ hr {  }
 	z-index:999;
 	visibility:hidden;
 	border:1px solid #000080;
-	background-color:#4000c0;
-	color:#FFFF00;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+	background-color:#FFA414;
+	color:white;
 	left:110px;
+        text-align: left;
 }
