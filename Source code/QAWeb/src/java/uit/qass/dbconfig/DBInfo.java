@@ -20,7 +20,22 @@ public class DBInfo {
     public DBInfo() {
         tables      =  new ArrayList<TableInfo>();
     }
+    public void addTable(TableInfo table)
+    {
+        tables.add(table);
+    }
 
+    public  TableInfo findTableInfoByName(String tableName)
+    {
+        if(tableName == null) return null;
+        if(tableName.trim().equals("")) return null;
+        for(TableInfo table:tables)
+        {
+            if(table.getName().equalsIgnoreCase(tableName))
+                return table;
+        }
+        return null;
+    }
     /**
      * Get the value of name
      *

@@ -25,25 +25,12 @@ package uit.qass.util.dao.orm;
 
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.StringReader;
-
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.SQLException;
-
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Properties;
-import uit.qass.kernel.jdbc.DataAccess;
+
 import uit.qass.util.OrderByComparator;
 import uit.qass.util.StringPool;
 import uit.qass.util.StringUtil;
 import uit.qass.util.Validator;
-import uit.qass.util.log.Log;
-import uit.qass.util.log.LogFactoryUtil;
 
 /**
  * <a href="CustomSQL.java.html"><b><i>View Source</i></b></a>
@@ -145,6 +132,18 @@ public class CustomSQL {
 		return sql;
 	}
 
+        /**
+         *
+         * @param fieldname
+         * @param operator
+         * @return Structure: (fieldname operator ? [$AND_OR_NULL_CHECK$])
+         */
+        public String createOperatorForField(String fieldname,String operator){
+            if(operator.equalsIgnoreCase(StringPool.LIKE))
+                return "("+fieldname+" "+operator+" ? [$AND_OR_NULL_CHECK$])";
+            else
+                return "("+fieldname+" "+operator+" ? )";
+        }
 	public String replaceKeywords(
 		String sql, String field, String operator, boolean last,
 		String[] values) {
@@ -171,7 +170,7 @@ public class CustomSQL {
 
 		for (int i = 0; i < values.length; i++) {
 			if (i > 0) {
-				newSql.append(" OR ");
+				newSql.append(" AND ");
 			}
 
 			newSql.append("(");

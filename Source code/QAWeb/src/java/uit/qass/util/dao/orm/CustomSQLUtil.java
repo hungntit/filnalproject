@@ -92,11 +92,20 @@ public class CustomSQLUtil {
 			_log.error(e, e);
 		}
 	}
-
+ /**
+         *
+         * @param fieldname
+         * @param operator
+         * @return Structure: (fieldname operator ? [$AND_OR_NULL_CHECK$])
+         */
+        public static String createOperatorForField(String fieldname,String operator){
+            return _instance._customSQL.createOperatorForField(fieldname, operator);
+        }
 	private static Log _log = LogFactoryUtil.getLog(CustomSQLUtil.class);
 
 	private static CustomSQLUtil _instance = new CustomSQLUtil();
 
 	private CustomSQL _customSQL;
-
+        public static String AND_OR_CONECTOR  =   "[$AND_OR_CONNECTOR$]";
+        public static String AND_OR_NULL_CHECK  =   "[$AND_OR_NULL_CHECK$]";
 }

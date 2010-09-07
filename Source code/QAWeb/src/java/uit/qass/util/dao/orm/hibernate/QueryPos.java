@@ -25,6 +25,7 @@ package uit.qass.util.dao.orm.hibernate;
 import java.sql.Timestamp;
 
 import org.hibernate.Query;
+import uit.qass.dbconfig.Type;
 
 /**
  * <a href="QueryPos.java.html"><b><i>View Source</i></b></a>
@@ -138,7 +139,43 @@ public class QueryPos {
 			}
 		}
 	}
+        public void add(String str,Type type)
+        {
+            if(type.equals(Type.INTEGER))
+            {
 
+                int value   =   0;
+                if(!str.trim().equals(""))
+                    value   =   Integer.parseInt(str);
+                add(value);
+            }
+            if(type.equals(Type.LONG))
+            {
+
+                long value   =   0;
+                if(!str.trim().equals(""))
+                    value   =   Long.parseLong(str);
+                add(value);
+            }
+            if(type.equals(Type.DOUBLE))
+            {
+
+                double value   =   0;
+                if(!str.trim().equals(""))
+                    value   =   Double.parseDouble(str);
+                add(value);
+            }
+            if(type.equals(Type.BOOLEAN))
+            {
+
+                boolean value   =   false;
+                if(!str.trim().equals(""))
+                    value   =   Boolean.parseBoolean(str);
+                add(value);
+
+            }
+
+        }
 	public void add(Timestamp value) {
 		_query.setTimestamp(_pos++, value);
 	}

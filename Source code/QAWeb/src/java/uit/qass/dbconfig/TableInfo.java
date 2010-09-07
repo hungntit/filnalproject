@@ -22,6 +22,16 @@ public class TableInfo {
     
     }
 
+    public List<ColumnInfo> getColumns() {
+        return columns;
+    }
+
+    public TableInfo(String name, String aliasName) {
+        this.name = name;
+        this.aliasName = aliasName;
+        this.columns    =   new ArrayList<ColumnInfo>();
+    }
+
     /**
      * Get the value of name
      *
@@ -57,6 +67,52 @@ public class TableInfo {
      */
     public void setAliasName(String aliasName) {
         this.aliasName = aliasName;
+    }
+    public void addColumn(ColumnInfo column)
+    {
+        columns.add(column);
+    }
+    public ColumnInfo findColumnByName(String columnName)
+    {
+        if(columnName == null)  return null;
+        if(columnName.trim().equals(""))  return null;
+        for(ColumnInfo column: columns)
+        {
+            if(column.getName().equalsIgnoreCase(columnName))
+                return column;
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TableInfo other = (TableInfo) obj;
+        
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + (this.columns != null ? this.columns.hashCode() : 0);
+        hash = 67 * hash + (this.name != null ? this.name.hashCode() : 0);
+        hash = 67 * hash + (this.aliasName != null ? this.aliasName.hashCode() : 0);
+        return hash;
     }
 
 }
