@@ -23,6 +23,11 @@ body, th, td, input, textarea, select {
 	color: #3F3F3F;
 }
 
+table {
+    text-align: left;
+}
+
+
 p, blockquote, ul, ol, dl {
 	margin-top: 0px;
 	margin-bottom: 1em;

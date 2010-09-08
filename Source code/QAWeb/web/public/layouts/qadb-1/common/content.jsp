@@ -20,16 +20,6 @@
                     </tr>
                     <tr>
                         <td>
-                            <form id="form2" name="form2" method="post" action="">
-                                <table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td class="style1"><h5 class="text3">Search: </h5></td>
-                                        <td align="center"><input name="textfield2" type="text" class="input1" /></td>
-                                        <td>&nbsp;</td>
-                                        <td><input name="Search2" type="submit" id="Search2" value="    Submit   " /></td>
-                                    </tr>
-                                </table>
-                            </form>
                         </td>
                     </tr>
                     <tr>

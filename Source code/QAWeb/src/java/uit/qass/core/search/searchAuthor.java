@@ -40,8 +40,7 @@ public class searchAuthor {
 
     public static List<Publication> searchPubsByAuthorName(String name) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = null;
-        session = sessionFactory.openSession();
+        Session session =  sessionFactory.openSession();
         Query q = session.createQuery("from Author au where au.author = :var");
         q.setString("var", name);
         List authors = q.list();

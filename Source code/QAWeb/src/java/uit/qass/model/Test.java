@@ -6,12 +6,13 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import uit.qass.core.search.searchAuthor;
+import uit.qass.core.search.searchPublication;
 import uit.qass.util.hibernate.HibernateUtil;
 
 public class Test {
 
     public static void main(String[] args) {
-        test5();
+        test6();
     }
 
     public static void test1() {
@@ -79,5 +80,12 @@ public class Test {
             Publication pub = (Publication) pubs.get(i);
             System.out.println(pub.getTitle());
         }
+    }
+
+    public static void test6() {
+        Publication pub = searchPublication.searchPubByID("71");
+            System.out.println(pub.getTitle());
+           System.out.println(pub.getAuthors().get(0).getAuthor());
+           System.out.println(pub.getRefPubs().size());
     }
 }
