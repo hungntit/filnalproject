@@ -11,7 +11,7 @@
     <div>
         <h2><c:out value="${publication.title}" /></h2>
         <div style="background: transparent">
-            <table>
+            <table  style="-moz-border-radius: 10px;-webkit-border-radius: 10px;background-color: whitesmoke">
                 <tr>
                     <th></th>
                     <th><bean:message key="text.informations"/></th>
