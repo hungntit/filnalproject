@@ -28,7 +28,7 @@
             <c:out value="${totalNums}"/><hr>
             <% int i = 1;%>
             <c:forEach var="pub" items="${publications}">
-                <div id="pub<%=i%>" style="visibility: hidden;margin: 0xp;position: fixed">
+                <span id="pub<%=i%>" style="visibility: hidden;margin: 0xp;position: fixed">
                     <h4><bean:message key="text.authors"/></h4>
                     <c:forEach var="au" items="${pub.authors}">
                         <c:out value="${au.author}"/>,
@@ -65,7 +65,7 @@
                         <bean:message key="text.url"/>:
                         <c:out value="${pub.url}" default="NA"/>
                     </li>
-                </div>
+                </span>
                 <li style="list-style: none">
                     <a href="./showPubDetail.do?id=${pub.id}" style="text-decoration: none;"
                        onmouseover="contextMenuClick(event,'pub<%=i%>');"

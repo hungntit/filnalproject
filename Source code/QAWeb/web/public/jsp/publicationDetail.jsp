@@ -32,7 +32,10 @@
                 </tr>
                 <tr>
                     <td><bean:message key="text.year"/></td>
-                    <td><c:out value="${publication.year}" default="NA"/></td>
+                    <td>
+                        <c:out value="${publication.month}" default=""/>
+                        <c:out value="${publication.year}" default="NA"/>
+                    </td>
                 </tr>
                 <tr>
                     <td><bean:message key="text.type"/></td>
@@ -58,7 +61,23 @@
                         <a href="${publication.ee_PDF}"><c:out value="${publication.ee_PDF}" default="NA"/></a>
                     </td>
                 </tr>
-            </table>
+                <tr>
+                    <td><bean:message key="text.url"/></td>
+                    <td>
+                        <a href="<bean:message key="link.dblp"/>${publication.url}"><bean:message key="link.dblp"/><c:out value="${publication.url}" default="NA"/></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><bean:message key="text.doi"/></td>
+                    <td>
+                         <a href="<bean:message key="link.doi"/>${publication.doi}"><c:out value="${publication.doi}" default="NA"/></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><bean:message key="text.publisher"/></td>
+                    <td><c:out value="${publication.publisher}" default="NA"/></td>
+                </tr>                
+            </table> 
             <% int i =1; %>
             <h3><bean:message key="text.references"/></h3><br>
             <c:out value="${warning}"/><br>
