@@ -5,11 +5,15 @@
 
 package uit.qass.dbconfig;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author ThuanHung
  */
-public class Param {
+public class Param implements Serializable{
 
     protected TableInfo table;
     protected ColumnInfo column;
@@ -91,6 +95,27 @@ public class Param {
         return "`"+table+"`"    +"."+   "`"+column+"`";
     }
 
+    public static List<Param> getParamsFromTableInfo(TableInfo table)
+    {
+        List<Param> result  =   new ArrayList<Param>();
+         int size    =   table.getColumns().size();
+        if(size<1)
+            return null;
+
+        for(int i=0;i<size;i++)
+        {
+            ColumnInfo column   =   table.getColumns().get(i);
+            if(column.isVisible)
+            {
+             Param param   =   new Param( table, column);
+             result.add(param);
+            }
+        }
+         if(result.size()==0)
+             return null;
+         return result;
+
+    }
 
 
 }

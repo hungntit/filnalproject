@@ -5,6 +5,7 @@
 
 package uit.qass.dbconfig;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  *
  * @author ThuanHung
  */
-public class DBInfo {
+public class DBInfo implements Serializable{
 
     protected String name;
     protected List<TableInfo>   tables;

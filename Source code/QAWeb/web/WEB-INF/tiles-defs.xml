@@ -27,6 +27,12 @@
         <put name="content"   value="/public/jsp/search.jsp" />
     </definition>
 
+    <definition name=".advanceSearchPage" extends=".qadb-1">
+        <put name="title"  value="Question answer system base on Database - Search Page" />
+        <put name="description"  value="Search Page" />
+        <put name="content"   value="/public/jsp/advanceSearch.jsp" />
+    </definition>
+
     <definition name=".pubsOfAuthorPage" extends=".qadb-1">
         <put name="title"  value="Question answer system base on Database - Publication written by author papge" />
         <put name="description"  value="Publication written by author papge" />

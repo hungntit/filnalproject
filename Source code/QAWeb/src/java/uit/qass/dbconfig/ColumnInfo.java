@@ -9,7 +9,7 @@ package uit.qass.dbconfig;
  *
  * @author ThuanHung
  */
-public class ColumnInfo {
+public class ColumnInfo implements Serializable{
 
     public ColumnInfo() {
         isVisible   =   true;

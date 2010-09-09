@@ -7,6 +7,7 @@
 
 <struts-config>
     <form-beans>
+        <form-bean name="AdvanceSearchForm" type="uit.qass.formBean.AdvanceSearchForm"/>
         <form-bean name="searchActionForm" type="uit.qass.formBean.searchActionForm"/>
     </form-beans>
     
@@ -19,6 +20,9 @@
     </global-forwards>
 
     <action-mappings>
+        <!-- Advance Search -->
+       
+        <!-- end Advance Search -->
         <action input=".searchPage" name="searchActionForm" path="/search" scope="request" validate="true" type="uit.qass.action.searchAction">
             <forward name="success" path=".searchPage"/>
         </action>
@@ -28,8 +32,11 @@
         <action path="/showPubDetail" type="uit.qass.action.showPubDetailAction">
             <forward name="success" path=".pubsDetail"/>
         </action>
+        <action input=".advanceSearchPage" name="AdvanceSearchForm" path="/advanceSearch" scope="request" type="uit.qass.action.advanceSearchAction"/>
+        
         <action path="/Welcome" forward="/welcomeStruts.jsp"/>
         <action path="/searchPage" forward=".searchPage"/>
+        <action path="/advanceSearchPage" forward=".advanceSearchPage"/>
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
