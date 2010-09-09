@@ -25,56 +25,65 @@
         <div style="text-align: left;background-color: transparent;">
             <h2 style="color: green"><c:out value="${authorName}"/></h2>
             <bean:message key="text.total"/>:
-            <c:out value="${totalNums}"/><hr>
-            <% int i = 1;%>
-            <c:forEach var="pub" items="${publications}">
-                <span id="pub<%=i%>" style="visibility: hidden;margin: 0xp;position: fixed">
-                    <h4><bean:message key="text.authors"/></h4>
-                    <c:forEach var="au" items="${pub.authors}">
-                        <c:out value="${au.author}"/>,
+            <c:out value="${totalNums}"/><hr>            
+        </div>
+        <% int i = 1;%>
+        <div style="text-align: left;background-color: whitesmoke;">
+            <c:forEach var="p" items="${publicationGrouped}">
+                <table border="1" style="width: 650px;">
+                    <c:forEach var="pub" items="${p}">
+                        <span id="pub<%=i%>" style="visibility: hidden;position: fixed">
+                            <h4><bean:message key="text.authors"/></h4>
+                            <c:forEach var="au" items="${pub.authors}">
+                                <c:out value="${au.author}"/>,
+                            </c:forEach>
+                            <li>
+                                <bean:message key="text.source"/>:
+                                <c:out value="${pub.source}" default="NA"/>
+                            </li>
+                            <li>
+                                <bean:message key="text.series"/>:
+                                <c:out value="${pub.series}" default="NA"/>
+                            </li>
+                            <li>
+                                <bean:message key="text.type"/>:
+                                <c:out value="${pub.type}" default="NA"/>
+                            </li>
+                            <li>
+                                <bean:message key="text.volume"/>:
+                                <c:out value="${pub.volume}" default="NA"/>
+                            </li>
+                            <li>
+                                <bean:message key="text.pages"/>:
+                                <c:out value="${pub.pages}" default="NA"/>
+                            </li>
+                            <li>
+                                <bean:message key="text.ee"/>:
+                                <c:out value="${pub.ee}" default="NA"/>
+                            </li>
+                            <li>
+                                <bean:message key="text.ee_PDF"/>:
+                                <c:out value="${pub.ee_PDF}" default="NA"/>
+                            </li>
+                            <li>
+                                <bean:message key="text.url"/>:
+                                <c:out value="${pub.url}" default="NA"/>
+                            </li>
+                        </span>
+                        <tr>
+                            <td>
+                                <a href="./showPubDetail.do?id=${pub.id}" style="text-decoration: none;"
+                                   onmouseover="contextMenuClick(event,'pub<%=i%>');"
+                                   onmouseout="document.getElementById('contextmenu').style.visibility = 'hidden'">
+                                    <%=i%>. <c:out value="${pub.title}"/>
+                                </a>
+                            </td>
+                            <td style="width: 35px;"><c:out value="${pub.year}"/></td>
+                        </tr>
+                        <%i++;%>
                     </c:forEach>
-                    <li>
-                        <bean:message key="text.source"/>:
-                        <c:out value="${pub.source}" default="NA"/>
-                    </li>
-                    <li>
-                        <bean:message key="text.series"/>:
-                        <c:out value="${pub.series}" default="NA"/>
-                    </li>
-                    <li>
-                        <bean:message key="text.type"/>:
-                        <c:out value="${pub.type}" default="NA"/>
-                    </li>
-                    <li>
-                        <bean:message key="text.volume"/>:
-                        <c:out value="${pub.volume}" default="NA"/>
-                    </li>
-                    <li>
-                        <bean:message key="text.pages"/>:
-                        <c:out value="${pub.pages}" default="NA"/>
-                    </li>
-                    <li>
-                        <bean:message key="text.ee"/>:
-                        <c:out value="${pub.ee}" default="NA"/>
-                    </li>
-                    <li>
-                        <bean:message key="text.ee_PDF"/>:
-                        <c:out value="${pub.ee_PDF}" default="NA"/>
-                    </li>
-                    <li>
-                        <bean:message key="text.url"/>:
-                        <c:out value="${pub.url}" default="NA"/>
-                    </li>
-                </span>
-                <li style="list-style: none">
-                    <a href="./showPubDetail.do?id=${pub.id}" style="text-decoration: none;"
-                       onmouseover="contextMenuClick(event,'pub<%=i%>');"
-                       onmouseout="document.getElementById('contextmenu').style.visibility = 'hidden'">
-                        <%=i%>. <c:out value="${pub.title}"/> 
-                    </a>
-                    - <c:out value="${pub.year}"/>                    
-                </li>
-                <%i++;%>
+                    <br>
+                </table>
             </c:forEach>
         </div>
     </div>

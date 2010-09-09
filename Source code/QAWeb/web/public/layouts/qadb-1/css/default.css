@@ -25,6 +25,7 @@ body, th, td, input, textarea, select {
 
 table {
     text-align: left;
+    padding: 1px;
 }
 
 
