@@ -31,7 +31,7 @@
         <div style="text-align: left;background-color: whitesmoke;">
             <c:forEach var="p" items="${publicationGrouped}">
                 <table border="1" style="width: 650px;">
-                    <c:forEach var="pub" items="${p}">
+                    <c:forEach var="pub" items="${p}" varStatus="status">
                         <span id="pub<%=i%>" style="visibility: hidden;position: fixed">
                             <h4><bean:message key="text.authors"/></h4>
                             <c:forEach var="au" items="${pub.authors}">
@@ -70,6 +70,11 @@
                                 <c:out value="${pub.url}" default="NA"/>
                             </li>
                         </span>
+                        <c:if test="${status.count == 1}">
+                            <tr style="text-align: center">
+                                <th><c:out value="${pub.year}"/></th>
+                            </tr>
+                        </c:if>
                         <tr>
                             <td>
                                 <a href="./showPubDetail.do?id=${pub.id}" style="text-decoration: none;"
@@ -77,8 +82,7 @@
                                    onmouseout="document.getElementById('contextmenu').style.visibility = 'hidden'">
                                     <%=i%>. <c:out value="${pub.title}"/>
                                 </a>
-                            </td>
-                            <td style="width: 35px;"><c:out value="${pub.year}"/></td>
+                            </td>                            
                         </tr>
                         <%i++;%>
                     </c:forEach>
