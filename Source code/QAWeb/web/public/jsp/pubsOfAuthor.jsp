@@ -82,6 +82,18 @@
                                    onmouseout="document.getElementById('contextmenu').style.visibility = 'hidden'">
                                     <%=i%>. <c:out value="${pub.title}"/>
                                 </a>
+                                <br>
+                                <bean:message key="text.authors"/> : 
+                                <c:forEach var="au" items="${pub.authors}">
+                                    <c:if test="${au.author==authorName}">
+                                        <c:out value="${authorName}"/>,
+                                    </c:if>
+                                    <c:if test="${au.author!=authorName}">
+                                        <a href="showPubsByAuthor.do?authorName=${au.author}">
+                                            <c:out value="${au.author}"/>
+                                        </a>,
+                                    </c:if>
+                                </c:forEach>
                             </td>                            
                         </tr>
                         <%i++;%>
