@@ -11,17 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import uit.qass.core.search.UtimateSearch;
+import uit.qass.dbconfig.DBInfoUtil;
 import uit.qass.dbconfig.Param;
 import uit.qass.dbconfig.TableInfo;
 import uit.qass.formBean.AdvanceSearchForm;
-import uit.qass.model.Publication;
 
 /**
  *
  * @author ThuanHung
  */
-public class advanceSearchAction extends org.apache.struts.action.Action {
+public class loadParamAction extends org.apache.struts.action.Action {
     
     /* forward name="success" path="" */
     private static final String SUCCESS = "success";
@@ -39,14 +38,26 @@ public class advanceSearchAction extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        AdvanceSearchForm advanceSForm  =   (AdvanceSearchForm)form;
-        TableInfo   table               =   advanceSForm.getTableInfo();
-        List<Param> paramslist          =   advanceSForm.getParams();
-        Param[] params                   =   (Param[])paramslist.toArray(new Param[paramslist.size()]);
+        String tablename    =   (String)request.getParameter("tbl");
+        AdvanceSearchForm   advanceSearchForm   =   (AdvanceSearchForm)form;
+        TableInfo table;
+        if(tablename == null)
+        {
+        
+            table =   DBInfoUtil.getDBInfo().getTables().get(0);
+        }
+        else
+        {
+            table =   DBInfoUtil.getDBInfo().findTableInfoByName(tablename);
+        }
 
-        List objs =   UtimateSearch.searchByParam(table.getClassTable(), params, advanceSForm.isIsAndOperator(),table , 0 , 100);
-        request.setAttribute("objs", objs);
-
-        return mapping.findForward(table.getAliasName().trim().toLowerCase());
+        List<Param> params  =   Param.getParamsFromTableInfo(table);
+        advanceSearchForm.setParams(params);
+        advanceSearchForm.setTableInfo(table);
+        response.setContentType("text/html");
+        if(tablename == null)
+            return mapping.findForward(SUCCESS);
+        else
+            return mapping.findForward("load");
     }
 }

@@ -12,7 +12,7 @@
     <ul>
         <li><a href="#" class="link1">Home</a></li>
         <li><a href="searchPage.do" class="link1">Search</a></li>
-        <li><a href="advanceSearchPage.do" class="link1">Advance Search</a></li>
+        <li><a href="loadParams.do" class="link1">Advance Search</a></li>
         <li><a href="#" class="link1">Contact us</a></li>
     </ul>
 </td>

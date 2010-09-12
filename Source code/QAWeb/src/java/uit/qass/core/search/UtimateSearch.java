@@ -7,6 +7,7 @@ package uit.qass.core.search;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -105,13 +106,19 @@ public class UtimateSearch {
               continue;
           if(param.getColumn().getType().equals(Type.STRING))
           {
-              condition+= CustomSQLUtil.AND_OR_CONECTOR+" "+ CustomSQLUtil.createOperatorForField(param.toString(), StringPool.LIKE) +"\n";
+              String keywords[];
+              if(keyword == null)
+                 keywords =   CustomSQLUtil.keywords(param.getValue());
+              else
+                  keywords =   CustomSQLUtil.keywords(keyword);
+              if(keywords.length>0)
+                  condition+= CustomSQLUtil.AND_OR_CONECTOR+" "+ CustomSQLUtil.createOperatorForField(param.toString(), StringPool.LIKE) +"\n";
 
           }
           else
           {
               if(keyword == null)
-                condition+= CustomSQLUtil.AND_OR_CONECTOR + CustomSQLUtil.createOperatorForField(param.toString(), StringPool.EQUAL);
+                condition+= CustomSQLUtil.AND_OR_CONECTOR + CustomSQLUtil.createOperatorForField(param.toString(),param.getOperator());
           }
 
       }
@@ -135,7 +142,7 @@ public class UtimateSearch {
 
       return query;
     }
-    public static List<Object> searchByParam(Class typeclass, Param[] params,boolean isAndOperator,TableInfo selectTable,int start, int end)
+    public static List searchByParam(Class typeclass, Param[] params,boolean isAndOperator,TableInfo selectTable,int start, int end)
     {
         String queryStr    =   generateSelectQuery(params, isAndOperator, selectTable);
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -147,6 +154,7 @@ public class UtimateSearch {
         SQLQuery   q   = session.createSQLQuery(queryStr);
         q.addEntity(typeclass);
         QueryPos    qPos    =   QueryPos.getInstance(q);
+        q.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         for(Param param:params)
         {
             if(param.getColumn().getType().equals(Type.STRING))
@@ -160,7 +168,7 @@ public class UtimateSearch {
             }
 
         }
-        return (List<Object>)QueryUtil.list(q, start, end);
+        return (List)QueryUtil.list(q, start, end);
         }
         catch(Exception ex)
         {
@@ -168,7 +176,7 @@ public class UtimateSearch {
         }
         finally
         {
-            session.close();
+            
         }
         return null;
     }
@@ -268,7 +276,7 @@ public class UtimateSearch {
 
   //      String pubqr   =   generateSelectQuery(new Param[]{pub3}, true, dblp_pub_new);
    //     System.out.println(pubqr);
-        List list   =   searchByParam(Publication.class,new Param[]{pub3}, true, dblp_pub_new, 1, 5);
+        List list   =   searchByParam(Publication.class,new Param[]{pub3}, true, dblp_pub_new, 1, 100);
         System.out.println("END");
     }
 

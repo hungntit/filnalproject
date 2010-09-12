@@ -17,6 +17,15 @@ public class TableInfo implements Serializable{
     protected List<ColumnInfo>  columns;
     protected String name;
     protected String aliasName;
+    protected Class  classTable;
+
+    public Class getClassTable() {
+        return classTable;
+    }
+
+    public void setClassTable(Class classTable) {
+        this.classTable = classTable;
+    }
 
     public TableInfo() {
         this.columns    =   new ArrayList<ColumnInfo>();

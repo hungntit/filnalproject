@@ -32,11 +32,20 @@
         <action path="/showPubDetail" type="uit.qass.action.showPubDetailAction">
             <forward name="success" path=".pubsDetail"/>
         </action>
-        <action input=".advanceSearchPage" name="AdvanceSearchForm" path="/advanceSearch" scope="request" type="uit.qass.action.advanceSearchAction"/>
+        <action input=".advanceSearchPage" name="AdvanceSearchForm" path="/loadParams" scope="session" type="uit.qass.action.loadParamAction">
+            <forward name="success" path=".advanceSearchPage"/>
+            <forward name="load" path="/public/jsp/advanceSearchForm.jsp"/>
+        </action>
+        <action input=".advanceSearchPage" name="AdvanceSearchForm" path="/advanceSearch" scope="session" type="uit.qass.action.advanceSearchAction">
+            <forward name="publication" path=".publications"/>
+            <forward name="author" path=".authors"/>
+
+        </action>
         
         <action path="/Welcome" forward="/welcomeStruts.jsp"/>
         <action path="/searchPage" forward=".searchPage"/>
         <action path="/advanceSearchPage" forward=".advanceSearchPage"/>
+
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>

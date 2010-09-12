@@ -21,6 +21,15 @@ public class DBInfo implements Serializable{
     public DBInfo() {
         tables      =  new ArrayList<TableInfo>();
     }
+
+    public List<TableInfo> getTables() {
+        return tables;
+    }
+
+    public void setTables(List<TableInfo> tables) {
+        this.tables = tables;
+    }
+
     public void addTable(TableInfo table)
     {
         tables.add(table);

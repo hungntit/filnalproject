@@ -27,7 +27,25 @@ public class AdvanceSearchForm extends org.apache.struts.action.ActionForm {
 
     private List<Param> params;
     private ImageButtonBean submit;
+    private TableInfo   tableInfo;
+    private boolean     isAndOperator;
 
+    public boolean isIsAndOperator() {
+        return isAndOperator;
+    }
+
+    public void setIsAndOperator(boolean isAndOperator) {
+        this.isAndOperator = isAndOperator;
+    }
+
+    public TableInfo getTableInfo() {
+        return tableInfo;
+    }
+
+    public void setTableInfo(TableInfo tableInfo) {
+        this.tableInfo = tableInfo;
+    }
+    
     public ImageButtonBean getSubmit() {
         return submit;
     }
@@ -43,15 +61,25 @@ public class AdvanceSearchForm extends org.apache.struts.action.ActionForm {
     public void setParams(List<Param> params) {
         this.params = params;
     }
+    public void setParam(int index,Param param)
+    {
+        if(index> params.size())
+        {
+            params.set(index, param);
+        }
+    }
 
-    
+    public Param getParam(int index)
+    {
+        return params.get(index);
+    }
     /**
      *
      */
     public AdvanceSearchForm() {
         submit = new ImageButtonBean();
-        TableInfo table =   DBInfoUtil.getDBInfo().findTableInfoByName("dblp_pub_new");
-        params  =   Param.getParamsFromTableInfo(table);
+        
+        params  =   new ArrayList<Param>();
         
         // TODO Auto-generated constructor stub
     }
@@ -64,6 +92,7 @@ public class AdvanceSearchForm extends org.apache.struts.action.ActionForm {
      */
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
+        /*
         for(Param param:params)
         {
             if(param.getColumn().getType().equals(Type.INTEGER)||param.getColumn().getType().equals(Type.LONG))
@@ -80,6 +109,8 @@ public class AdvanceSearchForm extends org.apache.struts.action.ActionForm {
                 
             }
         }
+         *
+         */
         return errors;
     }
 }

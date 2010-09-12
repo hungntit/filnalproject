@@ -5,6 +5,9 @@
 
 package uit.qass.dbconfig;
 
+import uit.qass.model.Author;
+import uit.qass.model.Publication;
+
 /**
  *
  * @author ThuanHung
@@ -14,14 +17,15 @@ public class DBInfoUtil {
 static
     {
         TableInfo dblp_author_ref_new   =   new TableInfo("dblp_author_ref_new", "Author");
+        dblp_author_ref_new.setClassTable(Author.class);
         ColumnInfo author               =   new ColumnInfo("author", "Author", Type.STRING);
-        ColumnInfo editor               =   new ColumnInfo("editor", "Editor", Type.INTEGER);
-        TableInfo dblp_pub_new          =   new TableInfo("dblp_pub_new", "Publisher");
+        ColumnInfo editor               =   new ColumnInfo("editor", "Editor", Type.BOOLEAN);
+        TableInfo dblp_pub_new          =   new TableInfo("dblp_pub_new", "Publication");
         ColumnInfo title                =   new ColumnInfo("title", "Title", Type.STRING);
         ColumnInfo publisher            =   new ColumnInfo("publisher", "Publisher", Type.STRING);
         ColumnInfo year                 =   new ColumnInfo("year", "Year", Type.INTEGER);
-
-        editor.setIsVisible(true);
+        dblp_pub_new.setClassTable(Publication.class);
+        editor.setIsVisible(false);
         dblp_author_ref_new.addColumn(editor);
         dblp_author_ref_new.addColumn(author);
 

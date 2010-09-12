@@ -5,11 +5,13 @@
 
 package uit.qass.dbconfig;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ThuanHung
  */
-public class Relation {
+public class Relation implements Serializable{
 
     protected String relationName;
     protected String relatedTable;

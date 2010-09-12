@@ -8,6 +8,7 @@ package uit.qass.dbconfig;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import uit.qass.util.StringPool;
 
 /**
  *
@@ -18,6 +19,25 @@ public class Param implements Serializable{
     protected TableInfo table;
     protected ColumnInfo column;
     protected String value;
+    protected String operator;
+
+    /**
+     * Get the value of operator
+     *
+     * @return the value of operator
+     */
+    public String getOperator() {
+        return operator;
+    }
+
+    /**
+     * Set the value of operator
+     *
+     * @param operator new value of operator
+     */
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
 
     /**
      * Get the value of value
@@ -45,6 +65,7 @@ public class Param implements Serializable{
         if(table != null)
             column  =   this.table.findColumnByName(coumnName);
         this.value  =   "";
+        this.operator   =   StringPool.EQUAL;
     }
 
     public Param(TableInfo table, ColumnInfo column) {

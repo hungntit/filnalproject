@@ -5,6 +5,8 @@
 
 package uit.qass.dbconfig;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ThuanHung
