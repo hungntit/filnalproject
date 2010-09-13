@@ -42,7 +42,7 @@
 
         </action>
         
-        <action path="/Welcome" forward="/welcomeStruts.jsp"/>
+        <action path="/Welcome" forward=".qadb-1"/>
         <action path="/searchPage" forward=".searchPage"/>
         <action path="/advanceSearchPage" forward=".advanceSearchPage"/>
 

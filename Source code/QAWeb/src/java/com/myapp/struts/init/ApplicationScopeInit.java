@@ -33,6 +33,6 @@ public class ApplicationScopeInit implements ServletContextListener {
     }
 
     public void contextDestroyed(ServletContextEvent event) {
-        event.getServletContext().removeAttribute("STRUTS_EXAMPLE_STATES");
+        HibernateUtil.closeSessionFactory();
     }
 }

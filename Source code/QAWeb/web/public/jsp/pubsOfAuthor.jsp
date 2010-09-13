@@ -71,13 +71,13 @@
                             </li>
                         </span>
                         <c:if test="${status.count == 1}">
-                            <tr style="text-align: center">
+                            <tr style="text-align: center;background-color: lightcoral">
                                 <th><c:out value="${pub.year}"/></th>
                             </tr>
                         </c:if>
                         <tr>
                             <td>
-                                <a href="./showPubDetail.do?id=${pub.id}" style="text-decoration: none;"
+                                <a href="./showPubDetail.do?id=${pub.id}" style="text-decoration: none; "
                                    onmouseover="contextMenuClick(event,'pub<%=i%>');"
                                    onmouseout="document.getElementById('contextmenu').style.visibility = 'hidden'">
                                     <%=i%>. <c:out value="${pub.title}"/>

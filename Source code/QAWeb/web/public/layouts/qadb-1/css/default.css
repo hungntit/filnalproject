@@ -47,6 +47,7 @@ a {
 a:hover {
 	font-weight: bold;
         text-decoration: underline;
+        color: green;
 }
 
 .link1 {
