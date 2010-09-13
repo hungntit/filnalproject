@@ -10,15 +10,17 @@
 
 <%@taglib uri="http://struts.apache.org/tags-bean-el" prefix="bean" %>
 
-<div class="text5">
-    <bean:message key="text.copyRight"/>
-    <a href="#">
-        <bean:message key="text.dbqa"/>
-    </a>
-    <br>
-     <bean:message key="text.downloadfrom"/>
-     <a href="http://www.freewebtemplates.com/">
-         <bean:message key="text.freeTemplate"/>
-     </a>.
+<div id ="footer">
+    <div class="text5">
+        <bean:message key="text.copyRight"/>
+        <a href="#">
+            <bean:message key="text.dbqa"/>
+        </a>
+        <br>
+        <bean:message key="text.downloadfrom"/>
+        <a href="http://www.freewebtemplates.com/">
+            <bean:message key="text.freeTemplate"/>
+        </a>.
+    </div>
 </div>
 

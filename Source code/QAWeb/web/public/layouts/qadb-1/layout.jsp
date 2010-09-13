@@ -18,11 +18,9 @@
         <link href="<html:rewrite page='/public/layouts/qadb-1/css/default.css'/>" rel="stylesheet" type="text/css" />
     </head>
     <body class="bg1">
+        <!--LAYOUT CONTENTS-->
+        <tiles:insert attribute="header"/>
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-                <tiles:insert attribute="header"/>
-            </tr>
-
             <tr>
                 <tiles:insert attribute="menu"/>
             </tr>
@@ -36,5 +34,6 @@
         <div style="text-align: center; font-size: 0.75em;margin-bottom: 1px;">
             <tiles:insert attribute="footer"/>
         </div>
+        <!--END LAYOUT CONTENTS-->
     </body>
 </html:html>

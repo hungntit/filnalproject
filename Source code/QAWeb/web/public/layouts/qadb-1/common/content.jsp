@@ -8,7 +8,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-<td class="bg4">
     <table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
         <tr valign="top">
             <td width="415"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -77,4 +76,3 @@
                 </table></td>
         </tr>
     </table>
-</td>

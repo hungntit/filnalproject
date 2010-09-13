@@ -28,6 +28,13 @@ table {
     padding: 1px;
 }
 
+#footer{
+    text-align: center;
+    font-size: 0.75em;
+    margin-bottom: 1px;
+    height: 36px;
+    bottom: auto;
+}
 
 p, blockquote, ul, ol, dl {
 	margin-top: 0px;
@@ -120,11 +127,12 @@ a:hover {
 }
 
 .bg1 {
-	background-color: #2C2C2C;
+	background-color: #2C2C2C;        
 }
 
-.bg2 {
+#header {
 	background-color: #FFA414;
+        padding-top: 10px;
 	height: 150px;
 }
 
