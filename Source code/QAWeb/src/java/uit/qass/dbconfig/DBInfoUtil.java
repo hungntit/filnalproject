@@ -17,6 +17,7 @@ public class DBInfoUtil {
 static
     {
         TableInfo dblp_author_ref_new   =   new TableInfo("dblp_author_ref_new", "Author");
+        dblp_author_ref_new.setPrimaryKey("pub_id");
         dblp_author_ref_new.setClassTable(Author.class);
         ColumnInfo author               =   new ColumnInfo("author", "Author", Type.STRING);
         ColumnInfo editor               =   new ColumnInfo("editor", "Editor", Type.BOOLEAN);
@@ -25,6 +26,7 @@ static
         ColumnInfo publisher            =   new ColumnInfo("publisher", "Publisher", Type.STRING);
         ColumnInfo year                 =   new ColumnInfo("year", "Year", Type.INTEGER);
         dblp_pub_new.setClassTable(Publication.class);
+        dblp_pub_new.setPrimaryKey("id");
         editor.setIsVisible(false);
         dblp_author_ref_new.addColumn(editor);
         dblp_author_ref_new.addColumn(author);

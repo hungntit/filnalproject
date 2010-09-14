@@ -92,7 +92,7 @@ public class AdvanceSearchForm extends org.apache.struts.action.ActionForm {
      */
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
-        /*
+        
         for(Param param:params)
         {
             if(param.getColumn().getType().equals(Type.INTEGER)||param.getColumn().getType().equals(Type.LONG))
@@ -109,8 +109,7 @@ public class AdvanceSearchForm extends org.apache.struts.action.ActionForm {
                 
             }
         }
-         *
-         */
+        
         return errors;
     }
 }

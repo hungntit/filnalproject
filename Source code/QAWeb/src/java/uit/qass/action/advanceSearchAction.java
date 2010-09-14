@@ -44,7 +44,7 @@ public class advanceSearchAction extends org.apache.struts.action.Action {
         List<Param> paramslist          =   advanceSForm.getParams();
         Param[] params                   =   (Param[])paramslist.toArray(new Param[paramslist.size()]);
 
-        List objs =   UtimateSearch.searchByParam(table.getClassTable(), params, advanceSForm.isIsAndOperator(),table , 0 , 100);
+        List objs =   UtimateSearch.searchByParam(table.getClassTable(), params, advanceSForm.isIsAndOperator(),table , 0 , 1);
         request.setAttribute("objs", objs);
 
         return mapping.findForward(table.getAliasName().trim().toLowerCase());

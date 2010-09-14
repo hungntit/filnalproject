@@ -18,6 +18,25 @@ public class TableInfo implements Serializable{
     protected String name;
     protected String aliasName;
     protected Class  classTable;
+    protected String primaryKey;
+
+    /**
+     * Get the value of primaryKey
+     *
+     * @return the value of primaryKey
+     */
+    public String getPrimaryKey() {
+        return primaryKey;
+    }
+
+    /**
+     * Set the value of primaryKey
+     *
+     * @param primaryKey new value of primaryKey
+     */
+    public void setPrimaryKey(String primaryKey) {
+        this.primaryKey = primaryKey;
+    }
 
     public Class getClassTable() {
         return classTable;
