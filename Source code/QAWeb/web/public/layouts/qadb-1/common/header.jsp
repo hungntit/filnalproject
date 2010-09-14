@@ -11,11 +11,12 @@
 <%@taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 
 <div id="header">
-    <div style="margin-left: 20%;margin-top: 50px;width:  200px;">
-        <span class="text1"><bean:message key="text.dbqa"/></span><br />
+   
+    <div style="margin-left: 20%;margin-top: 30px;width:  200px;">
+        <span class="text1"><bean:message key="text.dbqa"/></span><hr>
         <span class="text3"><bean:message key="text.UIT"/></span>
     </div>
-    <div style="margin-right: 3%;text-align: right;color: white">
+    <div style="margin-right: 3%;text-align: right;color: white;margin-top:-5px;">
         <bean:message key="text.language"/>
         <a href="#">
             <img src="<bean:message key="image.en"/>" alt="<bean:message key="image.en.alttext"/>"/>

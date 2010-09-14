@@ -19,18 +19,13 @@
     </head>
     <body class="bg1">
         <!--LAYOUT CONTENTS-->
-        <tiles:insert attribute="header"/>
-        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-                <tiles:insert attribute="menu"/>
-            </tr>
-
-            <tr>
+        <div class="wrapper">
+            <tiles:insert attribute="header"/>
+            <tiles:insert attribute="menu"/>
+            <div class="content">
                 <tiles:insert attribute="content"/>
-            </tr>
-
-        </table>
-
+            </div>
+        </div>
         <div style="text-align: center; font-size: 0.75em;margin-bottom: 1px;">
             <tiles:insert attribute="footer"/>
         </div>

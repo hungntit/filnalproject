@@ -64,7 +64,7 @@
                 <tr>
                     <td><bean:message key="text.url"/></td>
                     <td>
-                        <a href="<bean:message key="link.dblp"/>${publication.url}"><bean:message key="link.dblp"/><c:out value="${publication.url}" default="NA"/></a>
+                        <a href="<bean:message key="link.dblp"/>${publication.url}"><c:out value="${publication.url}" default="NA"/></a>
                     </td>
                 </tr>
                 <tr>

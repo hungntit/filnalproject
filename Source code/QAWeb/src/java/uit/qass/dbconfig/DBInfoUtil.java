@@ -21,6 +21,7 @@ static
         dblp_author_ref_new.setClassTable(Author.class);
         ColumnInfo author               =   new ColumnInfo("author", "Author", Type.STRING);
         ColumnInfo editor               =   new ColumnInfo("editor", "Editor", Type.BOOLEAN);
+        ColumnInfo source               =   new ColumnInfo("source", "Source", Type.STRING);
         TableInfo dblp_pub_new          =   new TableInfo("dblp_pub_new", "Publication");
         ColumnInfo title                =   new ColumnInfo("title", "Title", Type.STRING);
         ColumnInfo publisher            =   new ColumnInfo("publisher", "Publisher", Type.STRING);
@@ -34,15 +35,11 @@ static
         dblp_pub_new.addColumn(year);
         dblp_pub_new.addColumn(title);
         dblp_pub_new.addColumn(publisher);
-
-
-
-
+        dblp_pub_new.addColumn(source);
 
         dbinfo    =   new DBInfo();
         dbinfo.addTable(dblp_author_ref_new);
         dbinfo.addTable(dblp_pub_new);
-
 
     }
     public static DBInfo getDBInfo()
