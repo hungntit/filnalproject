@@ -80,7 +80,7 @@ public class AdvanceSearchForm extends org.apache.struts.action.ActionForm {
         submit = new ImageButtonBean();
         
         params  =   new ArrayList<Param>();
-        
+        isAndOperator   =   true;
         // TODO Auto-generated constructor stub
     }
 

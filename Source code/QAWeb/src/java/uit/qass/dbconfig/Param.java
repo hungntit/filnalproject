@@ -72,6 +72,7 @@ public class Param implements Serializable{
         this.table = table;
         this.column = column;
         this.value  =   "";
+        this.operator   =   StringPool.EQUAL;
     }
 
 

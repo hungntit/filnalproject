@@ -402,12 +402,8 @@ public class UtimateSearch {
         int size    =   selectTable.getColumns().size();
         if(size<1)
             return 0;
-        Param   params[]    =   new Param[size];
-        for(int i=0;i<size;i++)
-        {
-            ColumnInfo column   =   selectTable.getColumns().get(i);
-             params[i]   =   new Param( selectTable, column);
-        }
+        List<Param>   listparam    =   Param.getParamsFromTableInfo(selectTable);
+        Param[]         params      =   listparam.toArray(new Param[listparam.size()]);
 
         String queryStr    =   generateSelectQuery(params, false, selectTable,keyword);
         System.out.println(queryStr);
@@ -428,10 +424,7 @@ public class UtimateSearch {
 
                 qPos.add(keywords, 2);
             }
-            else
-            {
-                qPos.add(param.getValue(), param.getColumn().getType());
-            }
+            
 
         }
         Iterator<Long> itr = q.list().iterator();

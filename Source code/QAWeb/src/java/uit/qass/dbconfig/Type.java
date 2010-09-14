@@ -62,4 +62,11 @@ public class Type implements Serializable {
         return false;
 
     }
+    public boolean getIsBoolean()
+    {
+        if(type.equals(StringPool.BOOLEAN) )
+            return true;
+        return false;
+
+    }
 }

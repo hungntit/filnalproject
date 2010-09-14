@@ -43,10 +43,28 @@ public class advanceSearchAction extends org.apache.struts.action.Action {
         TableInfo   table               =   advanceSForm.getTableInfo();
         List<Param> paramslist          =   advanceSForm.getParams();
         Param[] params                   =   (Param[])paramslist.toArray(new Param[paramslist.size()]);
+        
+        int startRow =0;
+        String offset   =   request.getParameter("pager.offset");
+        if(offset == null)
+        {
+            int totalRowsCount  =   UtimateSearch.countByParam(params, advanceSForm.isIsAndOperator(), table);
+            request.getSession().setAttribute("totalRowsCount", totalRowsCount);
 
-        List objs =   UtimateSearch.searchByParam(table.getClassTable(), params, advanceSForm.isIsAndOperator(),table , 0 , 1);
+        }
+        else
+        {
+            startRow    =   Integer.parseInt(offset);
+        }
+        int range   =   20;
+        if(request.getParameter("range")!= null)
+        {
+            range   =   Integer.parseInt(request.getParameter("range"));
+        }
+        List objs =   UtimateSearch.searchByParam(table.getClassTable(), params, advanceSForm.isIsAndOperator(),table , startRow , startRow+range);
         request.setAttribute("objs", objs);
-
+        request.setAttribute("startRow", startRow);
+        request.setAttribute("range", range);
         return mapping.findForward(table.getAliasName().trim().toLowerCase());
     }
 }
