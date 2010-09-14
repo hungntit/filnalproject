@@ -6,6 +6,7 @@
 package uit.qass.core.search;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
@@ -13,11 +14,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import uit.qass.dbconfig.ColumnInfo;
 import uit.qass.dbconfig.DBInfo;
+import uit.qass.dbconfig.DBInfoUtil;
 import uit.qass.dbconfig.Param;
 import uit.qass.dbconfig.TableInfo;
 import uit.qass.dbconfig.Type;
 import uit.qass.model.Publication;
 import uit.qass.util.StringPool;
+import uit.qass.util.Table;
 import uit.qass.util.dao.orm.CustomSQLUtil;
 import uit.qass.util.dao.orm.hibernate.QueryPos;
 import uit.qass.util.dao.orm.hibernate.QueryUtil;
@@ -29,6 +32,7 @@ import uit.qass.util.hibernate.HibernateUtil;
  */
 public class UtimateSearch {
 
+    public static String COUNT_VALUE    =   "count_value";
     public static String generateSelectQuery(TableInfo selectTable,String keyword)
     {
         int size    =   selectTable.getColumns().size();
@@ -187,12 +191,8 @@ public class UtimateSearch {
         int size    =   selectTable.getColumns().size();
         if(size<1)
             return null;
-        Param   params[]    =   new Param[size];
-        for(int i=0;i<size;i++)
-        {
-            ColumnInfo column   =   selectTable.getColumns().get(i);
-             params[i]   =   new Param( selectTable, column);
-        }
+        List<Param>   listparam    =   Param.getParamsFromTableInfo(selectTable);
+        Param[]         params      =   listparam.toArray(new Param[listparam.size()]);
 
         String queryStr    =   generateSelectQuery(params, false, selectTable,keyword);
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -212,13 +212,175 @@ public class UtimateSearch {
 
                 qPos.add(keywords, 2);
             }
+            
+
+        }
+        return (List<Object>)QueryUtil.list(q, start, end);
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            
+        }
+        return null;
+    }
+
+/*
+ *
+ */
+
+    public static String generateCountQuery(TableInfo selectTable,String keyword)
+    {
+        int size    =   selectTable.getColumns().size();
+        if(size<1)
+            return null;
+        Param   params[]    =   new Param[size];
+        for(int i=0;i<size;i++)
+        {
+            ColumnInfo column   =   selectTable.getColumns().get(i);
+             params[i]   =   new Param( selectTable, column);
+        }
+        return generateCountQuery(params, false, selectTable, keyword);
+    }
+    public static String generateCountQuery(Param[] params,boolean isAndOperator,TableInfo selectTable)
+    {
+        return generateCountQuery(params, isAndOperator, selectTable, null);
+    }
+    public static String generateCountQuery(Param[] params,boolean isAndOperator)
+    {
+        return generateCountQuery(params, isAndOperator, null, null);
+    }
+    protected static String generateCountQuery(Param[] params,boolean isAndOperator,TableInfo selectTable,String keyword)
+    {
+
+      String AndOroperator;
+      if(isAndOperator)
+          AndOroperator =   "AND";
+      else
+          AndOroperator =   "OR";
+
+      String query      =   "SELECT\n";
+      int count         =   params.length;
+      if(count<1)
+          return null;
+      //---------------Select---------------------------------//
+      if(selectTable ==null)
+      {
+          query += "count(DISTINCT "+params[0]+") as "+ COUNT_VALUE +"\n";
+       }
+      else
+      {
+            query += "count(DISTINCT "+selectTable.getName()+"."+selectTable.getPrimaryKey()+") as "+COUNT_VALUE+"\n";
+      }
+      //!---------------End Select----------------------------//
+
+      //---------------From----------------------------------//
+
+      query+="FROM ";
+      List<TableInfo> tables    =       new ArrayList<TableInfo>();
+      for(Param param:params)
+      {
+          if(tables.contains(param.getTable()))
+          {
+              continue;
+          }
+          if(param.getColumn().isIsVisible())
+            tables.add(param.getTable());
+          query +=  "\n"+param.getTable()+",";
+
+      }
+      query =   query.substring(0, query.length()-1);
+      //!---------------End From-----------------------------//
+
+      //---------------Where--------------------------------//
+      query+= "\nWHERE";
+      String condition   =   "";
+      for(Param param:params)
+      {
+          if(!param.getColumn().isIsVisible())
+              continue;
+          if(param.getColumn().getType().equals(Type.STRING))
+          {
+              String keywords[];
+              if(keyword == null)
+                 keywords =   CustomSQLUtil.keywords(param.getValue());
+              else
+                  keywords =   CustomSQLUtil.keywords(keyword);
+              if(keywords.length>0)
+                  condition+= CustomSQLUtil.AND_OR_CONECTOR+" "+ CustomSQLUtil.createOperatorForField(param.toString(), StringPool.LIKE) +"\n";
+
+          }
+          else
+          {
+              if(keyword == null)
+                condition+= CustomSQLUtil.AND_OR_CONECTOR + CustomSQLUtil.createOperatorForField(param.toString(),param.getOperator());
+          }
+
+      }
+      condition =   condition.substring(CustomSQLUtil.AND_OR_CONECTOR.length());
+      query+="\n"+ condition;
+      for(Param param:params)
+      {
+          if(param.getColumn().getType().equals(Type.STRING))
+          {
+              String keywords[];
+              if(keyword == null)
+                 keywords =   CustomSQLUtil.keywords(param.getValue());
+              else
+                  keywords =   CustomSQLUtil.keywords(keyword);
+              query =   CustomSQLUtil.replaceKeywords(query, param.toString(), StringPool.LIKE, true, keywords);
+
+          }
+      }
+      query =   CustomSQLUtil.replaceAndOperator(query,isAndOperator);
+      //!---------------End Where----------------------------//
+
+      return query;
+    }
+ /*
+  *
+  */
+
+    public static int countByParam( Param[] params,boolean isAndOperator,TableInfo selectTable)
+    {
+        String queryStr    =   generateCountQuery(params, isAndOperator, selectTable);
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session =   null;
+        try
+        {
+        session= sessionFactory.openSession();
+
+        SQLQuery   q   = session.createSQLQuery(queryStr);
+        q.addScalar(COUNT_VALUE, org.hibernate.Hibernate.LONG);
+        QueryPos    qPos    =   QueryPos.getInstance(q);
+
+        for(Param param:params)
+        {
+            if(param.getColumn().getType().equals(Type.STRING))
+            {
+                String keywords[] =   CustomSQLUtil.keywords(param.getValue());
+                qPos.add(keywords, 2);
+            }
             else
             {
                 qPos.add(param.getValue(), param.getColumn().getType());
             }
 
         }
-        return (List<Object>)QueryUtil.list(q, start, end);
+         Iterator<Long> itr = q.list().iterator();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+
         }
         catch(Exception ex)
         {
@@ -226,58 +388,77 @@ public class UtimateSearch {
         }
         finally
         {
-            session.close();
+
         }
-        return null;
+        return 0;
+    }
+
+
+    public static int countByKeyWords( String keyword,TableInfo selectTable)
+    {
+        int size    =   selectTable.getColumns().size();
+        if(size<1)
+            return 0;
+        Param   params[]    =   new Param[size];
+        for(int i=0;i<size;i++)
+        {
+            ColumnInfo column   =   selectTable.getColumns().get(i);
+             params[i]   =   new Param( selectTable, column);
+        }
+
+        String queryStr    =   generateSelectQuery(params, false, selectTable,keyword);
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session =   null;
+        try
+        {
+        session= sessionFactory.openSession();
+
+        SQLQuery   q   = session.createSQLQuery(queryStr);
+        q.addScalar(COUNT_VALUE,org.hibernate.Hibernate.LONG);
+        QueryPos    qPos    =   QueryPos.getInstance(q);
+        String keywords[] =   CustomSQLUtil.keywords(keyword);
+        for(Param param:params)
+        {
+            if(param.getColumn().getType().equals(Type.STRING))
+            {
+
+                qPos.add(keywords, 2);
+            }
+            else
+            {
+                qPos.add(param.getValue(), param.getColumn().getType());
+            }
+
+        }
+        Iterator<Long> itr = q.list().iterator();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+
+        }
+        catch(Exception ex)
+        {
+
+        }
+        finally
+        {
+
+        }
+        return 0;
     }
 
 
 
     public static void main(String args[]){
-        TableInfo dblp_author_ref_new   =   new TableInfo("dblp_author_ref_new", "Author");
-        ColumnInfo author               =   new ColumnInfo("author", "Author", Type.STRING);
-        ColumnInfo editor               =   new ColumnInfo("editor", "Editor", Type.INTEGER);
-        TableInfo dblp_pub_new   =   new TableInfo("dblp_pub_new", "Publisher");
-        ColumnInfo title               =   new ColumnInfo("title", "Title", Type.STRING);
-        ColumnInfo publisher               =   new ColumnInfo("publisher", "Publisher", Type.STRING);
-        ColumnInfo year               =   new ColumnInfo("year", "Year", Type.INTEGER);
-
-        editor.setIsVisible(true);
-        dblp_author_ref_new.addColumn(editor);
-        dblp_author_ref_new.addColumn(author);
-
-        dblp_pub_new.addColumn(year);
-        dblp_pub_new.addColumn(title);
-        dblp_pub_new.addColumn(publisher);
-
-
-
-
-
-        DBInfo  database    =   new DBInfo();
-        database.addTable(dblp_author_ref_new);
-        database.addTable(dblp_pub_new);
-        
-        Param param1 =   new Param(database, dblp_author_ref_new.getName(), author.getName());
-        param1.setValue("Philip K.");
-        Param param2 =   new Param(database, dblp_author_ref_new.getName(), editor.getName());
-        String query1;
- //       query1   =   generateSelectQuery(dblp_author_ref_new,"Philip K.");
- //       String query2   =   generateSelectQuery(new Param[]{param1,param2}, true, dblp_author_ref_new);
-  //      System.out.println("Query1 with key:");
-  //      System.out.println(query1);
-  //      System.out.println("Query2 with params:");
-  //      System.out.println(query2);
-
-        Param pub1 =   new Param(database, dblp_pub_new.getName(), title.getName());
-        Param pub2 =   new Param(database, dblp_pub_new.getName(), publisher.getName());
-        Param pub3 =   new Param(database, dblp_pub_new.getName(), year.getName());
-        pub3.setValue("1999");
-
-  //      String pubqr   =   generateSelectQuery(new Param[]{pub3}, true, dblp_pub_new);
-   //     System.out.println(pubqr);
-        List list   =   searchByParam(Publication.class,new Param[]{pub3}, true, dblp_pub_new, 1, 100);
-        System.out.println("END");
+        TableInfo returnTbl     =       DBInfoUtil.getDBInfo().findTableInfoByName(Table.PUBLICATION);
+        List    list            =       searchByKeyWords(returnTbl.getClassTable(), "Life is", returnTbl, 0 , 30);
+        int a=0;
     }
 
 }
