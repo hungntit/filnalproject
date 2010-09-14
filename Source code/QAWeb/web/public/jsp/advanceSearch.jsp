@@ -12,7 +12,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib uri="http://struts.apache.org/tags-html"  prefix="html"%>
 <%@taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
@@ -42,17 +42,24 @@ request.setAttribute("tables", tables);
             <div id ="advanceSearchForm" >
             <html:form action="/advanceSearch"  >
                 <table>
+                    <bean:size id="paramsSize" name="AdvanceSearchForm" property="params" />
+                    <logic:greaterThan value="1" name="paramsSize"  >
                     <tr style="margin: 5px;">
                         <td>
                         <bean:message key="text.operator" />
                         </td>
+                        
                         <td>
-                        <html:select property="isAndOperator" name="AdvanceSearchForm">
-                            <html:option value="true">AND</html:option>
-                            <html:option value="false">OR</html:option>
-                        </html:select>
+
+                            <html:select property="isAndOperator" name="AdvanceSearchForm">
+                                <html:option value="true">AND</html:option>
+                                <html:option value="false">OR</html:option>
+                            </html:select>
+
                         </td>
+                        
                     </tr>
+                    </logic:greaterThan>
                     <logic:iterate id="param" name="AdvanceSearchForm" property="params" indexId="id">
 
                         <tr style="margin: 5px;">
@@ -71,7 +78,16 @@ request.setAttribute("tables", tables);
                                 </logic:equal>
 
 
-                                <html:text name="AdvanceSearchForm" property="param[${id}].value" />
+                                <logic:equal value="true"  property="column.type.isBoolean" name="param">
+                                    <html:select property="param[${id}].value" name="AdvanceSearchForm">
+                                        <html:option value="1"><bean:message key="text.true"/></html:option>
+                                        <html:option value="0"><bean:message key="text.false"/></html:option>
+                                    </html:select>
+                                </logic:equal>
+                                <logic:notEqual value="true"  property="column.type.isBoolean" name="param">
+                                    <html:text name="AdvanceSearchForm" property="param[${id}].value" />
+                                </logic:notEqual>
+
                             </td>
 
                         </tr>

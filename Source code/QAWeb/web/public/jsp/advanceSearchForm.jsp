@@ -12,8 +12,11 @@
 <%@taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html:form action="/advanceSearch"  >
                 <table>
+                    <bean:size id="paramsSize" name="AdvanceSearchForm" property="params" />
+                    <logic:greaterThan value="1" name="paramsSize"  >
                     <tr style="margin: 5px;">
                         <td>
                         <bean:message key="text.operator" />
@@ -25,6 +28,7 @@
                         </html:select>
                         </td>
                     </tr>
+                    </logic:greaterThan>
                     <logic:iterate id="param" name="AdvanceSearchForm" property="params" indexId="id">
 
                         <tr style="margin: 5px;">
@@ -41,9 +45,17 @@
                                     </html:select>
 
                                 </logic:equal>
+                                <logic:equal value="true"  property="column.type.isBoolean" name="param">
+                                    <html:select property="param[${id}].value" name="AdvanceSearchForm">
+                                        <html:option value="true"><bean:message key="text.true"/></html:option>
+                                        <html:option value="false"><bean:message key="text.false"/></html:option>
+                                    </html:select>
+                                </logic:equal>
+                                <logic:notEqual value="true"  property="column.type.isBoolean" name="param">
+                                    <html:text name="AdvanceSearchForm" property="param[${id}].value" />
+                                </logic:notEqual>
 
-
-                                <html:text name="AdvanceSearchForm" property="param[${id}].value" />
+                                
                             </td>
 
                         </tr>

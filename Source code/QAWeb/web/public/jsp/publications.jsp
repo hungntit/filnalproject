@@ -10,6 +10,8 @@
 <%@taglib uri="http://struts.apache.org/tags-bean-el" prefix="bean" %>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@taglib uri="http://struts.apache.org/tags-logic" prefix="l"%>
+<%@taglib uri="/WEB-INF/tlds/pager-taglib.tld" prefix="pg" %>
+
 <script type="text/javascript" language="javascript">
     function contextMenuClick(event,id) {
         ev = window.event || event;
@@ -31,12 +33,14 @@ request.setAttribute("publicationGrouped", publicationGrouped);
     <div id="contextmenu">publication informations
     </div>                
     <div>
-
+        
        <% int i = 1;%>
+       <pg:pager url="advanceSearch.do" maxPageItems="10" items="${totalRowsCount}" isOffset="true" maxIndexPages="10">
         <div style="text-align: left;background-color: whitesmoke;">
             <c:forEach var="p" items="${publicationGrouped}">
                 <table border="1" style="width: 650px;">
                     <c:forEach var="pub" items="${p}" varStatus="status">
+                        <pg:item>
                         <span id="pub<%=i%>" style="visibility: hidden;position: fixed">
                             <h4><bean:message key="text.authors"/></h4>
                             <c:forEach var="au" items="${pub.authors}">
@@ -89,11 +93,31 @@ request.setAttribute("publicationGrouped", publicationGrouped);
                                 </a>
                             </td>
                         </tr>
+                        </pg:item>
                         <%i++;%>
                     </c:forEach>
                     <br>
                 </table>
             </c:forEach>
         </div>
+        <pg:index>
+
+   
+
+            <pg:prev>
+              <a href="<%= pageUrl %>">[  &lt;&lt; Previous ]</a>
+            </pg:prev>
+
+            <pg:pages>
+               <a href="<%= pageUrl %>"><%= pageNumber %></a>
+            </pg:pages>
+
+            <pg:next>
+              <a href="<%= pageUrl %>">[ Next &gt;&gt; ]</a>
+            </pg:next>
+
+
+          </pg:index>
+    </pg:pager>
     </div>
 </td>

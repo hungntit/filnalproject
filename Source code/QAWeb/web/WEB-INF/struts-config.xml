@@ -32,7 +32,7 @@
         <action path="/showPubDetail" type="uit.qass.action.showPubDetailAction">
             <forward name="success" path=".pubsDetail"/>
         </action>
-        <action input=".advanceSearchPage" name="AdvanceSearchForm" path="/loadParams" scope="session" type="uit.qass.action.loadParamAction">
+        <action input=".advanceSearchPage" name="AdvanceSearchForm" path="/loadParams" validate="false" scope="session" type="uit.qass.action.loadParamAction">
             <forward name="success" path=".advanceSearchPage"/>
             <forward name="load" path="/public/jsp/advanceSearchForm.jsp"/>
         </action>
