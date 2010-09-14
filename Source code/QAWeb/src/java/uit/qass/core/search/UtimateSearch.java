@@ -149,6 +149,7 @@ public class UtimateSearch {
     public static List searchByParam(Class typeclass, Param[] params,boolean isAndOperator,TableInfo selectTable,int start, int end)
     {
         String queryStr    =   generateSelectQuery(params, isAndOperator, selectTable);
+        System.out.println(queryStr);
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session =   null;
         try
@@ -195,6 +196,7 @@ public class UtimateSearch {
         Param[]         params      =   listparam.toArray(new Param[listparam.size()]);
 
         String queryStr    =   generateSelectQuery(params, false, selectTable,keyword);
+        System.out.println(queryStr);
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session =   null;
         try
@@ -354,6 +356,7 @@ public class UtimateSearch {
         session= sessionFactory.openSession();
 
         SQLQuery   q   = session.createSQLQuery(queryStr);
+        System.out.println(queryStr);
         q.addScalar(COUNT_VALUE, org.hibernate.Hibernate.LONG);
         QueryPos    qPos    =   QueryPos.getInstance(q);
 
@@ -407,6 +410,7 @@ public class UtimateSearch {
         }
 
         String queryStr    =   generateSelectQuery(params, false, selectTable,keyword);
+        System.out.println(queryStr);
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session =   null;
         try
