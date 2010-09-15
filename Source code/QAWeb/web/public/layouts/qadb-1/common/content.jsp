@@ -13,7 +13,10 @@
         <td width="415">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                    <td class="text4">QASS</td>
+                    <td class="text4">Welcome to QASS !
+                        <br>
+                        Question Answering & Search System
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -23,7 +26,7 @@
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td><p><img src="images/img7.jpg" alt="" width="83" height="83" class="img1" />Donec leo. Vivamus fermentum nibh in augue. Praesent a lacus at urna congue rutrum. Nulla enim eros, porttitor eu, tempus id, varius non, nibh. Duis enim nulla, luctus eu, dapibus lacinia, venenatis id, quam. Vestibulum imperdiet, magna nec eleifend rutrum, nunc lectus vestibulum velit, euismod lacinia qua.</p>
+                    <td><p>Donec leo. Vivamus fermentum nibh in augue. Praesent a lacus at urna congue rutrum. Nulla enim eros, porttitor eu, tempus id, varius non, nibh. Duis enim nulla, luctus eu, dapibus lacinia, venenatis id, quam. Vestibulum imperdiet, magna nec eleifend rutrum, nunc lectus vestibulum velit, euismod lacinia qua.</p>
                         <p>In posuere eleifend odio. Quisque semper augue mattis wisi. Maecenas ligula. Pellentesque viverra vulputate enim. Aliquam erat volutpat. Pellentesque tristique ante ut risus. Quisque dictum. Integer nisl risus, sagittis convallis, rutrum id, elementum congue, nibh. Suspendisse dictum porta lectus. Donec placerat odio vel elit. Nullam ante orci, pellentesque eget, tempus quis, ultrices in, est. </p>
                         <p>Quisque erat. Vestibulum pellentesque, justo mollis pretium suscipit, justo nulla blandit libero, in blandit quis nisl. Fusce mattis viverra elit. Fusce quis tortor.</p>
                         <ol>
@@ -43,7 +46,7 @@
                     <td><img src="images/spacer.gif" alt="" width="100" height="35" /></td>
                 </tr>
                 <tr>
-                    <td class="text4">Nulla luctus eleifend purus</td>
+                    <td class="text4">University of Information Technology</td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>

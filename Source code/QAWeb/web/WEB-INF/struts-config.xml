@@ -23,7 +23,7 @@
         <!-- Advance Search -->
        
         <!-- end Advance Search -->
-        <action input=".searchPage" name="searchActionForm" path="/search" scope="request" validate="true" type="uit.qass.action.searchAction">
+        <action input=".searchPage" name="searchActionForm" path="/search" scope="session" validate="true" type="uit.qass.action.searchAction">
             <forward name="success" path=".searchPage"/>
         </action>
         <action path="/showPubsByAuthor" type="uit.qass.action.showPubsByAuthorAction">
@@ -45,6 +45,9 @@
         <action path="/Welcome" forward=".qadb-1"/>
         <action path="/searchPage" forward=".searchPage"/>
         <action path="/advanceSearchPage" forward=".advanceSearchPage"/>
+        <action path="/publicationList"
+				parameter=".searchPage"
+				type="org.apache.struts.actions.ForwardAction" />
 
     </action-mappings>
     

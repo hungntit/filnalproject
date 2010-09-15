@@ -7,7 +7,7 @@
 <%@taglib uri="http://struts.apache.org/tags-bean-el" prefix="bean" %>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@taglib uri="http://struts.apache.org/tags-logic" prefix="l"%>
-
+<%@taglib uri="/WEB-INF/tag-lib/pager-taglib.tld" prefix="pg"%>
 
 <div>
     <div>
@@ -47,31 +47,50 @@
         </ul>
     </div>
     <div id="box2">
-        <c:forEach var="pub" items="${publications}" varStatus="i">
-            <div id="box2">
-                <html:link href="#">
-                    <c:out value="${i.count}"/>.
-                    <c:out value="${pub.title}"/>                  
-                </html:link> - 
-                    <c:forEach var="au" items="${pub.authors}">
-                        <c:out value="${au.author}" default="N/A"/>, 
-                    </c:forEach>
-                    <hr>
-                    <table border="0.5" bgcolor="whitesmoke" style="width: 480px;">
-                    <tr>
-                        <td><bean:message key="text.source"/></td>
-                        <td><c:out value="${pub.source}" default="N/A"/></td>
-                    </tr>
-                    <tr>
-                        <td><bean:message key="text.year"/></td>
-                        <td><c:out value="${pub.year}" default="N/A"/></td>
-                    </tr>
-                    <tr>
-                        <td><bean:message key="text.publisher"/></td>
-                        <td><c:out value="${pub.publisher}" default="N/A"/></td>
-                    </tr>
-                </table>
-            </div>
-        </c:forEach>
+        <pg:pager url="publicationList.do" maxIndexPages="10" maxPageItems="10">
+            <c:forEach var="pub" items="${publications}" varStatus="i">
+                <pg:item>
+                    <div id="box2">
+                        <html:link href="./showPubDetail.do?id=${pub.id}">
+                            <c:out value="${i.count}"/>.
+                            <c:out value="${pub.title}"/>
+                        </html:link> -
+                        <c:forEach var="au" items="${pub.authors}">
+                            <c:out value="${au.author}" default="N/A"/>,
+                        </c:forEach>
+                        <hr>
+                        <table border="0.5" bgcolor="whitesmoke" style="width: 480px;">
+                            <tr>
+                                <td><bean:message key="text.source"/></td>
+                                <td><c:out value="${pub.source}" default="N/A"/></td>
+                            </tr>
+                            <tr>
+                                <td><bean:message key="text.year"/></td>
+                                <td><c:out value="${pub.year}" default="N/A"/></td>
+                            </tr>
+                            <tr>
+                                <td><bean:message key="text.publisher"/></td>
+                                <td><c:out value="${pub.publisher}" default="N/A"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </pg:item>                
+            </c:forEach>
+            <TABLE width="80%" border="0">
+                <TR><TD>&nbsp;</TD></TR>
+                <TR align="center">
+                    <TD>
+                        <pg:index>
+                            <pg:first><a href="<%= pageUrl%>">[&lt;&lt;First]</a></pg:first>
+                            <pg:prev><a href="<%= pageUrl%>">[&lt;&lt;Prev]</a></pg:prev>
+                            <pg:pages><a href="<%= pageUrl %>"><%= pageNumber %></a> </pg:pages>
+                            <pg:next><a href="<%= pageUrl%>">[Next&gt;&gt;]</a></pg:next>
+                            <pg:last><a href="<%= pageUrl%>">[Last&gt;&gt;]</a></pg:last>
+                        </pg:index>
+                    </TD>
+                </TR>
+                <TR><TD>&nbsp;</TD></TR>
+            </TABLE>
+        </pg:pager>
     </div>
 </div>

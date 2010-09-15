@@ -9,9 +9,10 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://struts.apache.org/tags-bean-el" prefix="bean" %>
 <%@taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@taglib uri="/WEB-INF/tag-lib/pager-taglib.tld" prefix="pager" %>
 
 <div id="header">
-   
+    <div><img src="<bean:message key="image.logo"/>" alt="<bean:message key="image.logo.alttext"/>" style="width: 100px; border-top-width: 1px; margin-left: 110px; margin-bottom: -106px;"/></div>
     <div style="margin-left: 20%;margin-top: 30px;width:  200px;">
         <span class="text1"><bean:message key="text.dbqa"/></span><hr>
         <span class="text3"><bean:message key="text.UIT"/></span>

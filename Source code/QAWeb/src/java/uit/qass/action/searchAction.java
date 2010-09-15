@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -45,6 +46,8 @@ public class searchAction extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         searchActionForm searchForm = (searchActionForm) form;
+        HttpSession session = request.getSession(true);
+        session.removeAttribute("publications");
         if ("Author".equals(searchForm.getType())) {
             String keyWords = searchForm.getKeyWord();
             List<String> authorNames = new ArrayList<String>();
@@ -61,7 +64,7 @@ public class searchAction extends org.apache.struts.action.Action {
             String keyWords = searchForm.getKeyWord();
             TableInfo returnTable = DBInfoUtil.getDBInfo().findTableInfoByName(Table.PUBLICATION);
             List<Object> list = UtimateSearch.searchByKeyWords(Publication.class, keyWords, returnTable, 0, 300);
-            request.setAttribute("publications", list);
+            session.setAttribute("publications", list);
             if (list == null || list.isEmpty()) {
                 request.setAttribute("warning", WARNING_3);
             }
