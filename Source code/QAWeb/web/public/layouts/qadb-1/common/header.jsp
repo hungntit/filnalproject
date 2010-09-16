@@ -9,7 +9,6 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://struts.apache.org/tags-bean-el" prefix="bean" %>
 <%@taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-<%@taglib uri="/WEB-INF/tag-lib/pager-taglib.tld" prefix="pager" %>
 
 <div id="header">
     <div><img src="<bean:message key="image.logo"/>" alt="<bean:message key="image.logo.alttext"/>" style="width: 100px; border-top-width: 1px; margin-left: 110px; margin-bottom: -106px;"/></div>
@@ -19,10 +18,10 @@
     </div>
     <div style="margin-right: 3%;text-align: right;color: white;margin-top:-5px;">
         <bean:message key="text.language"/>
-        <a href="#">
+        <a href="./Locale.do?method=english">
             <img src="<bean:message key="image.en"/>" alt="<bean:message key="image.en.alttext"/>"/>
         </a>
-        <a href="#">
+        <a href="./Locale.do?method=vietnamese">
             <img src="<bean:message key="image.vn"/>" alt="<bean:message key="image.vn.alttext"/>"/>
         </a>
     </div>

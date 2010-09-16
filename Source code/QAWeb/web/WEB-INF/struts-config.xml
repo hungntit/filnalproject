@@ -45,10 +45,10 @@
         <action path="/Welcome" forward=".qadb-1"/>
         <action path="/searchPage" forward=".searchPage"/>
         <action path="/advanceSearchPage" forward=".advanceSearchPage"/>
+        <action path="/Locale" type="uit.qass.action.LanguageSelectAction" parameter="method" validate="false"/>
         <action path="/publicationList"
 				parameter=".searchPage"
 				type="org.apache.struts.actions.ForwardAction" />
-
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
