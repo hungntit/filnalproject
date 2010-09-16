@@ -18,11 +18,19 @@
     </div>
     <div style="margin-right: 3%;text-align: right;color: white;margin-top:-5px;">
         <bean:message key="text.language"/>
-        <a href="./Locale.do?method=english">
-            <img src="<bean:message key="image.en"/>" alt="<bean:message key="image.en.alttext"/>"/>
-        </a>
-        <a href="./Locale.do?method=vietnamese">
-            <img src="<bean:message key="image.vn"/>" alt="<bean:message key="image.vn.alttext"/>"/>
-        </a>
+        <script language="javscript" type="text/javascript">
+            document.write('<a href="./Locale.do?method=english&page='+ document.location.href +'">');
+        </script>
+        <img src="<bean:message key="image.en"/>" alt="<bean:message key="image.en.alttext"/>"/>
+        <script language="javscript" type="text/javascript">
+            document.write('</a>');
+        </script>
+        <script language="javscript" type="text/javascript">
+            document.write('<a href="./Locale.do?method=vietnamese&page='+ document.location.href +'">');
+        </script>
+        <img src="<bean:message key="image.vn"/>" alt="<bean:message key="image.vn.alttext"/>"/>
+        <script language="javscript" type="text/javascript">
+            document.write('</a>');
+        </script>
     </div>
 </div>

@@ -11,9 +11,9 @@ import uit.qass.util.hibernate.HibernateUtil;
 
 public class Test {
 
-    public static void main(String[] args) {
-        test6();
-    }
+//    public static void main(String[] args) {
+//        test6();
+//    }
 
     public static void test1() {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
