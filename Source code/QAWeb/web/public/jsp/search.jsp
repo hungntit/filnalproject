@@ -7,7 +7,7 @@
 <%@taglib uri="http://struts.apache.org/tags-bean-el" prefix="bean" %>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@taglib uri="http://struts.apache.org/tags-logic" prefix="l"%>
-<%@taglib uri="/WEB-INF/tag-lib/pager-taglib.tld" prefix="pg"%>
+<%@taglib uri="WEB-INF/tlds/pager-taglib.tld" prefix="pg"%>
 
 <div>
     <div>
