@@ -50,37 +50,42 @@
             </c:forEach>
         </ul>
     </div>
-    <div id="box2">
-        <pg:pager url="publicationList.do" maxIndexPages="10" maxPageItems="10">
+    <div id="box2" style="margin-top: -60px;">
+        <pg:pager url="publicationList.do" maxIndexPages="10" maxPageItems="5">
+            <TABLE id ="header_table" width="80%" border="0"></TABLE>
             <c:forEach var="pub" items="${publications}" varStatus="i">
                 <pg:item>
-                    <div id="box2">
-                        <html:link href="./showPubDetail.do?id=${pub.id}">
+                    <div id="box3">
+                        <a href="./showPubDetail.do?id=${pub.id}" style="font-size: 20px;" >
                             <c:out value="${i.count}"/>.
                             <c:out value="${pub.title}"/>
-                        </html:link> -
+                        </a> -
                         <c:forEach var="au" items="${pub.authors}">
                             <c:out value="${au.author}" default="N/A"/>,
                         </c:forEach>
                         <hr>
-                        <table border="0.5" bgcolor="whitesmoke" style="width: 480px;">
+                        <table border="0.5" bgcolor="whitesmoke" style="width: 100%;">
                             <tr>
-                                <td><bean:message key="text.source"/></td>
+                                <td class="left_col"><bean:message key="text.source"/></td>
                                 <td><c:out value="${pub.source}" default="N/A"/></td>
                             </tr>
                             <tr>
-                                <td><bean:message key="text.year"/></td>
+                                <td class="left_col"><bean:message key="text.year"/></td>
                                 <td><c:out value="${pub.year}" default="N/A"/></td>
                             </tr>
                             <tr>
-                                <td><bean:message key="text.publisher"/></td>
+                                <td class="left_col"><bean:message key="text.publisher"/></td>
                                 <td><c:out value="${pub.publisher}" default="N/A"/></td>
+                            </tr>
+                            <tr>
+                                <td class="left_col"><bean:message key="text.type"/></td>
+                                <td><c:out value="${pub.type}" default="N/A"/></td>
                             </tr>
                         </table>
                     </div>
                 </pg:item>                
             </c:forEach>
-            <TABLE width="80%" border="0">
+            <TABLE id="footer_table"width="80%" border="0">
                 <TR><TD>&nbsp;</TD></TR>
                 <TR align="center">
                     <TD>
@@ -95,6 +100,9 @@
                 </TR>
                 <TR><TD>&nbsp;</TD></TR>
             </TABLE>
+            <script type="text/javascript" language="javascript">
+                document.getElementById("header_table").innerHTML = document.getElementById("footer_table").innerHTML;
+            </script>
         </pg:pager>
     </div>
 </div>

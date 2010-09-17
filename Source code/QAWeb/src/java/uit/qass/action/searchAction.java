@@ -5,6 +5,7 @@
 package uit.qass.action;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,7 +64,12 @@ public class searchAction extends org.apache.struts.action.Action {
         if ("All".equals(searchForm.getType())) {
             String keyWords = searchForm.getKeyWord();
             TableInfo returnTable = DBInfoUtil.getDBInfo().findTableInfoByName(Table.PUBLICATION);
-            List<Object> list = UtimateSearch.searchByKeyWords(Publication.class, keyWords, returnTable, 0, 300);
+            List list = UtimateSearch.searchByKeyWords(Publication.class, keyWords, returnTable, 0, 300);
+            if(list.size()>0){
+                if(list.get(0) instanceof  Comparable){
+                    Collections.sort(list);
+                }
+            }
             session.setAttribute("publications", list);
             if (list == null || list.isEmpty()) {
                 request.setAttribute("warning", WARNING_3);

@@ -210,3 +210,14 @@ img { border: none; }
     text-align: left;
     background-color: transparent;
 }
+
+#box3{
+    text-align: left;
+    background-color: transparent;
+    padding-top: 1px;
+    margin: 0px;
+}
+
+.left_col{
+    width: 100px;
+}

@@ -11,13 +11,13 @@
     <div>
         <h2><c:out value="${publication.title}" /></h2>
         <div style="background: transparent">
-            <table  style="-moz-border-radius: 10px;-webkit-border-radius: 10px;background-color: whitesmoke">
+            <table  style="-moz-border-radius: 10px;-webkit-border-radius: 10px;background-color: whitesmoke;width: 100%;">
                 <tr>
-                    <th></th>
+                    <th class="left_col"></th>
                     <th><bean:message key="text.informations"/></th>
                 </tr>
                 <tr>
-                    <td><bean:message key="text.authors"/></td>
+                    <td class="left_col"><bean:message key="text.authors"/></td>
                     <td>
                         <c:forEach var="au" items="${publication.authors}">
                             <a href="showPubsByAuthor.do?authorName=${au.author}">
@@ -27,54 +27,54 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><bean:message key="text.source"/></td>
+                    <td class="left_col"><bean:message key="text.source"/></td>
                     <td><c:out value="${publication.source}" default="NA"/></td>
                 </tr>
                 <tr>
-                    <td><bean:message key="text.year"/></td>
+                    <td class="left_col"><bean:message key="text.year"/></td>
                     <td>
                         <c:out value="${publication.month}" default=""/>
                         <c:out value="${publication.year}" default="NA"/>
                     </td>
                 </tr>
                 <tr>
-                    <td><bean:message key="text.type"/></td>
+                    <td class="left_col"><bean:message key="text.type"/></td>
                     <td><c:out value="${publication.type}" default="NA"/></td>
                 </tr>
                 <tr>
-                    <td><bean:message key="text.volume"/></td>
+                    <td class="left_col"><bean:message key="text.volume"/></td>
                     <td><c:out value="${publication.volume}" default="NA"/></td>
                 </tr>
                 <tr>
-                    <td><bean:message key="text.pages"/></td>
+                    <td class="left_col"><bean:message key="text.pages"/></td>
                     <td><c:out value="${publication.pages}" default="NA"/></td>
                 </tr>
                 <tr>
-                    <td><bean:message key="text.ee"/></td>
+                    <td class="left_col"><bean:message key="text.ee"/></td>
                     <td>
                         <a href="${publication.ee}"><c:out value="${publication.ee}" default="NA"/></a>
                     </td>
                 </tr>
                 <tr>
-                    <td><bean:message key="text.ee_PDF"/></td>
+                    <td class="left_col"><bean:message key="text.ee_PDF"/></td>
                     <td>
                         <a href="${publication.ee_PDF}"><c:out value="${publication.ee_PDF}" default="NA"/></a>
                     </td>
                 </tr>
                 <tr>
-                    <td><bean:message key="text.url"/></td>
+                    <td class="left_col"><bean:message key="text.url"/></td>
                     <td>
                         <a href="<bean:message key="link.dblp"/>${publication.url}"><c:out value="${publication.url}" default="NA"/></a>
                     </td>
                 </tr>
                 <tr>
-                    <td><bean:message key="text.doi"/></td>
+                    <td class="left_col"><bean:message key="text.doi"/></td>
                     <td>
                          <a href="<bean:message key="link.doi"/>${publication.doi}"><c:out value="${publication.doi}" default="NA"/></a>
                     </td>
                 </tr>
                 <tr>
-                    <td><bean:message key="text.publisher"/></td>
+                    <td class="left_col"><bean:message key="text.publisher"/></td>
                     <td><c:out value="${publication.publisher}" default="NA"/></td>
                 </tr>                
             </table> 
