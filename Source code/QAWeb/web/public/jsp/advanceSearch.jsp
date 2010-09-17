@@ -121,7 +121,7 @@ request.setAttribute("tables", tables);
                         </tr>
                     </logic:iterate>
                     <tr>
-                        <td><html:image property="submit" srcKey="image.submit" altKey="image.submit.alttext"/></td>
+                        <td><html:image property="submit" srcKey="image.submit" altKey="image.submit.alttext" onclick="showLoadingPage();"/></td>
                     </tr>
                 </table>
                 
