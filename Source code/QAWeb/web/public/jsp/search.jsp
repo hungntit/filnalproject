@@ -34,7 +34,11 @@
         </html:form>
     </div>
     <!--Show all authors which you search-->
-    <span style="color: green;"><c:out value="${warning}"/></span>
+    <c:if test="${warning != null}">
+        <span style="color: green;">
+            <bean:message key="${warning}"/>
+        </span>
+    </c:if>
     <div id="box2">
         <ul>
             <c:forEach var="au" items="${authors}">

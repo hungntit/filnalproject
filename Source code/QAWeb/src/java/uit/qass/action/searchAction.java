@@ -28,9 +28,9 @@ public class searchAction extends org.apache.struts.action.Action {
 
     /* forward name="success" path="" */
     private static final String SUCCESS = "success";
-    private static final String WARNING_1 = "Which authors do you want to find ?";
-    private static final String WARNING_2 = "Have no persons that you want to find !";
-    private static final String WARNING_3 = "Have no publications that you want to find !";
+    private static final String WARNING_1 = "text.warning1";
+    private static final String WARNING_2 = "text.warning2";
+    private static final String WARNING_3 = "text.warning3";
 
     /**
      * This is the action called from the Struts framework.
