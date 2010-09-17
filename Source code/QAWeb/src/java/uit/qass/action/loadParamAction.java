@@ -38,24 +38,25 @@ public class loadParamAction extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        String tablename    =   (String)request.getParameter("tbl");
+        String tableAliasName    =   (String)request.getParameter("tbl");
         AdvanceSearchForm   advanceSearchForm   =   (AdvanceSearchForm)form;
         TableInfo table;
-        if(tablename == null)
+        if(tableAliasName == null)
         {
-        
-            table =   DBInfoUtil.getDBInfo().getTables().get(0);
+            table   =   advanceSearchForm.getTableInfo();
+            if(table == null)
+                table =   DBInfoUtil.getDBInfo().getTables().get(0);
         }
         else
         {
-            table =   DBInfoUtil.getDBInfo().findTableInfoByName(tablename);
+            table =   DBInfoUtil.getDBInfo().findTableInfoByAliasName(tableAliasName);
         }
 
         List<Param> params  =   Param.getParamsFromTableInfo(table);
         advanceSearchForm.setParams(params);
         advanceSearchForm.setTableInfo(table);
         response.setContentType("text/html");
-        if(tablename == null)
+        if(tableAliasName == null)
             return mapping.findForward(SUCCESS);
         else
             return mapping.findForward("load");

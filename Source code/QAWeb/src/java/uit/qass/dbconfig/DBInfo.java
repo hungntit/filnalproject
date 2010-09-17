@@ -22,6 +22,11 @@ public class DBInfo implements Serializable{
         tables      =  new ArrayList<TableInfo>();
     }
 
+    public DBInfo(String name) {
+        this.name = name;
+        tables      =  new ArrayList<TableInfo>();
+    }
+
     public List<TableInfo> getTables() {
         return tables;
     }
@@ -42,6 +47,17 @@ public class DBInfo implements Serializable{
         for(TableInfo table:tables)
         {
             if(table.getName().equalsIgnoreCase(tableName))
+                return table;
+        }
+        return null;
+    }
+    public  TableInfo findTableInfoByAliasName(String tableAliasName)
+    {
+        if(tableAliasName == null) return null;
+        if(tableAliasName.trim().equals("")) return null;
+        for(TableInfo table:tables)
+        {
+            if(table.getAliasName().equalsIgnoreCase(tableAliasName))
                 return table;
         }
         return null;

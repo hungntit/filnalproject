@@ -7,15 +7,16 @@
 <%@page import="uit.qass.dblp.AuthorUtil"%>
 <%@page import="java.util.List"%>
 <%@taglib uri="http://struts.apache.org/tags-html"  prefix="html"%>
-<%@taglib uri="http://struts.apache.org/tags-bean-el" prefix="bean" %>
+<%@taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@taglib uri="http://struts.apache.org/tags-logic" prefix="l"%>
 <%@taglib uri="/WEB-INF/tlds/pager-taglib.tld" prefix="pg" %>
+
 <%
 List<String> authors    =   AuthorUtil.getListAuthorFromListObj((List<Author>) request.getAttribute("objs"));
 request.setAttribute("authors", authors);
 %>
-<td class="bg4">
+
     <div>
        
         <!--Show all authors which you search-->
@@ -53,5 +54,4 @@ request.setAttribute("authors", authors);
 
           </pg:index>
         </pg:pager>
-    </div
-</td>
+    </div>

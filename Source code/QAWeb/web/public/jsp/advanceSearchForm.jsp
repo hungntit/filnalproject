@@ -32,7 +32,9 @@
                     <logic:iterate id="param" name="AdvanceSearchForm" property="params" indexId="id">
 
                         <tr style="margin: 5px;">
-                            <td><bean:write name="param" property="column.aliasName" /></td>
+                            <td>
+                                 <bean:define name="param" property="column.aliasName" id="column_aliasName" />
+                                <bean:message  key="text.dblp.${fn:toLowerCase(column_aliasName)}"  />
                             <td>
                                 <logic:equal value="true"  property="column.type.isNumber" name="param">
 
@@ -54,8 +56,9 @@
                                 <logic:notEqual value="true"  property="column.type.isBoolean" name="param">
                                     <logic:notEmpty property="column.defaultValuesSet" name="param">
                                         <html:select property="param[${id}].value" name="AdvanceSearchForm">
+                                            <html:option value=""><c:out value=""/></html:option>
                                             <logic:iterate id="value_s" property="column.defaultValuesSet" name="param">
-                                                <html:option value="${value_s}"><c:out value="${value_s}"/></html:option>
+                                                <html:option value="${value_s}"><c:out value="${fn:toUpperCase(value_s)}"/></html:option>
                                             </logic:iterate>
                                             
                                         </html:select>

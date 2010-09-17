@@ -5,6 +5,7 @@
 
 package uit.qass.action;
 
+import java.util.Collections;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,6 +63,13 @@ public class advanceSearchAction extends org.apache.struts.action.Action {
             range   =   Integer.parseInt(request.getParameter("range"));
         }
         List objs =   UtimateSearch.searchByParam(table.getClassTable(), params, advanceSForm.isIsAndOperator(),table , startRow , startRow+range);
+        if(objs.size()>0)
+        {
+            if(objs.get(0) instanceof Comparable)
+            {
+                Collections.sort(objs);
+            }
+        }
         request.setAttribute("objs", objs);
         request.setAttribute("startRow", startRow);
         request.setAttribute("range", range);

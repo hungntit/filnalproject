@@ -7,7 +7,7 @@
 <%@page import="uit.qass.model.Publication"%>
 <%@page import="java.util.List"%>
 <%@taglib uri="http://struts.apache.org/tags-html"  prefix="html"%>
-<%@taglib uri="http://struts.apache.org/tags-bean-el" prefix="bean" %>
+<%@taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@taglib uri="http://struts.apache.org/tags-logic" prefix="l"%>
 <%@taglib uri="/WEB-INF/tlds/pager-taglib.tld" prefix="pg" %>
@@ -29,7 +29,7 @@ List<List<Publication>> publicationGrouped  =   PublicationUtil.groupByYear(objs
 request.setAttribute("publicationGrouped", publicationGrouped);
 %>
 
-<td class="bg4">
+
     <div id="contextmenu">publication informations
     </div>                
     <div>
@@ -120,4 +120,3 @@ request.setAttribute("publicationGrouped", publicationGrouped);
           </pg:index>
     </pg:pager>
     </div>
-</td>

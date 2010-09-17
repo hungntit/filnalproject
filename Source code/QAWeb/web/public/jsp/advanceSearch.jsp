@@ -22,12 +22,24 @@
 List<TableInfo> tables  =   DBInfoUtil.getDBInfo().getTables();
 request.setAttribute("tables", tables);
 %>
-<td class="bg4">
+
     	<html:form action="loadParams.do">
             <div id ="selectTable"
 		<select onchange="retrieveURL(' loadParams.do?tbl=' + this.value);">
                     <c:forEach items="${tables}" var="tbl">
-                        <option value="${tbl.name}" ><c:out value="${tbl.aliasName}"/></option>
+
+                        <logic:equal value="${tbl.aliasName}" name="AdvanceSearchForm" property="tableInfo.aliasName">
+                            <option value="${tbl.aliasName}"  selected="true">
+                                <bean:message key="text.dblp.${fn:toLowerCase(tbl.aliasName)}" />
+                            </option>
+                        </logic:equal>
+
+                        <logic:notEqual value="${tbl.aliasName}" name="AdvanceSearchForm" property="tableInfo.aliasName">
+                            <option value="${tbl.aliasName}"  >
+                                <bean:message key="text.dblp.${fn:toLowerCase(tbl.aliasName)}" />
+                            </option>
+                        </logic:notEqual>
+
                     </c:forEach>
 		</select>
         </div>
@@ -63,7 +75,11 @@ request.setAttribute("tables", tables);
                     <logic:iterate id="param" name="AdvanceSearchForm" property="params" indexId="id">
 
                         <tr style="margin: 5px;">
-                            <td><bean:write name="param" property="column.aliasName" /></td>
+                            <td>
+                                <bean:define name="param" property="column.aliasName" id="column_aliasName" />
+                                <bean:message  key="text.dblp.${fn:toLowerCase(column_aliasName)}"  />
+                            </td>
+
                             <td>
                                 <logic:equal value="true"  property="column.type.isNumber" name="param">
 
@@ -86,7 +102,8 @@ request.setAttribute("tables", tables);
                                 </logic:equal>
                                 <logic:notEqual value="true"  property="column.type.isBoolean" name="param">
                                     <logic:notEmpty property="column.defaultValuesSet" name="param">
-                                        <html:select property="param[${id}].value" name="AdvanceSearchForm">
+                                        <html:select property="param[${id}].value" name="AdvanceSearchForm" >
+                                            <html:option value=""><c:out value=""/></html:option>
                                             <logic:iterate id="value_s" property="column.defaultValuesSet" name="param">
                                                 <html:option value="${value_s}"><c:out value="${value_s}"/></html:option>
                                             </logic:iterate>
@@ -125,4 +142,4 @@ request.setAttribute("tables", tables);
             </ul>
         </div>
     </div
-</td>
+

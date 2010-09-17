@@ -7,12 +7,15 @@ package uit.qass.formBean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.struts.Globals;
 
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.util.ImageButtonBean;
+import org.apache.struts.util.MessageResources;
 import uit.qass.dbconfig.DBInfoUtil;
 import uit.qass.dbconfig.Param;
 import uit.qass.dbconfig.TableInfo;
@@ -92,7 +95,8 @@ public class AdvanceSearchForm extends org.apache.struts.action.ActionForm {
      */
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
-        
+        MessageResources    msgRes  =   (MessageResources)request.getAttribute(Globals.MESSAGES_KEY);
+        Locale              locale  =   (Locale)request.getSession().getAttribute(Globals.LOCALE_KEY);
         for(Param param:params)
         {
             if(param.getColumn().getType().equals(Type.INTEGER)||param.getColumn().getType().equals(Type.LONG))
@@ -100,11 +104,21 @@ public class AdvanceSearchForm extends org.apache.struts.action.ActionForm {
                 System.out.println(param.getValue());
                 try
                 {
-                    int number  =   Integer.parseInt(param.getValue());
+                    Integer.parseInt(param.getValue());
                 }
                 catch(Exception ex)
                 {
-                    errors.add(param.getColumn().getAliasName(), new ActionMessage("errors.isnumber",new String[]{param.getColumn().getAliasName()}));
+                    String dbName   =   DBInfoUtil.getDBInfo().getName();
+                    if(!dbName.equals(""))
+                        dbName  +=".";
+
+                    String fieldMsg        =   param.getColumn().getAliasName();
+                    if(locale!= null)
+                        fieldMsg    =   msgRes.getMessage(locale,"text."+dbName+param.getColumn().getAliasName().toLowerCase());
+                    else
+                        fieldMsg    =   msgRes.getMessage("text."+dbName+param.getColumn().getAliasName().toLowerCase());
+                    errors.add(param.getColumn().getAliasName(), new ActionMessage("errors.isnumber",new String[]{fieldMsg}));
+                    
                 }
                 
             }

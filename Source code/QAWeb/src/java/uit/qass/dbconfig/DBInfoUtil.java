@@ -42,7 +42,7 @@ public class DBInfoUtil {
         dblp_pub_new.addColumn(publisher);
         dblp_pub_new.addColumn(source);
         dblp_pub_new.addColumn(type);
-        dbinfo    =   new DBInfo();
+        dbinfo    =   new DBInfo("dblp");
         dbinfo.addTable(dblp_author_ref_new);
         dbinfo.addTable(dblp_pub_new);
 
