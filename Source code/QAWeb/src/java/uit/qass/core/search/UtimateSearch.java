@@ -450,7 +450,44 @@ public class UtimateSearch {
         return 0;
     }
 
+public static List<String> getListDefaultValueFromColumn(String columnName, String  tableName)
+    {
 
+        String column   =   columnName.trim().split(" ")[0];
+        String table   =   tableName.trim().split(" ")[0];
+        String queryStr    =   "SELECT\n";
+               queryStr   +=   "DISTINCT "+column+"\n";
+               queryStr   +=   "FROM\n";
+               queryStr   +=   table;
+
+
+        System.out.println(queryStr);
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session =   null;
+        try
+        {
+        session= sessionFactory.openSession();
+
+        SQLQuery   q   = session.createSQLQuery(queryStr);
+        q.addScalar(columnName,org.hibernate.Hibernate.STRING);
+        QueryPos    qPos    =   QueryPos.getInstance(q);
+
+
+        return q.list();
+
+
+
+        }
+        catch(Exception ex)
+        {
+
+        }
+        finally
+        {
+
+        }
+        return null;
+}
 
     public static void main(String args[]){
         TableInfo returnTbl     =       DBInfoUtil.getDBInfo().findTableInfoByName(Table.PUBLICATION);

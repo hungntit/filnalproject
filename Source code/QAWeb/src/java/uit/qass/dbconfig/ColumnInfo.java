@@ -6,6 +6,8 @@
 package uit.qass.dbconfig;
 
 import java.io.Serializable;
+import java.util.List;
+import uit.qass.core.search.UtimateSearch;
 
 /**
  *
@@ -29,6 +31,20 @@ public class ColumnInfo implements Serializable{
     protected String aliasName;
     protected Type type;
     protected Relation relation;
+    protected  List<String> defaultValuesSet  = null;
+
+    public  void setDefaultValuesSet(String columnName,String tableName) {
+        defaultValuesSet = UtimateSearch.getListDefaultValueFromColumn(tableName, columnName);
+    }
+    
+    /**
+     * Get the value of defaultValue
+     *
+     * @return the value of defaultValue
+     */
+    public  List<String> getDefaultValuesSet() {
+        return defaultValuesSet;
+    }
 
     /**
      * Get the value of relation
