@@ -28,7 +28,7 @@
                 <tr style="margin: 5px;">
                     <td><bean:message key="text.input"/></td>
                     <td><html:text property="keyWord" size="60"/></td>
-                    <td><html:image property="submit" srcKey="image.submit" altKey="image.submit.alttext"/></td>
+                    <td><html:image property="submit" srcKey="image.submit" altKey="image.submit.alttext" onclick="showLoadingPage();"/></td>
                 </tr>
             </table>
         </html:form>

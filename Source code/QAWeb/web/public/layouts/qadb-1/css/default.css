@@ -221,3 +221,18 @@ img { border: none; }
 .left_col{
     width: 100px;
 }
+
+#hidepage{
+    position: absolute;
+    background-color: whitesmoke;
+    visibility:hidden;
+    text-align: center;
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-top: 150px;
+    height:  70px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    padding: 10px;
+    border: #161616 solid;
+}

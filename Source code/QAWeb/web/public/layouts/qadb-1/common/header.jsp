@@ -9,7 +9,36 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://struts.apache.org/tags-bean-el" prefix="bean" %>
 <%@taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-
+<script language="JavaScript" type="text/javascript">
+    <!--
+    function hideLoadingPage() {
+        if (document.getElementById) { // DOM3 = IE5, NS6
+            document.getElementById('hidepage').style.visibility = 'hidden';
+        }
+        else {
+            if (document.layers) { // Netscape 4
+                document.hidepage.visibility = 'hidden';
+            }
+            else { // IE 4
+                document.all.hidepage.style.visibility = 'hidden';
+            }
+        }
+    }
+    function showLoadingPage() {
+        if (document.getElementById) { // DOM3 = IE5, NS6
+            document.getElementById('hidepage').style.visibility = 'visible';
+        }
+        else {
+            if (document.layers) { // Netscape 4
+                document.hidepage.visibility = 'show';
+            }
+            else { // IE 4
+                document.all.hidepage.style.visibility = 'visible';
+            }
+        }      
+    }
+    // End -->
+</script>
 <div id="header">
     <div><img src="<bean:message key="image.logo"/>" alt="<bean:message key="image.logo.alttext"/>" style="width: 100px; border-top-width: 1px; margin-left: 110px; margin-bottom: -106px;"/></div>
     <div style="margin-left: 20%;margin-top: 30px;width:  200px;">
@@ -33,4 +62,8 @@
             document.write('</a>');
         </script>
     </div>
+</div>
+<div id="hidepage">
+    <b><bean:message key="text.process"/></b><br>
+    <img src="<bean:message key="image.wait"/>" alt="<bean:message key="image.wait.alttext"/>">
 </div>
