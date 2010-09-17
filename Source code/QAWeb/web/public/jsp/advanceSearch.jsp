@@ -85,7 +85,18 @@ request.setAttribute("tables", tables);
                                     </html:select>
                                 </logic:equal>
                                 <logic:notEqual value="true"  property="column.type.isBoolean" name="param">
-                                    <html:text name="AdvanceSearchForm" property="param[${id}].value" />
+                                    <logic:notEmpty property="column.defaultValuesSet" name="param">
+                                        <html:select property="param[${id}].value" name="AdvanceSearchForm">
+                                            <logic:iterate id="value_s" property="column.defaultValuesSet" name="param">
+                                                <html:option value="${value_s}"><c:out value="${value_s}"/></html:option>
+                                            </logic:iterate>
+
+                                        </html:select>
+
+                                    </logic:notEmpty>
+                                    <logic:empty property="column.defaultValuesSet" name="param">
+                                        <html:text name="AdvanceSearchForm" property="param[${id}].value" />
+                                    </logic:empty>
                                 </logic:notEqual>
 
                             </td>
