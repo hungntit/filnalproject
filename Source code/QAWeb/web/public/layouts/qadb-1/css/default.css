@@ -218,9 +218,15 @@ img { border: none; }
     margin: 0px;
 }
 
+.box_search{
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    background-color: #FFA414;
+}
 .left_col{
     width: 100px;
 }
+
 
 #hidepage{
     position: absolute;

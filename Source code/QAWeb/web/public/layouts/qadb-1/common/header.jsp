@@ -40,7 +40,7 @@
     // End -->
 </script>
 <div id="header">
-    <div><img src="<bean:message key="image.logo"/>" alt="<bean:message key="image.logo.alttext"/>" style="width: 100px; border-top-width: 1px; margin-left: 110px; margin-bottom: -106px;"/></div>
+    <div><img src="<bean:message key="image.logo"/>" alt="<bean:message key="image.logo.alttext"/>" style="width: 100px;margin-left: 9% ; margin-bottom: -106px;"/></div>
     <div style="margin-left: 20%;margin-top: 30px;width:  200px;">
         <span class="text1"><bean:message key="text.dbqa"/></span><hr>
         <span class="text3"><bean:message key="text.UIT"/></span>
