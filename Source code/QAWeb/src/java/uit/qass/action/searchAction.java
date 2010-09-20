@@ -63,6 +63,7 @@ public class searchAction extends org.apache.struts.action.Action {
         }
         if ("All".equals(searchForm.getType())) {
             String keyWords = searchForm.getKeyWord();
+            String pageSize = searchForm.getMaxResult();
             TableInfo returnTable = DBInfoUtil.getDBInfo().findTableInfoByName(Table.PUBLICATION);
             List list = UtimateSearch.searchByKeyWords(Publication.class, keyWords, returnTable, 0, 300);
             if(list.size()>0){
@@ -71,6 +72,7 @@ public class searchAction extends org.apache.struts.action.Action {
                 }
             }
             session.setAttribute("publications", list);
+            session.setAttribute("pagesize", pageSize);
             if (list == null || list.isEmpty()) {
                 request.setAttribute("warning", WARNING_3);
             }

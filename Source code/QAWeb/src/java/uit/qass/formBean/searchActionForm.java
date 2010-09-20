@@ -21,6 +21,15 @@ public class searchActionForm extends org.apache.struts.action.ActionForm {
     private String type;
     private String keyWord;
     private ImageButtonBean submit;
+    private String maxResult;
+
+    public String getMaxResult() {
+        return maxResult;
+    }
+
+    public void setMaxResult(String maxResult) {
+        this.maxResult = maxResult;
+    }
 
     public searchActionForm() {
         type = "";

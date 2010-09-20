@@ -8,7 +8,8 @@
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@taglib uri="http://struts.apache.org/tags-logic" prefix="l"%>
 <%@taglib uri="/WEB-INF/tlds/pager-taglib.tld" prefix="pg"%>
-<table>
+<%@taglib uri="http://displaytag.sf.net" prefix="display"%>
+<table> 
     <tr>
         <td style="width: 25%;margin: 5px;">
             <div style="width: 75%;border: #2C2C2C solid;">
@@ -38,6 +39,17 @@
                             <td><html:text property="keyWord" size="60"/></td>
                             <td><html:image property="submit" srcKey="image.submit" altKey="image.submit.alttext" onclick="showLoadingPage();"/></td>
                         </tr>
+                        <tr>
+                            <td>Max Items</td>
+                            <td>
+                                <html:select property="maxResult" >
+                                    <html:option value="5" >5</html:option>
+                                    <html:option value="10">10</html:option>
+                                    <html:option value="15" >15</html:option>
+                                    <html:option value="20" >20</html:option>
+                                </html:select>
+                            </td>
+                        </tr>
                     </table>
                 </html:form>
             </div>
@@ -63,60 +75,14 @@
                     </c:forEach>
                 </ul>
             </div>
-            <div id="box2" style="margin-top: -60px;">
-                <pg:pager url="publicationList.do" maxIndexPages="10" maxPageItems="5">
-                    <TABLE id ="header_table" width="80%" border="0"></TABLE>
-                    <c:forEach var="pub" items="${publications}" varStatus="i">
-                        <pg:item>
-                            <div id="box3">
-                                <a href="./showPubDetail.do?id=${pub.id}" style="font-size: 20px;" >
-                                    <c:out value="${i.count}"/>.
-                                    <c:out value="${pub.title}"/>
-                                </a> -
-                                <c:forEach var="au" items="${pub.authors}">
-                                    <c:out value="${au.author}" default="N/A"/>,
-                                </c:forEach>
-                                <hr>
-                                <table border="0.5" bgcolor="whitesmoke" style="width: 100%;">
-                                    <tr>
-                                        <td class="left_col"><bean:message key="text.source"/></td>
-                                        <td><c:out value="${pub.source}" default="N/A"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="left_col"><bean:message key="text.year"/></td>
-                                        <td><c:out value="${pub.year}" default="N/A"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="left_col"><bean:message key="text.publisher"/></td>
-                                        <td><c:out value="${pub.publisher}" default="N/A"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="left_col"><bean:message key="text.type"/></td>
-                                        <td><c:out value="${pub.type}" default="N/A"/></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </pg:item>
-                    </c:forEach>
-                    <TABLE id="footer_table"width="80%" border="0">
-                        <TR><TD>&nbsp;</TD></TR>
-                        <TR align="center">
-                            <TD>
-                                <pg:index>
-                                    <pg:first><a href="<%= pageUrl%>">[&lt;&lt;First]</a></pg:first>
-                                    <pg:prev><a href="<%= pageUrl%>">[&lt;&lt;Prev]</a></pg:prev>
-                                    <pg:pages><a href="<%= pageUrl%>"><%= pageNumber%></a> </pg:pages>
-                                    <pg:next><a href="<%= pageUrl%>">[Next&gt;&gt;]</a></pg:next>
-                                    <pg:last><a href="<%= pageUrl%>">[Last&gt;&gt;]</a></pg:last>
-                                </pg:index>
-                            </TD>
-                        </TR>
-                        <TR><TD>&nbsp;</TD></TR>
-                    </TABLE>
-                    <script type="text/javascript" language="javascript">
-                        document.getElementById("header_table").innerHTML = document.getElementById("footer_table").innerHTML;
-                    </script>
-                </pg:pager>
+            <div id="box2" style="margin-top: -60px; margin-left: 0px;margin-right: 0px;">
+                <display:table id="data" name="${publications}" requestURI="/search.do" pagesize="${pagesize}" >
+                    <display:column value="${data_rowNum}" title="No."/>
+                    <display:column value="<a href='./showPubDetail.do?id=${data.id}'>${data.title}</a>" title="Title" sortable="true"/>
+                    <display:column value="${data.type}" title="Type" sortable="true"/>
+                    <display:column value="${data.publisher}" title="Publisher" sortable="true"/>
+                    <display:column value="${data.year}" title="Year" sortable="true"/>
+                </display:table>                
             </div>
         </td>
     </tr>

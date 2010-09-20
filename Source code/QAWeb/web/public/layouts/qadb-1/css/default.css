@@ -24,8 +24,73 @@ body, th, td, input, textarea, select {
 }
 
 table {
-    text-align: left;
-    padding: 1px;
+        text-align: left;
+        padding: 1px;
+}
+
+
+thead tr {
+	background-color: #CCCCCC;
+}
+
+th.sorted {
+	background-color: #CCCCCC;
+}
+
+th a,th a:visited {
+	color: black;
+}
+
+th a:hover {
+	text-decoration: underline;
+	color: black;
+}
+
+th.sorted a,th.sortable a {
+	background-position: right;
+	display: block;
+	width: 100%;
+}
+
+th.sortable a {
+	background-image: url(../../../images/arrow_off.png);
+    background-repeat: no-repeat;
+}
+
+th.order1 a {
+	background-image: url(../../../images/arrow_down.png);
+    background-repeat: no-repeat;
+}
+
+th.order2 a {
+	background-image: url(../../../images/arrow_up.png);
+    background-repeat: no-repeat;
+}
+
+tr.odd {
+	background-color: #fff
+}
+
+tr.tableRowEven,tr.even {
+	background-color: #CCCCCC
+}
+
+.group-1 {
+    font-weight:bold;
+    padding-bottom:10px;
+    border-top:1px solid black;
+}
+.group-2 {
+    font-style:italic;
+    border-top: 1px solid black;
+
+}
+
+.grouped-table tr.even {
+    background-color: #fff;
+}
+.grouped-table tr.odd {
+    background-color: #fff;
 }
 
 #footer{
