@@ -22,10 +22,11 @@
 List<TableInfo> tables  =   DBInfoUtil.getDBInfo().getTables();
 request.setAttribute("tables", tables);
 %>
-
+<div>
+    <div>
     	<html:form action="loadParams.do">
-            <div id ="selectTable"
-		<select onchange="retrieveURL(' loadParams.do?tbl=' + this.value);">
+            <div id ="selectTable">
+                 <html:select property="tableInfo.aliasName" name="AdvanceSearchForm" onchange="retrieveURL(' loadParams.do?tbl=' + this.value);">
                     <c:forEach items="${tables}" var="tbl">
 
                         <logic:equal value="${tbl.aliasName}" name="AdvanceSearchForm" property="tableInfo.aliasName">
@@ -41,13 +42,13 @@ request.setAttribute("tables", tables);
                         </logic:notEqual>
 
                     </c:forEach>
-		</select>
+		</html:select>
         </div>
 		<br>
 		
 	</html:form>
-    <div>
-        <div>
+    
+        
             <span style="color: red;font-weight: bold">
                 <html:errors/>
             </span>
