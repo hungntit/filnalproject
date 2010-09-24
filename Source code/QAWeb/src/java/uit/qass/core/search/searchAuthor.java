@@ -5,6 +5,8 @@
 package uit.qass.core.search;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class searchAuthor {
         Query q = session.createSQLQuery(sql);
         q.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         for (int i = 0; i < words.length; i++) {
-            q.setString("var"+i, '%' + words[i] + '%');
+            q.setString("var" + i, '%' + words[i] + '%');
         }
         q.setMaxResults(MAX_RESULT);
         result = q.list();
@@ -76,8 +78,20 @@ public class searchAuthor {
         return result;
     }
 
-    private static String[] getKeys(String key){
+    private static String[] getKeys(String key) {
         String[] result = key.split(" ");
+        return result;
+    }
+
+    public static List<String> searchtopAuthor() {
+        List result = new ArrayList();
+        int year = 2000 + Calendar.YEAR;
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        String sql = "SELECT distinct author FROM dblp_pub_new,dblp_author_ref_new where dblp_pub_new.id = dblp_author_ref_new.pub_id and year = " + year + " limit 30;";
+        Query q = session.createSQLQuery(sql);
+        result = q.list();
+        session.close();
         return result;
     }
 }

@@ -11,9 +11,9 @@ import uit.qass.util.hibernate.HibernateUtil;
 
 public class Test {
 
-//    public static void main(String[] args) {
-//        test6();
-//    }
+    public static void main(String[] args) {
+        test9();
+    }
 
     public static void test1() {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -84,8 +84,23 @@ public class Test {
 
     public static void test6() {
         Publication pub = searchPublication.searchPubByID("71");
-            System.out.println(pub.getTitle());
-           System.out.println(pub.getAuthors().get(0).getAuthor());
-           System.out.println(pub.getRefPubs().size());
+        System.out.println(pub.getTitle());
+        System.out.println(pub.getAuthors().get(0).getAuthor());
+        System.out.println(pub.getRefPubs().size());
+    }
+
+    public static void test7() {
+        List pub = searchPublication.searchTop100();
+        System.out.println(pub.size());
+    }
+
+    public static void test8() {
+        List pub = searchAuthor.searchtopAuthor();
+        System.out.println(pub.size());
+    }
+
+    public static void test9() {
+        List pub = searchPublication.searchByType("www");
+        System.out.println(pub.size());
     }
 }

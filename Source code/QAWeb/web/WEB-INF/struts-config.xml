@@ -41,6 +41,9 @@
             <forward name="author" path=".authors"/>
 
         </action>
+        <action path="/quicksearch" type="uit.qass.action.quickSearchAction">
+            <forward name="success" path=".searchPage"/>
+        </action>
         
         <action path="/Welcome" forward=".qadb-1"/>
         <action path="/searchPage" forward=".searchPage"/>

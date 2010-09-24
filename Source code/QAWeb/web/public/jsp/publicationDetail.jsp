@@ -76,7 +76,14 @@
                 <tr>
                     <td class="left_col"><bean:message key="text.publisher"/></td>
                     <td><c:out value="${publication.publisher}" default="NA"/></td>
-                </tr>                
+                </tr>
+                <tr>
+                    <td class="left_col">Try to another links </td>
+                    <td>
+                        <a href="http://scholar.google.com/scholar?q=${publication.title.replace(" ","+")}"><img src="public/images/scholar.jpg" width="30" height="30"/></a>
+                        <a href="http://citeseerx.ist.psu.edu/search?q=${publication.title.replace(" ","+")}"><img src="public/images/citexeer.jpg" width="30" height="30"/></a>
+                    </td>
+                </tr>
             </table> 
             <% int i =1; %>
             <h3><bean:message key="text.references"/></h3><br>

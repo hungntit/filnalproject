@@ -9,16 +9,26 @@
 <%@taglib uri="http://struts.apache.org/tags-logic" prefix="l"%>
 <%@taglib uri="/WEB-INF/tlds/pager-taglib.tld" prefix="pg"%>
 <%@taglib uri="http://displaytag.sf.net" prefix="display"%>
-<table> 
+<table >
     <tr>
-        <td style="width: 25%;margin: 5px;">
+        <td style="width: 25%;margin: 5px;" rowspan="2" valign="top">
             <div style="width: 75%;border: #2C2C2C solid;">
-                Quick Search<hr>
-                <ul>Find top 10 newest publications</ul>
-                <ul>Find top 10 authors</ul>
+                <h3>Quick Search</h3><hr>
+                <ol>
+                    <li><a href="./quicksearch.do?p=topPubs" onclick="showLoadingPage();"><bean:message key="text.top.newestPublications"/></a></li>
+                    <li><a href="./quicksearch.do?p=topAus" onclick="showLoadingPage();"><bean:message key="text.top.topAuthors"/></a></li>
+                    <li><a href="./quicksearch.do?p=book" onclick="showLoadingPage();"><bean:message key="text.top.book"/></a></li>
+                    <li><a href="./quicksearch.do?p=www" onclick="showLoadingPage();"><bean:message key="text.top.www"/></a></li>
+                    <li><a href="./quicksearch.do?p=article" onclick="showLoadingPage();"><bean:message key="text.top.article"/></a></li>
+                    <li><a href="./quicksearch.do?p=incollection" onclick="showLoadingPage();"><bean:message key="text.top.incollection"/></a></li>
+                    <li><a href="./quicksearch.do?p=inproceedings" onclick="showLoadingPage();"><bean:message key="text.top.inproceeding"/></a></li>
+                    <li><a href="./quicksearch.do?p=mastersthesis" onclick="showLoadingPage();"><bean:message key="text.top.masterthesis"/></a></li>
+                    <li><a href="./quicksearch.do?p=phdthesis" onclick="showLoadingPage();"><bean:message key="text.top.phdthesis"/></a></li>
+                    <li><a href="./quicksearch.do?p=proceedings" onclick="showLoadingPage();"><bean:message key="text.top.proceeding"/></a></li>
+                </ol>
             </div>
         </td>
-        <td style="width: 75%;">
+        <td style="width: 75%;" valign="top">
             <div class="box_search">
                 <span style="color: red;">
                     <html:errors/>
@@ -55,8 +65,7 @@
             </div>
         </td>
     </tr>
-    <tr>
-        <td></td>
+    <tr>        
         <td>
             <!--Show all authors which you search-->
             <c:if test="${warning != null}">
@@ -77,7 +86,7 @@
             </div>
             <div id="box2" style="margin-top: -60px; margin-left: 0px;margin-right: 0px;">
                 <display:table id="data" name="${publications}" requestURI="/search.do" pagesize="${pagesize}" >
-                    <display:column value="${data_rowNum}" title="No."/>
+                    <display:column value="${data_rowNum}" title="No." sortable="true"/>
                     <display:column value="<a href='./showPubDetail.do?id=${data.id}'>${data.title}</a>" title="Title" sortable="true"/>
                     <display:column value="${data.type}" title="Type" sortable="true"/>
                     <display:column value="${data.publisher}" title="Publisher" sortable="true"/>

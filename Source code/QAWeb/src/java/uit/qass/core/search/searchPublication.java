@@ -4,9 +4,12 @@
  */
 package uit.qass.core.search;
 
+import java.util.List;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import uit.qass.model.Publication;
+import uit.qass.util.dao.orm.hibernate.QueryPos;
 import uit.qass.util.hibernate.HibernateUtil;
 
 /**
@@ -15,6 +18,8 @@ import uit.qass.util.hibernate.HibernateUtil;
  */
 public class searchPublication {
 
+    private static int MAX_RESULT = 100;
+
     public static Publication searchPubByID(String id) {
         Publication result = new Publication();
         int pubID = Integer.parseInt(id);
@@ -22,5 +27,23 @@ public class searchPublication {
         Session session = sessionFactory.openSession();
         result = (Publication) session.get(Publication.class, pubID);
         return result;
+    }
+
+    public static List searchTop100(){
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        SQLQuery   q   = session.createSQLQuery("select * from dblp_pub_new order by year desc");
+        q.addEntity(Publication.class);
+        q.setMaxResults(MAX_RESULT);
+        return q.list();
+    }
+
+    public static List searchByType(String type){
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        SQLQuery   q   = session.createSQLQuery("SELECT * FROM dblp_pub_new where type= :var order by year desc limit 100;");
+        q.addEntity(Publication.class);
+        q.setString("var", type);     
+        return q.list();
     }
 }
