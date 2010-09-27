@@ -84,12 +84,14 @@
                     </c:forEach>
                 </ul>
             </div>
+            <br>
             <div id="box2" style="margin-top: -60px; margin-left: 0px;margin-right: 0px;">
                 <display:table id="data" name="${publications}" requestURI="/search.do" pagesize="${pagesize}" >
                     <display:column value="${data_rowNum}" title="No." sortable="true"/>
                     <display:column value="<a href='./showPubDetail.do?id=${data.id}'>${data.title}</a>" title="Title" sortable="true"/>
                     <display:column value="${data.type}" title="Type" sortable="true"/>
                     <display:column value="${data.publisher}" title="Publisher" sortable="true"/>
+                    <display:column value="${data.source}" title="Source" sortable="true"/>
                     <display:column value="${data.year}" title="Year" sortable="true"/>
                 </display:table>                
             </div>

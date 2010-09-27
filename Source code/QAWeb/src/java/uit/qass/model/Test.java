@@ -12,7 +12,7 @@ import uit.qass.util.hibernate.HibernateUtil;
 public class Test {
 
     public static void main(String[] args) {
-        test9();
+        test10();
     }
 
     public static void test1() {
@@ -26,6 +26,10 @@ public class Test {
             Author temp = (Author) a.getAuthors().get(i);
             System.out.println("Author -------------");
             System.out.println("Name: " + temp.getAuthor());
+
+
+
+
             System.out.println("--------------------------");
         }
         session.close();
@@ -102,5 +106,18 @@ public class Test {
     public static void test9() {
         List pub = searchPublication.searchByType("www");
         System.out.println(pub.size());
+    }
+
+    public static void test10() {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        // get author with name = Philip K. Chan
+        Query q = session.createQuery("select au.author from Publication as p inner join p.authors as au where p.title ='Machine Learning for Computer Security.'");
+        List result = q.list();
+        System.out.println("Number of Objects: " + result.size());
+        for (int i = 0; i < result.size(); i++) {
+            System.out.println("Title: " + i + " " + result.get(i));
+        }
+        session.close();
     }
 }
