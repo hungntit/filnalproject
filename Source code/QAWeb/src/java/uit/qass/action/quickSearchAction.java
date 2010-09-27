@@ -60,7 +60,6 @@ public class quickSearchAction extends org.apache.struts.action.Action {
                 return mapping.findForward(SUCCESS);
             }
         }
-
         return mapping.findForward(SUCCESS);
     }
 }

@@ -112,7 +112,7 @@ public class Test {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         // get author with name = Philip K. Chan
-        Query q = session.createQuery("select au.author from Publication as p inner join p.authors as au where p.title ='Machine Learning for Computer Security.'");
+        Query q = session.createQuery("select p.title from Publication as p inner join p.authors as au where au.author ='philip k. chan' and p.year = 1999");
         List result = q.list();
         System.out.println("Number of Objects: " + result.size());
         for (int i = 0; i < result.size(); i++) {
