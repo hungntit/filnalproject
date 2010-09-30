@@ -11,8 +11,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import uit.qabpss.core.search.searchAuthor;
-import uit.qabpss.core.search.searchPublication;
+import uit.qabpss.core.search.SearchAuthor;
+import uit.qabpss.core.search.SearchPublication;
 
 /**
  *
@@ -39,7 +39,7 @@ public class quickSearchAction extends org.apache.struts.action.Action {
         String quickString = request.getParameter("p");
         HttpSession session = request.getSession(true);
         if ("topPubs".equals(quickString)) {
-            List pubs = searchPublication.searchTop100();
+            List pubs = SearchPublication.searchTop100();
             if (pubs != null) {
                 session.setAttribute("publications", pubs);
                 session.setAttribute("pagesize", "10");
@@ -47,13 +47,13 @@ public class quickSearchAction extends org.apache.struts.action.Action {
             }
         }
         else if("topAus".equals(quickString)) {
-            List Aus = searchAuthor.searchtopAuthor();
+            List Aus = SearchAuthor.searchtopAuthor();
             if (Aus != null) {
                 request.setAttribute("authors", Aus);
                 return mapping.findForward(SUCCESS);
             }
         } else{
-            List pubs = searchPublication.searchByType(quickString);
+            List pubs = SearchPublication.searchByType(quickString);
             if (pubs != null) {
                 session.setAttribute("publications", pubs);
                 session.setAttribute("pagesize", "10");

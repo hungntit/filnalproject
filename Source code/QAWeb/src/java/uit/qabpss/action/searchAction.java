@@ -15,7 +15,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import uit.qabpss.core.search.UtimateSearch;
 import uit.qabpss.formbean.searchActionForm;
-import uit.qabpss.core.search.searchAuthor;
+import uit.qabpss.core.search.SearchAuthor;
 import uit.qabpss.dbconfig.DBInfoUtil;
 import uit.qabpss.dbconfig.TableInfo;
 import uit.qabpss.model.Publication;
@@ -52,7 +52,7 @@ public class searchAction extends org.apache.struts.action.Action {
         if ("Author".equals(searchForm.getType())) {
             String keyWords = searchForm.getKeyWord();
             List<String> authorNames = new ArrayList<String>();
-            authorNames = searchAuthor.searchAuthorByKey(keyWords);
+            authorNames = SearchAuthor.searchAuthorByKey(keyWords);
             request.setAttribute("authors", authorNames);
             if (authorNames != null && authorNames.size() > 0) {
                 request.setAttribute("warning", WARNING_1);

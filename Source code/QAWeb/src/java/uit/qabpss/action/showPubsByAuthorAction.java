@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import uit.qabpss.core.search.searchAuthor;
+import uit.qabpss.core.search.SearchAuthor;
 import uit.qabpss.model.Author;
 import uit.qabpss.model.Publication;
 
@@ -39,7 +39,7 @@ public class showPubsByAuthorAction extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         String authorName = (String) request.getParameter("authorName");
-        List<Publication> publications = searchAuthor.searchPubsByAuthorName(authorName);
+        List<Publication> publications = SearchAuthor.searchPubsByAuthorName(authorName);
         Collections.sort(publications);
         request.setAttribute("totalNums", publications.size());
         request.setAttribute("authorName", authorName);

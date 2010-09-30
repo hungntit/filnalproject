@@ -5,8 +5,8 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import uit.qabpss.core.search.searchAuthor;
-import uit.qabpss.core.search.searchPublication;
+import uit.qabpss.core.search.SearchAuthor;
+import uit.qabpss.core.search.SearchPublication;
 import uit.qabpss.util.hibernate.HibernateUtil;
 
 public class Test {
@@ -70,7 +70,7 @@ public class Test {
     }
 
     public static void test4() {
-        List rs = searchAuthor.searchAuthorByKey("Philip K");
+        List rs = SearchAuthor.searchAuthorByKey("Philip K");
         System.out.println(rs.size());
         for (int i = 0; i < rs.size(); i++) {
             String s = (String) rs.get(i);
@@ -79,7 +79,7 @@ public class Test {
     }
 
     public static void test5() {
-        List<Publication> pubs = searchAuthor.searchPubsByAuthorName("Philip K. Chan");
+        List<Publication> pubs = SearchAuthor.searchPubsByAuthorName("Philip K. Chan");
         for (int i = 0; i < pubs.size(); i++) {
             Publication pub = (Publication) pubs.get(i);
             System.out.println(pub.getTitle());
@@ -87,24 +87,24 @@ public class Test {
     }
 
     public static void test6() {
-        Publication pub = searchPublication.searchPubByID("71");
+        Publication pub = SearchPublication.searchPubByID("71");
         System.out.println(pub.getTitle());
         System.out.println(pub.getAuthors().get(0).getAuthor());
         System.out.println(pub.getRefPubs().size());
     }
 
     public static void test7() {
-        List pub = searchPublication.searchTop100();
+        List pub = SearchPublication.searchTop100();
         System.out.println(pub.size());
     }
 
     public static void test8() {
-        List pub = searchAuthor.searchtopAuthor();
+        List pub = SearchAuthor.searchtopAuthor();
         System.out.println(pub.size());
     }
 
     public static void test9() {
-        List pub = searchPublication.searchByType("www");
+        List pub = SearchPublication.searchByType("www");
         System.out.println(pub.size());
     }
 

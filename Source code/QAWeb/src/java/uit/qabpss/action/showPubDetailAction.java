@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import uit.qabpss.core.search.searchPublication;
+import uit.qabpss.core.search.SearchPublication;
 import uit.qabpss.model.Publication;
 
 /**
@@ -37,7 +37,7 @@ public class showPubDetailAction extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         String id = request.getParameter("id");
-        Publication publication = searchPublication.searchPubByID(id);
+        Publication publication = SearchPublication.searchPubByID(id);
         request.setAttribute("publication", publication);
         if(publication.getRefPubs().size()==0){
             request.setAttribute("warning", WARNING);
