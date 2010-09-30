@@ -87,7 +87,7 @@
             <br>
             <div id="box2" style="margin-top: -60px; margin-left: 0px;margin-right: 0px;">
                 <c:if test="${publications != null}">
-                    <display:table id="data" name="${publications}" pagesize="${pagesize}" >
+                    <display:table id="data" name="${publications}" requestURI="" pagesize="${pagesize}" >
                         <display:column value="${data_rowNum}" title="No." sortable="true"/>
                         <display:column value="<a href='./showPubDetail.do?id=${data.id}'>${data.title}</a>" title="Title" sortable="true"/>
                         <display:column value="${data.type}" title="Type" sortable="true"/>

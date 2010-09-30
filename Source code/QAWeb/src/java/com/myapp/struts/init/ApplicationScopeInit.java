@@ -13,7 +13,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.apache.struts.util.LabelValueBean;
-import uit.qass.util.hibernate.HibernateUtil;
+import uit.qabpss.util.hibernate.HibernateUtil;
 
 /**
  * ApplicationScopeInit initializes relevant objects and puts them in application scope.

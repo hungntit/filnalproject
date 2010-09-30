@@ -3,8 +3,8 @@
     Created on : Sep 3, 2010, 9:21:15 PM
     Author     : Hoang-PC
 --%>
-<%@page import="uit.qass.model.Author"%>
-<%@page import="uit.qass.dblp.AuthorUtil"%>
+<%@page import="uit.qabpss.model.Author"%>
+<%@page import="uit.qabpss.dblp.AuthorUtil"%>
 <%@page import="java.util.List"%>
 <%@taglib uri="http://struts.apache.org/tags-html"  prefix="html"%>
 <%@taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>

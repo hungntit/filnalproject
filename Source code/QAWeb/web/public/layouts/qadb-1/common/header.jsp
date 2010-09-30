@@ -42,10 +42,10 @@
 <div id="header">
     <div><img src="<bean:message key="image.logo"/>" alt="<bean:message key="image.logo.alttext"/>" style="width: 100px;margin-left: 9% ; margin-bottom: -106px;"/></div>
     <div style="margin-left: 20%;margin-top: 30px;width:  200px;">
-        <span class="text1"><bean:message key="text.dbqa"/></span><hr>
-        <span class="text3"><bean:message key="text.UIT"/></span>
+        <span class="text1" style="color: #FFA414"><bean:message key="text.dbqa"/></span><hr>
+        <span class="text3" style="color: #FFA414"><bean:message key="text.UIT"/></span>
     </div>
-    <div style="margin-right: 3%;text-align: right;color: white;margin-top:-5px;">
+    <div style="margin-right: 3%;text-align: right;color: white;margin-top:-15px;">
         <bean:message key="text.language"/>
         <script language="javscript" type="text/javascript">
             document.write('<a href="./Locale.do?method=english&page='+ document.location.href +'">');
@@ -65,5 +65,6 @@
 </div>
 <div id="hidepage">
     <b><bean:message key="text.process"/></b><br>
-    <img src="<bean:message key="image.wait"/>" alt="<bean:message key="image.wait.alttext"/>">
+    <img src="<bean:message key="image.wait"/>" alt="<bean:message key="image.wait.alttext"/>"><br>
+    <a style="text-align: right" href="#" onclick="hideLoadingPage();">Close</a>
 </div>

@@ -184,9 +184,10 @@ a:hover {
 }
 
 #header {
-    background-color: #FFA414;
+    background-image: url(../../../images/banner_op_02.jpg);
     padding-top: 10px;
-    height: 120px;
+    height: 110px;
+    width: 100%;
 }
 
 .content{

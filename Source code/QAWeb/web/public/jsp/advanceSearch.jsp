@@ -5,10 +5,10 @@
 --%>
 
 <%@page import="java.util.List"%>
-<%@page import="uit.qass.dbconfig.DBInfoUtil"%>
-<%@page import="uit.qass.dbconfig.TableInfo"%>
-<%@page import="uit.qass.util.StringPool"%>
-<%@page import="uit.qass.dbconfig.Type"%>
+<%@page import="uit.qabpss.dbconfig.DBInfoUtil"%>
+<%@page import="uit.qabpss.dbconfig.TableInfo"%>
+<%@page import="uit.qabpss.util.StringPool"%>
+<%@page import="uit.qabpss.dbconfig.Type"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
