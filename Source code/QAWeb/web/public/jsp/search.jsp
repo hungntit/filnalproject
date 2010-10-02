@@ -9,32 +9,15 @@
 <%@taglib uri="http://struts.apache.org/tags-logic" prefix="l"%>
 <%@taglib uri="/WEB-INF/tlds/pager-taglib.tld" prefix="pg"%>
 <%@taglib uri="http://displaytag.sf.net" prefix="display"%>
-<table >
+<table style="width: 100%">
     <tr>
-        <td style="width: 25%;margin: 5px;" rowspan="2" valign="top">
-            <div style="width: 75%;border: #2C2C2C solid;">
-                <h3>Quick Search</h3><hr>
-                <ol>
-                    <li><a href="./quicksearch.do?p=topPubs" onclick="showLoadingPage();"><bean:message key="text.top.newestPublications"/></a></li>
-                    <li><a href="./quicksearch.do?p=topAus" onclick="showLoadingPage();"><bean:message key="text.top.topAuthors"/></a></li>
-                    <li><a href="./quicksearch.do?p=book" onclick="showLoadingPage();"><bean:message key="text.top.book"/></a></li>
-                    <li><a href="./quicksearch.do?p=www" onclick="showLoadingPage();"><bean:message key="text.top.www"/></a></li>
-                    <li><a href="./quicksearch.do?p=article" onclick="showLoadingPage();"><bean:message key="text.top.article"/></a></li>
-                    <li><a href="./quicksearch.do?p=incollection" onclick="showLoadingPage();"><bean:message key="text.top.incollection"/></a></li>
-                    <li><a href="./quicksearch.do?p=inproceedings" onclick="showLoadingPage();"><bean:message key="text.top.inproceeding"/></a></li>
-                    <li><a href="./quicksearch.do?p=mastersthesis" onclick="showLoadingPage();"><bean:message key="text.top.masterthesis"/></a></li>
-                    <li><a href="./quicksearch.do?p=phdthesis" onclick="showLoadingPage();"><bean:message key="text.top.phdthesis"/></a></li>
-                    <li><a href="./quicksearch.do?p=proceedings" onclick="showLoadingPage();"><bean:message key="text.top.proceeding"/></a></li>
-                </ol>
-            </div>
-        </td>
-        <td style="width: 75%;" valign="top">
+        <td valign="top">
             <div class="box_search">
                 <span style="color: red;">
                     <html:errors/>
                 </span>
                 <html:form action="/search" focus="keyWord" >
-                    <table >
+                    <table style="width: 100%;">
                         <tr style="margin: 5px;">
                             <td><bean:message key="text.search"/></td>
                             <td align="left">
@@ -85,12 +68,13 @@
                 </ul>
             </div>
             <br>
+            <!--Show all publications which you search-->
             <div id="box2" style="margin-top: -60px; margin-left: 0px;margin-right: 0px;">
                 <c:if test="${publications != null}">
                     <display:table id="data" name="${publications}" requestURI="" pagesize="${pagesize}" >                       
-                        <display:column title="Title" sortable="true">
+                        <display:column title="Title" sortable="true" >
                             <a href='./showPubDetail.do?id=${data.id}' style="font-size: 20px;line-height: 22px;">${data_rowNum}. ${data.title}</a><br>
-                            <table  style="width: 100%;font-size: 8px;">
+                            <table  style="width: 100%;">
                                 <tr>
                                     <td class="left_col"><bean:message key="text.authors"/></td>
                                     <td>
@@ -107,7 +91,7 @@
                                 </tr>
                             </table>
                         </display:column>
-                        <display:column value="${data.year}" title="Year" sortable="true"/>
+                            <display:column value="${data.year}" title="Year" sortable="true" style="width: 32px;"/>
                     </display:table>
                 </c:if>
             </div>

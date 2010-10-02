@@ -33,7 +33,7 @@
                 </tr>
             </table>
         </td>
-        <td width="35">&nbsp;</td>
+        <td width="15">&nbsp;</td>
         <td width="250">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
@@ -43,6 +43,21 @@
                     <td class="text4"><bean:message key="text.UIT"/></td>
                 </tr>
             </table>
+        </td>
+        <td width="250">
+                <h3>Quick Search</h3><hr>
+                <ol>
+                    <li><a href="./quicksearch.do?p=topPubs" onclick="showLoadingPage();"><bean:message key="text.top.newestPublications"/></a></li>
+                    <li><a href="./quicksearch.do?p=topAus" onclick="showLoadingPage();"><bean:message key="text.top.topAuthors"/></a></li>
+                    <li><a href="./quicksearch.do?p=book" onclick="showLoadingPage();"><bean:message key="text.top.book"/></a></li>
+                    <li><a href="./quicksearch.do?p=www" onclick="showLoadingPage();"><bean:message key="text.top.www"/></a></li>
+                    <li><a href="./quicksearch.do?p=article" onclick="showLoadingPage();"><bean:message key="text.top.article"/></a></li>
+                    <li><a href="./quicksearch.do?p=incollection" onclick="showLoadingPage();"><bean:message key="text.top.incollection"/></a></li>
+                    <li><a href="./quicksearch.do?p=inproceedings" onclick="showLoadingPage();"><bean:message key="text.top.inproceeding"/></a></li>
+                    <li><a href="./quicksearch.do?p=mastersthesis" onclick="showLoadingPage();"><bean:message key="text.top.masterthesis"/></a></li>
+                    <li><a href="./quicksearch.do?p=phdthesis" onclick="showLoadingPage();"><bean:message key="text.top.phdthesis"/></a></li>
+                    <li><a href="./quicksearch.do?p=proceedings" onclick="showLoadingPage();"><bean:message key="text.top.proceeding"/></a></li>
+                </ol>
         </td>
     </tr>
 </table>
