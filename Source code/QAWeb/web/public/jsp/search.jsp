@@ -87,12 +87,26 @@
             <br>
             <div id="box2" style="margin-top: -60px; margin-left: 0px;margin-right: 0px;">
                 <c:if test="${publications != null}">
-                    <display:table id="data" name="${publications}" requestURI="" pagesize="${pagesize}" >
-                        <display:column value="${data_rowNum}" title="No." sortable="true"/>
-                        <display:column value="<a href='./showPubDetail.do?id=${data.id}'>${data.title}</a>" title="Title" sortable="true"/>
-                        <display:column value="${data.type}" title="Type" sortable="true"/>
-                        <display:column value="${data.publisher}" title="Publisher" sortable="true"/>
-                        <display:column value="${data.source}" title="Source" sortable="true"/>
+                    <display:table id="data" name="${publications}" requestURI="" pagesize="${pagesize}" >                       
+                        <display:column title="Title" sortable="true">
+                            <a href='./showPubDetail.do?id=${data.id}' style="font-size: 20px;line-height: 22px;">${data_rowNum}. ${data.title}</a><br>
+                            <table  style="width: 100%;font-size: 8px;">
+                                <tr>
+                                    <td class="left_col"><bean:message key="text.authors"/></td>
+                                    <td>
+                                        <c:forEach var="au" items="${data.authors}">
+                                            <a href="showPubsByAuthor.do?authorName=${au.author}">
+                                                <c:out value="${au.author}"/>
+                                            </a> ,
+                                        </c:forEach>
+                                    </td>
+                                </tr>                                                             
+                                <tr>
+                                    <td class="left_col"><bean:message key="text.publisher"/></td>
+                                    <td><c:out value="${data.publisher}" default="N/A"/></td>
+                                </tr>
+                            </table>
+                        </display:column>
                         <display:column value="${data.year}" title="Year" sortable="true"/>
                     </display:table>
                 </c:if>
