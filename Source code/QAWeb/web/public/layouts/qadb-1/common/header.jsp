@@ -40,28 +40,41 @@
     // End -->
 </script>
 <div id="header">
-    <div><img src="<bean:message key="image.logo"/>" alt="<bean:message key="image.logo.alttext"/>" style="width: 100px;margin-left: 9% ; margin-bottom: -106px;"/></div>
-    <div style="margin-left: 20%;margin-top: 30px;width:  200px;">
-        <span class="text1" style="color: #FFA414"><bean:message key="text.dbqa"/></span><hr>
-        <span class="text3" style="color: #FFA414"><bean:message key="text.UIT"/></span>
-    </div>
-    <div style="margin-right: 3%;text-align: right;color: white;margin-top:-15px;">
-        <bean:message key="text.language"/>
-        <script language="javscript" type="text/javascript">
-            document.write('<a href="./Locale.do?method=english&page='+ document.location.href +'">');
-        </script>
-        <img src="<bean:message key="image.en"/>" alt="<bean:message key="image.en.alttext"/>"/>
-        <script language="javscript" type="text/javascript">
-            document.write('</a>');
-        </script>
-        <script language="javscript" type="text/javascript">
-            document.write('<a href="./Locale.do?method=vietnamese&page='+ document.location.href +'">');
-        </script>
-        <img src="<bean:message key="image.vn"/>" alt="<bean:message key="image.vn.alttext"/>"/>
-        <script language="javscript" type="text/javascript">
-            document.write('</a>');
-        </script>
-    </div>
+    <img src="<bean:message key="image.background"/>" alt="<bean:message key="image.logo.alttext"/>" style="position: fixed;z-index: -1;width: 100%; height: 110px; top: 0px;visibility: inherit"/>
+    <table style="width: 100%" >
+        <tr>
+            <td style="width: 50%;height: 80px;" align="center">
+                <table>
+                    <tr>
+                        <td><img src="<bean:message key="image.logo"/>" alt="<bean:message key="image.logo.alttext"/>" style="width: 80px;"/></td>
+                        <td valign="middle">
+                            <div style="width:  200px;height: 80px;">
+                                <span class="text1" style="color: #FFA414"><bean:message key="text.dbqa"/></span><hr>
+                                <span class="text3" style="color: #FFA414"><bean:message key="text.UIT"/></span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 50%;height: 100px;text-align: right" valign="bottom">
+                <bean:message key="text.language"/>
+                <script language="javscript" type="text/javascript">
+                    document.write('<a href="./Locale.do?method=english&page='+ document.location.href +'">');
+                </script>
+                <img src="<bean:message key="image.en"/>" alt="<bean:message key="image.en.alttext"/>"/>
+                <script language="javscript" type="text/javascript">
+                    document.write('</a>');
+                </script>
+                <script language="javscript" type="text/javascript">
+                    document.write('<a href="./Locale.do?method=vietnamese&page='+ document.location.href +'">');
+                </script>
+                <img src="<bean:message key="image.vn"/>" alt="<bean:message key="image.vn.alttext"/>"/>
+                <script language="javscript" type="text/javascript">
+                    document.write('</a>');
+                </script>
+            </td>
+        </tr>
+    </table>
 </div>
 <div id="hidepage">
     <b><bean:message key="text.process"/></b><br>
