@@ -8,7 +8,7 @@
 <struts-config>
     <form-beans>
         <form-bean name="AdvanceSearchForm" type="uit.qabpss.formbean.AdvanceSearchForm"/>
-        <form-bean name="searchActionForm" type="uit.qabpss.formbean.searchActionForm"/>
+        <form-bean name="searchForm" type="uit.qabpss.formbean.SearchForm"/>
     </form-beans>
     
     <global-exceptions>
@@ -23,7 +23,7 @@
         <!-- Advance Search -->
        
         <!-- end Advance Search -->
-        <action input=".searchPage" name="searchActionForm" path="/search" scope="session" validate="true" type="uit.qabpss.action.searchAction">
+        <action input=".searchPage" name="searchForm" path="/search" scope="session" validate="true" type="uit.qabpss.action.searchAction">
             <forward name="success" path=".searchPage"/>
         </action>
         <action path="/showPubsByAuthor" type="uit.qabpss.action.showPubsByAuthorAction">

@@ -14,7 +14,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import uit.qabpss.core.search.UtimateSearch;
-import uit.qabpss.formbean.searchActionForm;
+import uit.qabpss.formbean.SearchForm;
 import uit.qabpss.core.search.SearchAuthor;
 import uit.qabpss.dbconfig.DBInfoUtil;
 import uit.qabpss.dbconfig.TableInfo;
@@ -46,7 +46,7 @@ public class searchAction extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        searchActionForm searchForm = (searchActionForm) form;
+        SearchForm searchForm = (SearchForm) form;
         HttpSession session = request.getSession(true);
         session.removeAttribute("publications");
         if ("Author".equals(searchForm.getType())) {

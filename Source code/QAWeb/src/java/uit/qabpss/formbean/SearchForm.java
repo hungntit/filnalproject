@@ -16,7 +16,7 @@ import org.apache.struts.util.ImageButtonBean;
  *
  * @author Hoang-PC
  */
-public class searchActionForm extends org.apache.struts.action.ActionForm {
+public class SearchForm extends org.apache.struts.action.ActionForm {
 
     private String type;
     private String keyWord;
@@ -31,7 +31,7 @@ public class searchActionForm extends org.apache.struts.action.ActionForm {
         this.maxResult = maxResult;
     }
 
-    public searchActionForm() {
+    public SearchForm() {
         type = "";
         keyWord = "";
         submit = new ImageButtonBean();
