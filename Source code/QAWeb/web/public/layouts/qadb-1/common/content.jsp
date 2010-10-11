@@ -9,9 +9,9 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@taglib uri="http://struts.apache.org/tags-bean-el" prefix="bean" %>
-<table width="700" border="0" align="center" cellpadding="0" cellspacing="0" style="padding-top: 10px;">
+<table border="0" align="center" cellpadding="0" cellspacing="0" style="padding: 20px;width: 100%">
     <tr valign="top">
-        <td width="415">
+        <td style="width: 35%">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td class="text4">
@@ -33,19 +33,22 @@
                 </tr>
             </table>
         </td>
-        <td width="15">&nbsp;</td>
-        <td width="250">
+        <td  style="width: 5%">&nbsp;</td>
+        <td  style="width: 30%">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td><img src="images/spacer.gif" alt="" width="100" height="35" /></td>
                 </tr>
                 <tr>
-                    <td class="text4"><bean:message key="text.UIT"/></td>
+                    <td class="text4">
+                        <bean:message key="text.UIT"/>
+                        <img src="<bean:message key="image.uit.school"/>" style="padding: 10px;"/>
+                    </td>
                 </tr>
             </table>
         </td>
-        <td width="250">
-                <h3>Quick Search</h3><hr>
+        <td  style="width: 30%">
+            <h3 class="text4">Quick Search</h3><hr>
                 <ol>
                     <li><a href="./quicksearch.do?p=topPubs" onclick="showLoadingPage();"><bean:message key="text.top.newestPublications"/></a></li>
                     <li><a href="./quicksearch.do?p=topAus" onclick="showLoadingPage();"><bean:message key="text.top.topAuthors"/></a></li>

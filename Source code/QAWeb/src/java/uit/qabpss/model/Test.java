@@ -12,7 +12,7 @@ import uit.qabpss.util.hibernate.HibernateUtil;
 public class Test {
 
     public static void main(String[] args) {
-        test10();
+        test11();
     }
 
     public static void test1() {
@@ -26,10 +26,6 @@ public class Test {
             Author temp = (Author) a.getAuthors().get(i);
             System.out.println("Author -------------");
             System.out.println("Name: " + temp.getAuthor());
-
-
-
-
             System.out.println("--------------------------");
         }
         session.close();
@@ -120,4 +116,10 @@ public class Test {
         }
         session.close();
     }
+
+    public static void test11() {
+        List pub = SearchPublication.searchBySource("CIT","10174");
+        System.out.println(pub.size());
+    }
+
 }

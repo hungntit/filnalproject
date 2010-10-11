@@ -69,7 +69,7 @@
             </div>
             <br>
             <!--Show all publications which you search-->
-            <div id="box2" style="margin-top: -60px; margin-left: 0px;margin-right: 0px;">
+            <div id="box2" style="margin-top: -60px; margin-left: 10%;margin-right: 10%;">
                 <c:if test="${publications != null}">
                     <display:table id="data" name="${publications}" requestURI="" pagesize="${pagesize}" >                       
                         <display:column title="Title" sortable="true" >

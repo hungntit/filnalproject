@@ -29,21 +29,40 @@ public class SearchPublication {
         return result;
     }
 
-    public static List searchTop100(){
+    public static List searchTop100() {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
-        SQLQuery   q   = session.createSQLQuery("select * from dblp_pub_new order by year desc");
+        SQLQuery q = session.createSQLQuery("select * from dblp_pub_new order by year desc");
         q.addEntity(Publication.class);
         q.setMaxResults(MAX_RESULT);
         return q.list();
     }
 
-    public static List searchByType(String type){
+    public static List searchByType(String type) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
-        SQLQuery   q   = session.createSQLQuery("SELECT * FROM dblp_pub_new where type= :var order by year desc limit 100;");
+        SQLQuery q = session.createSQLQuery("SELECT * FROM dblp_pub_new where type= :var order by year desc limit 100;");
         q.addEntity(Publication.class);
         q.setString("var", type);
         return q.list();
+    }
+
+    public static List searchBySource(String sourceName, String notId) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        String plus = "";
+        if (notId != null && !"".equals(notId)) {
+            plus = "and id !=" + notId + " ";
+        }
+        try {
+            SQLQuery q = session.createSQLQuery("SELECT * FROM dblp_pub_new where source= :var " + plus + "order by year desc limit 15;");
+            q.addEntity(Publication.class);
+            q.setString("var", sourceName);
+            return q.list();
+        } catch (Exception e) {
+        } finally {
+            session.close();
+        }
+        return null;
     }
 }

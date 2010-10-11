@@ -98,6 +98,19 @@
                 </tr>
             </c:forEach>
             </table>
+            <br>
+            <c:if test="${sameSourcePubs != null}">
+            <h3>Publications have the same source</h3><br>            
+            <table>
+                <c:forEach var="ref" items="${sameSourcePubs}" varStatus="status">
+                <tr>
+                    <td>${status.count}</td>
+                    <td><a href="showPubDetail.do?id=${ref.id}"><c:out value="${ref.title}"/></a></td>
+                    <td><c:out value="${ref.year}"/></td>
+                </tr>
+            </c:forEach>
+            </table>
+            </c:if>
         </div>
     </div>
 </td>

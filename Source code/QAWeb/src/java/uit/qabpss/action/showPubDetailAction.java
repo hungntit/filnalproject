@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package uit.qabpss.action;
 
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -18,11 +18,11 @@ import uit.qabpss.model.Publication;
  * @author aa
  */
 public class showPubDetailAction extends org.apache.struts.action.Action {
-    
+
     /* forward name="success" path="" */
     private static final String SUCCESS = "success";
-     private static final String WARNING = "There are no references now !";
-    
+    private static final String WARNING = "There are no references now !";
+
     /**
      * This is the action called from the Struts framework.
      * @param mapping The ActionMapping used to select this instance.
@@ -38,9 +38,14 @@ public class showPubDetailAction extends org.apache.struts.action.Action {
             throws Exception {
         String id = request.getParameter("id");
         Publication publication = SearchPublication.searchPubByID(id);
+        String sourceName = publication.getSource();
         request.setAttribute("publication", publication);
-        if(publication.getRefPubs().size()==0){
+        if (publication.getRefPubs().isEmpty()) {
             request.setAttribute("warning", WARNING);
+        }
+        if (sourceName != null && !"".equals(sourceName)) {
+            List pubs = SearchPublication.searchBySource(sourceName,id);
+            request.setAttribute("sameSourcePubs", pubs);
         }
         return mapping.findForward(SUCCESS);
     }
