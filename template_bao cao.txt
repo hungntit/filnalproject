@@ -1,0 +1,5 @@
+1. Nhung cong viec da lam trong tuan
+2. Nhung y kien can de xuat, kho khan
+3. Cong viec sap toi
+
+PS: neu co cac file ket qua thi gui kem
