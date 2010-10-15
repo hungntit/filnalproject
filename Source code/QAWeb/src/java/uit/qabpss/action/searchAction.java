@@ -16,10 +16,13 @@ import org.apache.struts.action.ActionMapping;
 import uit.qabpss.core.search.UtimateSearch;
 import uit.qabpss.formbean.SearchForm;
 import uit.qabpss.core.search.SearchAuthor;
+import uit.qabpss.dbconfig.ColumnInfo;
 import uit.qabpss.dbconfig.DBInfoUtil;
 import uit.qabpss.dbconfig.TableInfo;
+import uit.qabpss.dbconfig.Type;
 import uit.qabpss.model.Publication;
 import uit.qabpss.util.Table;
+import uit.qabpss.util.hibernate.HibernateUtil;
 
 /**
  *
@@ -46,28 +49,43 @@ public class searchAction extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        SearchForm searchForm = (SearchForm) form;
-        HttpSession session = request.getSession(true);
-        session.removeAttribute("publications");
-        if ("Author".equals(searchForm.getType())) {
-            String keyWords = searchForm.getKeyWord();
-            List<String> authorNames = new ArrayList<String>();
-            authorNames = SearchAuthor.searchAuthorByKey(keyWords);
-            request.setAttribute("authors", authorNames);
-            if (authorNames != null && authorNames.size() > 0) {
-                request.setAttribute("warning", WARNING_1);
-            } else {
-                request.setAttribute("warning", WARNING_2);
-            }
-            return mapping.findForward(SUCCESS);
-        }
-        if ("All".equals(searchForm.getType())) {
+        try {
+            SearchForm searchForm = (SearchForm) form;
+            HttpSession session = request.getSession(true);
+            session.removeAttribute("publications");
             String keyWords = searchForm.getKeyWord();
             String pageSize = searchForm.getMaxResult();
-            TableInfo returnTable = DBInfoUtil.getDBInfo().findTableInfoByName(Table.PUBLICATION);
-            List list = UtimateSearch.searchByKeyWords(Publication.class, keyWords, returnTable, 0, 300);
-            if(list.size()>0){
-                if(list.get(0) instanceof  Comparable){
+            TableInfo returnTable = null;
+            List list = null;
+            if ("Author".equals(searchForm.getType())) {
+                List<String> authorNames = new ArrayList<String>();
+                authorNames = SearchAuthor.searchAuthorByKey(keyWords);
+                request.setAttribute("authors", authorNames);
+                if (authorNames != null && authorNames.size() > 0) {
+                    request.setAttribute("warning", WARNING_1);
+                } else {
+                    request.setAttribute("warning", WARNING_2);
+                }
+                return mapping.findForward(SUCCESS);
+            }
+            if ("All".equals(searchForm.getType())) {
+                returnTable = DBInfoUtil.getDBInfo().findTableInfoByName(Table.PUBLICATION);
+                list = UtimateSearch.searchByKeyWords(Publication.class, keyWords, returnTable, 0, 300);
+            }
+            if ("Publisher".equals(searchForm.getType())) {
+                ColumnInfo publisher = new ColumnInfo(Table.PUBLISHER_FIELD, searchForm.getType(), Type.STRING);
+                returnTable = new TableInfo(Table.PUBLICATION, "Publication");
+                returnTable.addColumn(publisher);
+                list = UtimateSearch.searchByKeyWords(Publication.class, keyWords, returnTable, 0, 300);
+            }
+            if ("Source".equals(searchForm.getType())) {
+                ColumnInfo publisher = new ColumnInfo(Table.SOURCE_FIELD, searchForm.getType(), Type.STRING);
+                returnTable = new TableInfo(Table.PUBLICATION, "Publication");
+                returnTable.addColumn(publisher);
+                list = UtimateSearch.searchByKeyWords(Publication.class, keyWords, returnTable, 0, 300);
+            }
+            if (list.size() > 0) {
+                if (list.get(0) instanceof Comparable) {
                     Collections.sort(list);
                 }
             }
@@ -77,7 +95,8 @@ public class searchAction extends org.apache.struts.action.Action {
                 request.setAttribute("warning", WARNING_3);
             }
             return mapping.findForward(SUCCESS);
+        } finally {
+            HibernateUtil.getSessionFactory().close();
         }
-        return mapping.findForward(SUCCESS);
     }
 }

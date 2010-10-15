@@ -80,8 +80,8 @@
                 <tr>
                     <td class="left_col">Try to another links </td>
                     <td>
-                        <a href="http://scholar.google.com/scholar?q=${publication.title.replace(" ","+")}"><img src="public/images/scholar.jpg" width="30" height="30"/></a>
-                        <a href="http://citeseerx.ist.psu.edu/search?q=${publication.title.replace(" ","+")}"><img src="public/images/citexeer.jpg" width="30" height="30"/></a>
+                        <a target="_blank"  href="http://scholar.google.com/scholar?q=${publication.title.replace(" ","+")}"><img src="public/images/scholar.jpg" width="30" height="30"/></a>
+                        <a target="_blank" href="http://citeseerx.ist.psu.edu/search?q=${publication.title.replace(" ","+")}"><img src="public/images/citexeer.jpg" width="30" height="30"/></a>
                     </td>
                 </tr>
             </table> 

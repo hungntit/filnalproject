@@ -24,6 +24,8 @@
                                 <html:select property="type" >
                                     <html:option value="All" ><bean:message key="text.all"/></html:option>
                                     <html:option value="Author"><bean:message key="text.author"/></html:option>
+                                    <html:option value="Publisher"><bean:message key="text.publisher"/></html:option>
+                                    <html:option value="Source"><bean:message key="text.source"/></html:option>
                                 </html:select>
                             </td>
                         </tr>
