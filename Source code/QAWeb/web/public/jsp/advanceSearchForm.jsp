@@ -23,11 +23,13 @@
                         </td>
                         <td>
                         <html:select property="isAndOperator" name="AdvanceSearchForm">
-                            <html:option value="true">AND</html:option>
-                            <html:option value="false">OR</html:option>
+                            <html:option value="true"><bean:message key="operator.and" /></html:option>
+                            <html:option value="false"><bean:message key="operator.or" /></html:option>
                         </html:select>
                         </td>
                     </tr>
+                    <tr></tr>
+                    <br>
                     </logic:greaterThan>
                     <logic:iterate id="param" name="AdvanceSearchForm" property="params" indexId="id">
 
