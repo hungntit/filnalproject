@@ -1,0 +1,13 @@
+﻿<?xml version="1.0"?>
+<!--Created by Liquid XML Data Binding Libraries (www.liquid-technologies.com) for Liquid Technologies Limited-->
+<XmlStudioProject xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" Version="8.1.5.2538" UseRelativePaths="false">
+	<Project Name="DatabaseQAConfig">
+		<SubGroup Name="Documents">
+			<File Uri="D:\IT\Final Project\DatabaseQAConfig\SampleFile.xml"/>
+		</SubGroup>
+		<SubGroup Name="Schemas">
+			<File Uri="D:\IT\Final Project\DatabaseQAConfig\config.xsd"/>
+		</SubGroup>
+		<SubGroup Name="Transforms"/>
+	</Project>
+</XmlStudioProject>

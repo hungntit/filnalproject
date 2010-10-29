@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Created by Liquid XML Data Binding Libraries (www.liquid-technologies.com) for Liquid Technologies Limited-->
+<XmlStudioProjectOptions xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" Version="8.1.5.2538">
+	<OpenFile Uri="D:\IT\Final Project\DatabaseQAConfig\config.xsd"/>
+	<OpenFile Uri="D:\IT\Final Project\DatabaseQAConfig\SampleFile.xml"/>
+</XmlStudioProjectOptions>

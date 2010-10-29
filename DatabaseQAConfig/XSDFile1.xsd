@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--Created with Liquid XML Studio Developer Edition (Trial) 8.1.5.2538 (http://www.liquid-technologies.com)-->
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="database">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="table" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="table-name">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string" />
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:sequence>
+                                <xs:element name="relation" minOccurs="0" maxOccurs="unbounded">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element name="mapping-table" type="xs:string" />
+                                            <xs:element name="related-table" type="xs:string" />
+                                            <xs:element name="relation-name" type="xs:string" />
+                                            <xs:sequence>
+                                                <xs:element name="table-key" type="xs:string" />
+                                                <xs:element name="related-table-key" type="xs:string" />
+                                            </xs:sequence>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
+                            </xs:sequence>
+                            <xs:sequence>
+                                <xs:element name="field">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element name="field-name" type="xs:string" />
+                                        </xs:sequence>
+                                        <xs:attribute name="type" type="xs:string" use="required" />
+                                        <xs:attribute name="field-alias" type="xs:string" />
+                                    </xs:complexType>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:sequence>
+                        <xs:attribute name="primary-key" type="xs:string" use="optional" />
+                        <xs:attribute name="table-alias" type="xs:string" use="optional" />
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="database-name" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
