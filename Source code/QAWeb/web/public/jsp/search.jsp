@@ -74,7 +74,7 @@
             <div id="box2" style="margin-top: -60px; margin-left: 10%;margin-right: 10%;">
                 <c:if test="${publications != null}">
                     <display:table id="data" name="${publications}" requestURI="" pagesize="${pagesize}" >                       
-                        <display:column title="Title" sortable="true" >
+                        <display:column>
                             <a href='./showPubDetail.do?id=${data.id}' style="font-size: 20px;line-height: 22px;">${data_rowNum}. ${data.title}</a><br>
                             <table  style="width: 100%;">
                                 <tr>
@@ -91,9 +91,16 @@
                                     <td class="left_col"><bean:message key="text.publisher"/></td>
                                     <td><c:out value="${data.publisher}" default="N/A"/></td>
                                 </tr>
+                                <tr>
+                                    <td class="left_col"><bean:message key="text.publicationdate"/></td>
+                                    <td><c:out value="${data.month}" default=" "/> <c:out value="${data.year}" default="N/A"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="left_col"><bean:message key="text.pages"/></td>
+                                    <td><c:out value="${data.pages}" default="N/A"/></td>
+                                </tr>
                             </table>
-                        </display:column>
-                            <display:column value="${data.year}" title="Year" sortable="true" style="width: 32px;"/>
+                        </display:column>                           
                     </display:table>
                 </c:if>
             </div>

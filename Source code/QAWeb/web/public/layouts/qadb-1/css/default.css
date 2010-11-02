@@ -93,7 +93,7 @@ tr.tableRowEven,tr.even {
     background-color: #fff;
 }
 
-#footer{
+.footer{
     text-align: center;
     font-size: 0.75em;
     margin-bottom: 1px;
@@ -191,7 +191,8 @@ a:hover {
 
 .content{
     background-color: white;
-    height: auto;
+    height: 430px;
+    overflow: auto;
 }
 
 .wrapper{

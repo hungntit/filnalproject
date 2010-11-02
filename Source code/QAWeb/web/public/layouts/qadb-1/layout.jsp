@@ -26,7 +26,7 @@
                 <tiles:insert attribute="content"/>
             </div>
         </div>
-        <div style="text-align: center; font-size: 0.75em;margin-bottom: 1px;">
+        <div class ="footer">
             <tiles:insert attribute="footer"/>
         </div>
         <!--END LAYOUT CONTENTS-->

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package uit.qabpss.analysisandprocess;
+package uit.qabpss.analysisandprocess; 
 
 import org.hibernate.Query;
 import org.hibernate.Session;
