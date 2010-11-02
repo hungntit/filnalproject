@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid XML Studio Developer Edition (Trial) 8.1.5.2538 (http://www.liquid-technologies.com) -->
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///D:/IT/Final%20Project/DatabaseQAConfig/config.xsd">
+    <table table-alias="publication"> <!-- Tên do người dùng đặt thay thế cho dblp_pub_new -->
+        <table-name>dblp_pub_new</table-name>
+        <field type="String" field-alias="author" visible="false">
+            <!--Thông tin này không được hiển thị cho người dùng-->
+            <relation>
+                <relation-name>has author</relation-name> <!--Thiết lập các loại quan hệ chính sẽ xuất hiện trong câu hỏi -->
+                <relation-name>has writer</relation-name>
+                <relation-name>has composer</relation-name>
+                <relation-name>be write</relation-name>
+                <relation-name>be compose</relation-name>
+                <reversed-relation>write</reversed-relation>
+                <reversed-relation>compose</reversed-relation>
+				<reversed-relation>has write</reversed-relation>
+				<reversed-relation>has compose</reversed-relation>                
+                <mapping-table>pub_author</mapping-table> <!-- Thông tin ánh xạ -->
+            </relation>          
+        </field>
+        
+        <field type="String" field-alias="title" visible="true">
+            <relation>
+                <relation-name>has title</relation-name> 
+                <relation-name>has heading</relation-name> 
+                <!-- Vì thuộc tính này không được ánh xạ thông qua table nào khác nên nó sẽ không có mapping-table hoặc related-table -->
+            </relation>
+            <field-name>title</field-name>
+        </field>
+        
+        <field type="String" field-alias="source" visible="true">
+            <relation>
+                <relation-name>has source</relation-name>
+                <relation-name>from</relation-name>
+                <relation-name>in</relation-name>
+            </relation>
+            <field-name>source</field-name>
+        </field>
+        
+        <!-- Các thuộc tính khác -->
+        <!-- ................... -->
+        <!-- ................... -->
+        
+        <field type="Int" field-alias="year" visible="true">
+            <relation>
+                <relation-name>has year</relation-name>
+                <relation-name>in</relation-name>
+                <relation-name>from</relation-name>
+                <relation-name>to</relation-name>
+            </relation>
+            <field-name>year</field-name>
+        </field>
+        
+        <field type="String" field-alias="type" visible="true">
+            <relation>
+                <relation-name>has type</relation-name>
+            </relation>
+            <field-name>type</field-name>
+        </field>
+        
+        <field type="String" field-alias="publisher" visible="true">
+            <relation>
+                <relation-name>has publisher</relation-name>
+                <relation-name>be publish</relation-name>                
+                <relation-name>be release</relation-name>
+                <reversed-relation>publish</reversed-relation>
+                <reversed-relation>has publish</reversed-relation>
+                <reversed-relation>release</reversed-relation>
+                <reversed-relation>has release</reversed-relation>
+            </relation>
+            <field-name>publisher</field-name>
+        </field>
+        
+        <primary-key>id</primary-key>
+        
+    </table>  
+    
+    <database-name>dblp</database-name> 	
+ 
+    <mapping-table>
+        <mapping-table-name>dblp_author_ref_new</mapping-table-name> <!-- Tên table mapping là dblp_author_ref_new trong database -->
+        <name>pub_author</name>
+        <table-key>pub_id</table-key>
+        <related-table-key>author</related-table-key>
+	</mapping-table>
+</database>
