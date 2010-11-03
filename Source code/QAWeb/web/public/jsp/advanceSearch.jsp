@@ -24,31 +24,9 @@ request.setAttribute("tables", tables);
 %>
 <div>
         <div>
-    	<html:form action="loadParams.do">
-            <div id ="selectTable">
-                <bean:message key="text.dblp.findby" />
-		<select onchange="retrieveURL(' loadParams.do?tbl=' + this.value);">
-                    <c:forEach items="${tables}" var="tbl">
-
-                        <logic:equal value="${tbl.aliasName}" name="AdvanceSearchForm" property="tableInfo.aliasName">
-                            <option value="${tbl.aliasName}"  selected="true">
-                                <bean:message key="text.dblp.${fn:toLowerCase(tbl.aliasName)}" />
-                            </option>
-                        </logic:equal>
-
-                        <logic:notEqual value="${tbl.aliasName}" name="AdvanceSearchForm" property="tableInfo.aliasName">
-                            <option value="${tbl.aliasName}"  >
-                                <bean:message key="text.dblp.${fn:toLowerCase(tbl.aliasName)}" />
-                            </option>
-                        </logic:notEqual>
-
-                    </c:forEach>
-		</select>
-        </div>
-		<br>
-		
-	</html:form>
-    
+            <script type="text/javascript">
+                retrieveURL(' loadParams.do?tbl=Publication');
+            </script>
             <span style="color: red;font-weight: bold">
                 <html:errors/>
             </span>
@@ -56,25 +34,6 @@ request.setAttribute("tables", tables);
             <html:form action="/advanceSearch"  >
                 <table>
                     <bean:size id="paramsSize" name="AdvanceSearchForm" property="params" />
-                    <logic:greaterThan value="1" name="paramsSize"  >
-                    <tr style="margin: 5px;">
-                        <td>
-                        <bean:message key="text.operator" />
-                        </td>
-                        
-                        <td>
-
-                            <html:select property="isAndOperator" name="AdvanceSearchForm">
-                                <html:option value="true"><bean:message key="operator.and" /></html:option>
-                                <html:option value="false"><bean:message key="operator.or" /></html:option>
-                            </html:select>
-
-                        </td>
-                        
-                    </tr>
-                    <tr></tr>
-                    <br>
-                    </logic:greaterThan>
                     <logic:iterate id="param" name="AdvanceSearchForm" property="params" indexId="id">
 
                         <tr style="margin: 5px;">

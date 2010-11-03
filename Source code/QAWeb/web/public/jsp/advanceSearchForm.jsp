@@ -16,21 +16,6 @@
 <html:form action="/advanceSearch"  >
                 <table>
                     <bean:size id="paramsSize" name="AdvanceSearchForm" property="params" />
-                    <logic:greaterThan value="1" name="paramsSize"  >
-                    <tr style="margin: 5px;">
-                        <td>
-                        <bean:message key="text.operator" />
-                        </td>
-                        <td>
-                        <html:select property="isAndOperator" name="AdvanceSearchForm">
-                            <html:option value="true"><bean:message key="operator.and" /></html:option>
-                            <html:option value="false"><bean:message key="operator.or" /></html:option>
-                        </html:select>
-                        </td>
-                    </tr>
-                    <tr></tr>
-                    <br>
-                    </logic:greaterThan>
                     <logic:iterate id="param" name="AdvanceSearchForm" property="params" indexId="id">
 
                         <tr style="margin: 5px;">
@@ -60,7 +45,7 @@
                                         <html:select property="param[${id}].value" name="AdvanceSearchForm">
                                             <html:option value=""><c:out value=""/></html:option>
                                             <logic:iterate id="value_s" property="column.defaultValuesSet" name="param">
-                                                <html:option value="${value_s}"><c:out value="${fn:toUpperCase(value_s)}"/></html:option>
+                                                <html:option value="${value_s}"><c:out value="${fn:toLowerCase(value_s)}"/></html:option>
                                             </logic:iterate>
                                             
                                         </html:select>

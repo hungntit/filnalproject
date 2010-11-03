@@ -3,7 +3,7 @@
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///D:/IT/Final%20Project/DatabaseQAConfig/config.xsd">
     <table table-alias="publication"> <!-- Tên do người dùng đặt thay thế cho dblp_pub_new -->
         <table-name>dblp_pub_new</table-name>
-        <field type="String" field-alias="author" visible="false">
+        <field type="String" field-alias="author" visible="false" relation="related table">
             <!--Thông tin này không được hiển thị cho người dùng-->
             <relation>
                 <relation-name>has author</relation-name> <!--Thiết lập các loại quan hệ chính sẽ xuất hiện trong câu hỏi -->
@@ -19,7 +19,7 @@
             </relation>          
         </field>
         
-        <field type="String" field-alias="title" visible="true">
+        <field type="String" field-alias="title" visible="true" relation="has attribute">
             <relation>
                 <relation-name>has title</relation-name> 
                 <relation-name>has heading</relation-name> 
@@ -28,7 +28,7 @@
             <field-name>title</field-name>
         </field>
         
-        <field type="String" field-alias="source" visible="true">
+        <field type="String" field-alias="source" visible="true" relation="has attribute">
             <relation>
                 <relation-name>has source</relation-name>
                 <relation-name>from</relation-name>
@@ -41,7 +41,7 @@
         <!-- ................... -->
         <!-- ................... -->
         
-        <field type="Int" field-alias="year" visible="true">
+        <field type="Int" field-alias="year" visible="true" relation="has attribute">
             <relation>
                 <relation-name>has year</relation-name>
                 <relation-name>in</relation-name>
@@ -51,14 +51,14 @@
             <field-name>year</field-name>
         </field>
         
-        <field type="String" field-alias="type" visible="true">
+        <field type="String" field-alias="type" visible="true" relation="has attribute">
             <relation>
                 <relation-name>has type</relation-name>
             </relation>
             <field-name>type</field-name>
         </field>
         
-        <field type="String" field-alias="publisher" visible="true">
+        <field type="String" field-alias="publisher" visible="true" relation="has attribute">
             <relation>
                 <relation-name>has publisher</relation-name>
                 <relation-name>be publish</relation-name>                

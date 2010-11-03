@@ -10,6 +10,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class XMLReader {
+        private static final String RELATION = "relation";
+        
 	private static final String REVERSED_RELATION = "reversed-relation";
 
 	private static final String FIELD = "field";
@@ -40,6 +42,7 @@ public class XMLReader {
 	public String relationWordMapping(String word) {
 		String firstObj = null;
 		String secondObj = null;
+                String rel = null;
 		boolean isReverse = false;
 		Node temp = null;
 		Node n = null;
@@ -77,14 +80,16 @@ public class XMLReader {
 					&& temp.getAttributes().getNamedItem(FIELD_ALIAS) != null) {
 				secondObj = temp.getAttributes().getNamedItem(FIELD_ALIAS)
 						.getNodeValue();
+                                rel = temp.getAttributes().getNamedItem(RELATION)
+						.getNodeValue();
 			}
 			temp = temp.getParentNode();
 		}
 		
 		if (!isReverse) {
-			return firstObj + "-" + word + "-" + secondObj;
+			return firstObj + "-" + rel + "-" + secondObj;
 		} else {
-			return secondObj + "-" + word + "-" + firstObj;
+			return secondObj + "-" + rel + "-" + firstObj;
 		}
 	}
 }
