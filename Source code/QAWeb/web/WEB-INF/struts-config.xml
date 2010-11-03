@@ -47,6 +47,7 @@
         
         <action path="/Welcome" forward=".qadb-1"/>
         <action path="/searchPage" forward=".searchPage"/>
+        <action path="/qaSearchPage" forward=".qaSearchPage"/>
         <action path="/advanceSearchPage" forward=".advanceSearchPage"/>
         <action path="/Locale" type="uit.qabpss.action.languageSelectAction" parameter="method" validate="false"/>
         <action path="/publicationList"

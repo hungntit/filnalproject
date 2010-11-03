@@ -19,7 +19,7 @@
                 <html:form action="/search" focus="keyWord" >
                     <table style="width: 100%;">
                         <tr style="margin: 5px;">
-                            <td><bean:message key="text.search"/></td>
+                            <td width="80"><bean:message key="text.search"/></td>
                             <td align="left">
                                 <html:select property="type" >
                                     <html:option value="All" ><bean:message key="text.all"/></html:option>
@@ -30,9 +30,9 @@
                             </td>
                         </tr>
                         <tr style="margin: 5px;">
-                            <td><bean:message key="text.input"/></td>
-                            <td><html:text property="keyWord" size="60"/></td>
-                            <td><html:image property="submit" srcKey="image.submit" altKey="image.submit.alttext" onclick="showLoadingPage();"/></td>
+                            <td ><bean:message key="text.input"/></td>
+                            <td width="60"><html:text property="keyWord" size="60"/></td>
+                            <td align="left"><html:image property="submit" srcKey="image.submit" altKey="image.submit.alttext" onclick="showLoadingPage();"/></td>
                         </tr>
                         <tr>
                             <td>Max Items</td>

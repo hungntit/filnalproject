@@ -13,16 +13,17 @@
                 <relation-name>be compose</relation-name>
                 <reversed-relation>write</reversed-relation>
                 <reversed-relation>compose</reversed-relation>
-				<reversed-relation>has write</reversed-relation>
-				<reversed-relation>has compose</reversed-relation>                
-                <mapping-table>pub_author</mapping-table> <!-- Thông tin ánh xạ -->
-            </relation>          
+                <reversed-relation>has write</reversed-relation>
+                <reversed-relation>has compose</reversed-relation>
+                <mapping-table>author</mapping-table> <!-- Thông tin ánh xạ -->
+            </relation>
+            <field-name>author</field-name>
         </field>
         
         <field type="String" field-alias="title" visible="true" relation="has attribute">
             <relation>
-                <relation-name>has title</relation-name> 
-                <relation-name>has heading</relation-name> 
+                <relation-name>has title</relation-name>
+                <relation-name>has heading</relation-name>
                 <!-- Vì thuộc tính này không được ánh xạ thông qua table nào khác nên nó sẽ không có mapping-table hoặc related-table -->
             </relation>
             <field-name>title</field-name>
@@ -61,7 +62,7 @@
         <field type="String" field-alias="publisher" visible="true" relation="has attribute">
             <relation>
                 <relation-name>has publisher</relation-name>
-                <relation-name>be publish</relation-name>                
+                <relation-name>be publish</relation-name>
                 <relation-name>be release</relation-name>
                 <reversed-relation>publish</reversed-relation>
                 <reversed-relation>has publish</reversed-relation>
@@ -73,14 +74,14 @@
         
         <primary-key>id</primary-key>
         
-    </table>  
+    </table>
     
     <database-name>dblp</database-name> 	
  
     <mapping-table>
+        <name>author</name>
         <mapping-table-name>dblp_author_ref_new</mapping-table-name> <!-- Tên table mapping là dblp_author_ref_new trong database -->
-        <name>pub_author</name>
         <table-key>pub_id</table-key>
         <related-table-key>author</related-table-key>
-	</mapping-table>
+    </mapping-table>
 </database>
