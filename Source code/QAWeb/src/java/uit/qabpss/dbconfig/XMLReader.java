@@ -10,14 +10,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class XMLReader {
-
-    private static final String RELATION = "relation";
-    private static final String REVERSED_RELATION = "reversed-relation";
-    private static final String FIELD = "field";
-    private static final String FIELD_ALIAS = "field-alias";
-    private static final String TABLE = "table";
-    private static final String TABLE_ALIAS = "table-alias";
-    private static final String RELATION_NAME = "relation-name";
+    public static final String PRIMARYKEY = "primary-key";
+    public static final String TABLE = "table";
+    public static final String TABLENAME = "table-name";
+    public static final String RELATION = "relation";
+    public static final String REVERSED_RELATION = "reversed-relation";
+    public static final String FIELD = "field";
+    public static final String FIELD_ALIAS = "field-alias";
+    public static final String TABLE_ALIAS = "table-alias";
+    public static final String RELATION_NAME = "relation-name";
     private static final String PATH = "xmlconfig\\rel_config.xml";
     public Document doc = null;
 
@@ -85,18 +86,28 @@ public class XMLReader {
         }
     }
 
-    public String getDBTableName(String xmlTableName) {
-        String tbName = null;
+    public String getValueElement(String aliasTableName,String tagName){
+        String result = null;
+        if(aliasTableName.isEmpty() || tagName.isEmpty()){
+            return null;
+        }
+        
+        try{
         doc.getDocumentElement().normalize();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
         Node n = null;
         // get relation from tags relation name
-        NodeList nodeLst = doc.getElementsByTagName("table");        
+        NodeList nodeLst = doc.getElementsByTagName(TABLE);
         for (int i = 0; i < nodeLst.getLength(); i++) {
             n = nodeLst.item(i);            
-            if (xmlTableName.equals(n.getAttributes().getNamedItem(TABLE_ALIAS).getNodeValue())) {                 
-                tbName = n.getOwnerDocument().getElementsByTagName("table-name").item(0).getTextContent();
+            if (aliasTableName.equals(n.getAttributes().getNamedItem(TABLE_ALIAS).getNodeValue())) {
+                result = n.getOwnerDocument().getElementsByTagName(tagName).item(0).getTextContent();
             }
         }
-        return tbName;
+        return result;
     }
+    
 }
