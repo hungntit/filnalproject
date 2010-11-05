@@ -45,7 +45,7 @@ public class loadParamAction extends org.apache.struts.action.Action {
         {
             table   =   advanceSearchForm.getTableInfo();
             if(table == null)
-                table =   DBInfoUtil.getDBInfo().getTables().get(0);
+                table =   DBInfoUtil.getDBInfo().getTables().get(1);
         }
         else
         {

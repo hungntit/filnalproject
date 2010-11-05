@@ -23,10 +23,7 @@ List<TableInfo> tables  =   DBInfoUtil.getDBInfo().getTables();
 request.setAttribute("tables", tables);
 %>
 <div>
-        <div>
-            <script type="text/javascript">
-                retrieveURL(' loadParams.do?tbl=Publication');
-            </script>
+        <div class="box_search">
             <span style="color: red;font-weight: bold">
                 <html:errors/>
             </span>

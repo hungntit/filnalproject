@@ -75,7 +75,7 @@
                 <c:if test="${publications != null}">
                     <display:table id="data" name="${publications}" requestURI="" pagesize="${pagesize}" >                       
                         <display:column>
-                            <a href='./showPubDetail.do?id=${data.id}' style="font-size: 20px;line-height: 22px;">${data_rowNum}. ${data.title}</a><br>
+                            <a href='./showPubDetail.do?id=${data.id}' style="font-size: 16px;line-height: 22px;">${data_rowNum}. ${data.title}</a><br>
                             <table  style="width: 100%;">
                                 <tr>
                                     <td class="left_col"><bean:message key="text.authors"/></td>
