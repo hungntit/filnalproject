@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Created with Liquid XML Studio Developer Edition (Trial) 8.1.5.2538 (http://www.liquid-technologies.com) -->
+
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///D:/IT/Final%20Project/DatabaseQAConfig/config.xsd">
     <table table-alias="publication"> <!-- Tên do người dùng đặt thay thế cho dblp_pub_new -->
         <table-name>dblp_pub_new</table-name>
         <field type="String" field-alias="author" visible="false" relation="related table">
             <!--Thông tin này không được hiển thị cho người dùng-->
             <relation>
-                <relation-name>has author</relation-name> <!--Thiết lập các loại quan hệ chính sẽ xuất hiện trong câu hỏi -->
+                <relation-name>has author</relation-name> 
                 <relation-name>has writer</relation-name>
                 <relation-name>has composer</relation-name>
                 <relation-name>be write</relation-name>
@@ -14,8 +14,8 @@
                 <reversed-relation>write</reversed-relation>
                 <reversed-relation>compose</reversed-relation>
                 <reversed-relation>has write</reversed-relation>
-                <reversed-relation>has compose</reversed-relation>
-                <mapping-table>author</mapping-table> <!-- Thông tin ánh xạ -->
+                <reversed-relation>has compose</reversed-relation> 
+                <related-table>author</related-table>               
             </relation>
             <field-name>author</field-name>
         </field>
@@ -24,7 +24,6 @@
             <relation>
                 <relation-name>has title</relation-name>
                 <relation-name>has heading</relation-name>
-                <!-- Vì thuộc tính này không được ánh xạ thông qua table nào khác nên nó sẽ không có mapping-table hoặc related-table -->
             </relation>
             <field-name>title</field-name>
         </field>
@@ -37,11 +36,7 @@
             </relation>
             <field-name>source</field-name>
         </field>
-        
-        <!-- Các thuộc tính khác -->
-        <!-- ................... -->
-        <!-- ................... -->
-        
+              
         <field type="Int" field-alias="year" visible="true" relation="has attribute">
             <relation>
                 <relation-name>has year</relation-name>
@@ -78,10 +73,9 @@
     
     <database-name>dblp</database-name> 	
  
-    <mapping-table>
+    <related-table>
         <name>author</name>
-        <mapping-table-name>dblp_author_ref_new</mapping-table-name> <!-- Tên table mapping là dblp_author_ref_new trong database -->
+        <related-table-name>dblp_author_ref_new</related-table-name> 
         <table-key>pub_id</table-key>
-        <related-table-key>author</related-table-key>
-    </mapping-table>
+    </related-table>
 </database>

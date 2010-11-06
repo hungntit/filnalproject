@@ -6,6 +6,7 @@
 package uit.qabpss.dbconfig;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import uit.qabpss.core.search.UtimateSearch;
 
@@ -17,6 +18,7 @@ public class ColumnInfo implements Serializable{
 
     public ColumnInfo() {
         isVisible   =   true;
+        relation = new ArrayList<Relation>();
     }
 
     public ColumnInfo(String name, String aliasName, Type type) {
@@ -30,11 +32,30 @@ public class ColumnInfo implements Serializable{
     protected boolean isVisible;
     protected String aliasName;
     protected Type type;
-    protected Relation relation;
+    protected List<Relation> relation;
     protected  List<String> defaultValuesSet  = null;
+    protected  String relationType;
+    protected String relatedTable;
+    protected String mappingTable;
 
     public  void setDefaultValuesSet(String columnName,String tableName) {
         defaultValuesSet = UtimateSearch.getListDefaultValueFromColumn(tableName, columnName);
+    }
+
+    public String getMappingTable() {
+        return mappingTable;
+    }
+
+    public void setMappingTable(String mappingTable) {
+        this.mappingTable = mappingTable;
+    }
+
+    public String getRelatedTable() {
+        return relatedTable;
+    }
+
+    public void setRelatedTable(String relatedTable) {
+        this.relatedTable = relatedTable;
     }
     
     /**
@@ -46,22 +67,16 @@ public class ColumnInfo implements Serializable{
         return defaultValuesSet;
     }
 
-    /**
-     * Get the value of relation
-     *
-     * @return the value of relation
-     */
-    public Relation getRelation() {
+    public List<Relation> getRelation() {
         return relation;
     }
 
-    /**
-     * Set the value of relation
-     *
-     * @param relation new value of relation
-     */
-    public void setRelation(Relation relation) {
+    public void setRelation(List<Relation> relation) {
         this.relation = relation;
+    }
+
+    public void addRelation(Relation relation) {
+        this.relation.add(relation);
     }
 
     /**
@@ -78,8 +93,13 @@ public class ColumnInfo implements Serializable{
      *
      * @param type new value of type
      */
-    public void setType(Type type) {
-        this.type = type;
+    public void setType(String type) {
+        if("String".equals(type)){
+            this.type = Type.STRING;
+        }
+        if("Int".equals(type)){
+            this.type = Type.INTEGER;
+        }
     }
 
  
@@ -88,8 +108,12 @@ public class ColumnInfo implements Serializable{
         return isVisible;
     }
 
-    public void setIsVisible(boolean isVisible) {
-        this.isVisible = isVisible;
+    public void setIsVisible(String isVisible) {
+        if("true".equals(isVisible)){
+            this.isVisible = true;
+        } else{
+            this.isVisible = false;
+        }
     }
 
     /**
@@ -127,6 +151,14 @@ public class ColumnInfo implements Serializable{
      */
     public void setAliasName(String aliasName) {
         this.aliasName = aliasName;
+    }
+
+    public String getRelationType() {
+        return relationType;
+    }
+
+    public void setRelationType(String relationType) {
+        this.relationType = relationType;
     }
 
     @Override
@@ -170,6 +202,7 @@ public class ColumnInfo implements Serializable{
     public String toString() {
         return this.name;
     }
+
 
 
 }
