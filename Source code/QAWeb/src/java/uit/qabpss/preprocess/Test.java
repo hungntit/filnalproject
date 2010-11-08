@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package uit.qabpss.preprocess;
+package uit.qadpss.preprocess;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ public class Test {
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
         String[] questions = new String[]{
-            "Which books were written by Rafiul Ahad and Amelia Carlson in 2010 ? ",
+           "Which books were written by Rafiul Ahad and Amelia Carlson in 2010 ? ",
             "Which books were written by Rafiul Ahad from 1999 to 2010 ?",
             "Which books were published by O'Reilly  in 1999 ?",
             "How many papers were written by Rafiul Ahad ?",
@@ -35,8 +35,8 @@ public class Test {
             "What book did Philip K. Chan write from 1999 to 2000?",
             "What are the titles of the books published by O’reilly in 1999 ?",
             "What composer wrote \" Java 2D Graphics\"",
-            "What books has isbn  1-56592-484-3",
-            "What books has doi  10.1145/360271.360274",
+            "What books has isbn 1-56592-484-3",
+            "What books has doi 10.1145/360271.360274",
             "What composer wrote books from 1999 in ACM?",
             "Who is the author of the paper \"Question Classification using Head Words and their Hypernyms.\"?",
             "Who wrote \"Question Classification using Head Words and their Hypernyms.\"?",
@@ -47,6 +47,7 @@ public class Test {
             Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
             tokens = SentenseUtil.optimizePosTags(tokens);
             System.out.println(SentenseUtil.tokensToStr(tokens));
+
         }
     }
 }
