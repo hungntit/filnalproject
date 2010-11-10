@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package uit.qadpss.preprocess;
+package uit.qabpss.preprocess;
 
 import edu.mit.jwi.Dictionary;
 import edu.mit.jwi.item.IIndexWord;
@@ -31,7 +31,7 @@ public class SentenseUtil {
     private static ParserTagger    parserTagger ;
     static {
         try {
-            initWordnetDictionary("C:\\Program Files\\WordNet\\2.1");
+            initWordnetDictionary("WordNet");
             initPosTagger();
         } catch (IOException ex) {
             Logger.getLogger(SentenseUtil.class.getName()).log(Level.SEVERE, null, ex);
