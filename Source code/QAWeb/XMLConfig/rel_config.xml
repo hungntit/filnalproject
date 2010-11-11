@@ -53,6 +53,22 @@
             </relation>
             <field-name>type</field-name>
         </field>
+
+        <field type="String" field-alias="isbn" visible="true" relation="has attribute">
+            <relation>
+                <relation-name>have</relation-name>
+                <relation-name>has</relation-name>
+            </relation>
+            <field-name>isbn</field-name>
+        </field>
+
+        <field type="String" field-alias="doi" visible="true" relation="has attribute">
+            <relation>
+                <relation-name>have</relation-name>
+                <relation-name>has</relation-name>
+            </relation>
+            <field-name>isbn</field-name>
+        </field>
         
         <field type="String" field-alias="publisher" visible="true" relation="has attribute">
             <relation>
