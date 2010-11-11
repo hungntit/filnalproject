@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import uit.qabpss.preprocess.SentenseUtil;
 import uit.qabpss.preprocess.Token;
 import uit.qabpss.preprocess.TripleWord;
+import uit.qabpss.util.hibernate.HibernateUtil;
 
 /**
  *
@@ -33,10 +34,11 @@ public class RelationReg {
         "NNS TO CD --> NNS,TO,CD",
         "NNS IN NNP --> NNS,IN,NNP",
         "NN VB NNS --> NN,VB,NNS",
-        "NN IN NNP --> NN,IN,NNP",
+        "NN IN NNP --> NN,IN,NNP",        
         "NN IN DT NN NNP--> NN,IN,NNP",
         "NN VB NNP --> NN,VB,NNP",
-        "NN IN CD --> NN,IN,CD",};
+        "NN IN CD --> NN,IN,CD",
+    "NN TO CD --> NN,TO,CD",};
 
     public List<TripleWord> extractTripleWordRel(Token[] tokens) {
         List<TripleWord> result = new ArrayList<TripleWord>();
@@ -111,10 +113,30 @@ public class RelationReg {
                 result.add(t);
             }
         }
+        // recognize remain entities which system does not find
+        if (tempTokens.length > 0) {
+            List<Token> remaintokens = new ArrayList<Token>();
+            List<TripleWord> remainTriple = new ArrayList<TripleWord>();
+            for (int i = 0; i < tempTokens.length; i++) {
+                Token token = tempTokens[i];
+                if ("NNP".equals(token.getPos_value()) || "CD".equals(token.getPos_value())) {
+                    remaintokens.add(token);
+                }
+            }
+            if (remaintokens.size() > 0) {
+                for (int i = 0; i < remaintokens.size(); i++) {
+                    Token token = remaintokens.get(i);
+                    TripleWord t = HibernateUtil.getTripleFromValue(token.getValue());
+                    if (t != null) {
+                        result.add(t);
+                    }
+                }
+            }
+        }
         return result;
     }
 
-    public Token[] removeToken(Token[] tokens, Token tokenRe) {
+    private Token[] removeToken(Token[] tokens, Token tokenRe) {
         Token[] result = new Token[tokens.length - 1];
         int count = -1;
         boolean hasRemove = false;
@@ -131,6 +153,12 @@ public class RelationReg {
         }
         return result;
     }
+
+//    public List<TripleWord> regcognizeRemainNER(List<Token> remains){
+//        List<TripleWord> ls = new ArrayList<TripleWord>();
+//
+//        return null;
+//    }
 
     public static void main(String[] args) throws IOException {
         //Token[] tokens = SentenseUtil.formatNerWordInQuestion("Who is the author of the paper \"Question Classification using Head Words and their Hypernyms.\"?");

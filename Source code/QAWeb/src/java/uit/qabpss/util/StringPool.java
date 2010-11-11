@@ -139,6 +139,7 @@ public class StringPool {
         public static final String BOOLEAN  =   "BOOLEAN";
         public static final String CHARACTER  =   "CHARACTER";
         public static final String DATETIME  =   "DATETIME";
+        public static final String CODE  =   "CODE";
 
 
 }

@@ -19,6 +19,8 @@ public class Type implements Serializable {
         public static final Type DOUBLE = new Type(StringPool.DOUBLE);
         public static final Type BOOLEAN = new Type(StringPool.BOOLEAN);
         public static final Type CHARACTER = new Type(StringPool.CHARACTER);
+        public static final Type CODE = new Type(StringPool.CODE);
+        
         private Type(String type)
         {
             this.type   =   type;

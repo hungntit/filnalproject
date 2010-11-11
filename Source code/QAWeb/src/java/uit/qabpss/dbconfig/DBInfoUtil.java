@@ -21,27 +21,34 @@ public class DBInfoUtil {
         TableInfo dblp_author_ref_new   =   new TableInfo("dblp_author_ref_new", "Author");
         dblp_author_ref_new.setPrimaryKey("author");
         dblp_author_ref_new.setClassTable(Author.class);
+        //clolumn at table Author
         ColumnInfo author               =   new ColumnInfo("author", "Author", Type.STRING);
-        ColumnInfo editor               =   new ColumnInfo("editor", "Editor", Type.BOOLEAN);
-        ColumnInfo source               =   new ColumnInfo("source", "Source", Type.STRING);
+        //clolumn at table publication        
         TableInfo dblp_pub_new          =   new TableInfo("dblp_pub_new", "Publication");
-        ColumnInfo title                =   new ColumnInfo("title", "Title", Type.STRING);
+        ColumnInfo source               =   new ColumnInfo("source", "Source", Type.STRING);
+        ColumnInfo titleSignature       =   new ColumnInfo("titleSignature", "Title", Type.STRING);
         ColumnInfo publisher            =   new ColumnInfo("publisher", "Publisher", Type.STRING);
         ColumnInfo year                 =   new ColumnInfo("year", "Year", Type.INTEGER);
         ColumnInfo type                 =   new ColumnInfo("type", "Type", Type.STRING);
+        ColumnInfo isbn                 =   new ColumnInfo("isbn", "Type", Type.CODE);
+        ColumnInfo doi                  =   new ColumnInfo("doi", "Type", Type.CODE);
+        
         type.setDefaultValuesSet(dblp_pub_new.getName(), type.name);
         
         dblp_pub_new.setClassTable(Publication.class);
         dblp_pub_new.setPrimaryKey("id");
-        
-        dblp_author_ref_new.addColumn(editor);
-        dblp_author_ref_new.addColumn(author);
 
-        dblp_pub_new.addColumn(year);
-        dblp_pub_new.addColumn(title);
+        //add column to table
+        dblp_author_ref_new.addColumn(author);
+        
+        //add column to table
+        dblp_pub_new.addColumn(titleSignature);
+        dblp_pub_new.addColumn(year);        
         dblp_pub_new.addColumn(publisher);
         dblp_pub_new.addColumn(source);
         dblp_pub_new.addColumn(type);
+        dblp_pub_new.addColumn(isbn);
+        dblp_pub_new.addColumn(doi);
         dbinfo    =   new DBInfo("dblp");
         dbinfo.addTable(dblp_author_ref_new);
         dbinfo.addTable(dblp_pub_new);
