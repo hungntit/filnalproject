@@ -394,6 +394,31 @@ public class SentenseUtil {
         result        = processForPattern(result,"(VBZ|VBP)-1-->VB-1");                     // 	VBZ/VBP(1)    VB(1).
         result        = optimizeVerb(result);
 
+        for (int i = 0; i < result.length; i++) {
+            Token token = result[i];
+            if(token.getPos_value().equals("DT")
+                    && (token.getValue().equals("a") || token.getValue().equals("an") || token.getValue().equals("the"))){
+                result = removeToken(result, token);
+            }
+        }
+        return result;
+    }
+
+    public static Token[] removeToken(Token[] tokens, Token tokenRe) {
+        Token[] result = new Token[tokens.length - 1];
+        int count = -1;
+        boolean hasRemove = false;
+        for (int i = 0; i < tokens.length; i++) {
+            Token token = tokens[i];
+            if (!token.getValue().equals(tokenRe.getValue()) || hasRemove == true) {
+                count++;
+                result[count] = new Token();
+                result[count].setValue(token.getValue());
+                result[count].setPos_value(token.getPos_value());
+            } else {
+                hasRemove = true;
+            }
+        }
         return result;
     }
 }

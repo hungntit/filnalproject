@@ -46,8 +46,7 @@ public class ExtractTriple {
             String relWord = rulesTriples[1].trim();
             String obj2 = rulesTriples[2].trim();
             //
-            String posString = SentenseUtil.tokensToPosTagsStr(tempTokens);
-            System.out.println(posString);          
+            String posString = SentenseUtil.tokensToPosTagsStr(tempTokens);        
             // Check the formular is matched
             Pattern pattern = Pattern.compile(in);
             if (pattern.matcher(posString).find()) {
@@ -66,15 +65,15 @@ public class ExtractTriple {
                 String[] relWords = relWord.split(" ");
                 for (int i = 0; i < tempTokens.length; i++) {
                     Token token = tempTokens[i];
-                    for (int j = 0; j < relWords.length; j++) {
+                    for (int j = 0; j < relWords.length; j++) {                       
                         if (token.getPos_value().equals(relWords[j])) {
-                            if (!token.getValue().equals(DO) || token.getValue().equals(DOES)) {
+                            if (!token.getValue().equals(DO) || token.getValue().equals(DOES)) {                                
                                 t.setRelationWord(t.getRelationWord() + " " + token.getValue());
-                                numRel++;
+                                numRel++;                                
                             }
+                            t.setRelationWord(t.getRelationWord().trim());
+                            break;
                         }
-                        t.setRelationWord(t.getRelationWord().trim());
-                        break;
                     }
                     if (numRel == relWords.length) {
                         break;
@@ -103,7 +102,7 @@ public class ExtractTriple {
                             }
                         }
                         if (pos.equals(tk.getPos_value())) {
-                            tempTokens = removeToken(tempTokens, tk);
+                            tempTokens = SentenseUtil.removeToken(tempTokens, tk);
                             break;
                         }
                     }
@@ -132,61 +131,38 @@ public class ExtractTriple {
         }
         return result;
     }
-
-    private Token[] removeToken(Token[] tokens, Token tokenRe) {
-        Token[] result = new Token[tokens.length - 1];
-        int count = -1;
-        boolean hasRemove = false;
-        for (int i = 0; i < tokens.length; i++) {
-            Token token = tokens[i];
-            if (!token.getValue().equals(tokenRe.getValue()) || hasRemove == true) {
-                count++;
-                result[count] = new Token();
-                result[count].setValue(token.getValue());
-                result[count].setPos_value(token.getPos_value());
-            } else {
-                hasRemove = true;
-            }
-        }
-        return result;
-    }
-
-//    public List<TripleWord> regcognizeRemainNER(List<Token> remains){
-//        List<TripleWord> ls = new ArrayList<TripleWord>();
-//
-//        return null;
-//    }
-
+  
     public static void main(String[] args) throws IOException {
-        //Token[] tokens = SentenseUtil.formatNerWordInQuestion("Who is the author of the paper \"Question Classification using Head Words and their Hypernyms.\"?");
-        //Token[] tokens = SentenseUtil.formatNerWordInQuestion("Who published books from 1999 to 2000 ?");
         String[] questions = new String[]{
-                       "Which books were written by Rafiul Ahad and Amelia Carlson in 2010 ? ",        //need to fix
-                        "Which books were written by Rafiul Ahad from 1999 to 2010 ?",
-                        "Which books were published by O'Reilly  in 1999 ?",
-                        "How many papers were written by Rafiul Ahad ?",
-                        "Who write books in 1999 ?",
-                        "Who write books from 1999 to 2010 ?",
-                        "How many papers were written by Rafiul Ahad in 2010 ?",
-                        "Who published books from 1999 to 2000 ?",
-                        "Who published books in 1999 ?",
-                        "What are titles of books written by Marcus Thint ?",
-                        "What book did Jennifer Widom write ?",
-                        "What books did Jennifer Widom write ?",                                          //test fail
-                        "Who is the author of  \"Working Models for Uncertain Data\"",
-                        "What book did Philip K. Chan write in 1999 ?",                                   //test fail
-                        "What book did Philip K. Chan write from 1999 to 2000?",
-                        "What are the titles of the books published by O’reilly in 1999 ?",
-                        "What composer wrote \" Java 2D Graphics\"",
-                        "What books has isbn 1-56592-484-3",
-                        "What books has doi 10.1145/360271.360274",
-                        "What composer wrote books from 1999 in ACM?",
-                        "Who is the author of the paper \"Question Classification using Head Words and their Hypernyms.\"?",
-                        "Who wrote \"Question Classification using Head Words and their Hypernyms.\"?",
-                        "What books were written by \"Philip K. Chan\" from ACM?",
-                        "How many publisher did \"Philip K. Chan\" works with?"
+           "Who is the author of the book, \"Question Classification using Head Words and their Hypernyms.\"?",
+//                    "What publications have resulted from the TREC?",
+//                       "Which books were written by Rafiul Ahad and Amelia Carlson in 2010 ? ",        //need to fix
+//                        "Which books were written by Rafiul Ahad from 1999 to 2010 ?",
+//                        "Which books were published by O'Reilly  in 1999 ?",
+//                        "How many papers were written by Rafiul Ahad ?",
+//                        "Who write books in 1999 ?",
+//                        "Who write books from 1999 to 2010 ?",
+//                        "How many papers were written by Rafiul Ahad in 2010 ?",
+//                        "Who published books from 1999 to 2000 ?",
+//                        "Who published books in 1999 ?",
+//                        "What are titles of books written by Marcus Thint ?",
+//                        "What book did Jennifer Widom write ?",
+//                        "What books did Jennifer Widom write ?",                                          //test fail
+//                        "Who is the author of  \"Working Models for Uncertain Data\"",
+//                        "What book did Philip K. Chan write in 1999 ?",                                   //test fail
+//                        "What book did Philip K. Chan write from 1999 to 2000?",
+//                        "What are the titles of the books published by O’reilly in 1999 ?",
+//                        "What composer wrote \" Java 2D Graphics\"",
+//                        "What books has isbn 1-56592-484-3",
+//                        "What books has doi 10.1145/360271.360274",
+//                        "What composer wrote books from 1999 in ACM?",
+//                        "Who is the author of the paper \"Question Classification using Head Words and their Hypernyms.\"?",
+//                        "Who wrote \"Question Classification using Head Words and their Hypernyms.\"?",
+//                        "What books were written by \"Philip K. Chan\" from ACM?",
+//                        "How many publisher did \"Philip K. Chan\" works with?"
         };
         int count =1;
+        HibernateUtil.getSessionFactory();
         for (String question : questions) {
             Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
             tokens = SentenseUtil.optimizePosTags(tokens);
@@ -194,7 +170,7 @@ public class ExtractTriple {
             ExtractTriple exTriple = new ExtractTriple();
             List<TripleWord> t = exTriple.extractTripleWordRel(tokens);
             for (int i = 0; i < t.size(); i++) {
-                System.out.println("<" + t.get(i).getFirstObject() + "," + t.get(i).getRelationWord() + "," + t.get(i).getSecondObject() + ">");
+                System.out.println("< " + t.get(i).getFirstObject() + " , " + t.get(i).getRelationWord() + " , " + t.get(i).getSecondObject() + " >");
             }
             count++;
             System.out.println("------------------------------------");
