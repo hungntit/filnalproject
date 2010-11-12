@@ -6,17 +6,27 @@
 package uit.qabpss.preprocess;
 
 import java.util.List;
+import uit.qabpss.extracttriple.ExtractTriple;
 
 /**
  *
  * @author ThuanHung
  */
-public class TripleWord {
+public final class TripleWord {
 
     protected String firstObject;
+    protected String firstObjPos;
     protected String relationWord;
     protected String secondObject;
+    protected String secondObjPos;
     protected String operator;
+
+    public TripleWord() {
+        setFirstObject("");
+        setSecondObject("");
+        setRelationWord("");
+        setOperator("=");
+    }
 
     public TripleWord(String firstObject, String relationWord, String secondObject) {
         this.firstObject = firstObject;
@@ -100,12 +110,28 @@ public class TripleWord {
         this.operator = operator;
     }
 
+    public String getFirstObjPos() {
+        return firstObjPos;
+    }
+
+    public void setFirstObjPos(String firstObjPos) {
+        this.firstObjPos = firstObjPos;
+    }
+
+    public String getSecondObjPos() {
+        return secondObjPos;
+    }
+
+    public void setSecondObjPos(String secondObjPos) {
+        this.secondObjPos = secondObjPos;
+    }
+
     public static List<TripleWord> getTripleWordFromQuestion(Token[] tokens)
     {
-        String[]  rulesStr  =   new String[]
-        {
-
-        };
-        return null;
+        if(tokens.length==0){
+            return null;
+        }
+        ExtractTriple extractTriple = new ExtractTriple();
+        return extractTriple.extractTripleWordRel(tokens);
     }
 }

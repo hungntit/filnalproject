@@ -14,6 +14,7 @@ import uit.qabpss.dbconfig.Type;
 import uit.qabpss.preprocess.TripleWord;
 
 public class HibernateUtil {
+    
 	private static SessionFactory sessionFactory;
 	
 	static {
@@ -34,21 +35,20 @@ public class HibernateUtil {
             }
             String temp = value;
             TripleWord t = null;
-
+            // check value is number : year
             try {
                 int num = Integer.parseInt(temp);
-                System.out.println("is number");
                 t = checkValueFromDB(value, Type.INTEGER);
                 return t;
             } catch (Exception e) {
                 //do nothing
             }
-
+            // check value is CODE : isbn, doi
             if ((value + " ").matches("[0-9].*")) {
                 t = checkValueFromDB(value, Type.CODE);
                 return t;
             }
-
+            //check to another fields
             t = checkValueFromDB(value, Type.STRING);
             if (t != null) {
                 return t;
@@ -56,19 +56,27 @@ public class HibernateUtil {
             return null;
         }
 
+        public static final String TITLESIGNATURE = "titleSignature";
+        public static final String FROM = "from ";
+        public static final String WHERE = " where ";
+        public static final String EQUAL = " = ";
+        public static final String HAS = "has ";
+        public static final String NN = "NN";
+        public static final String NNP = "NNP";
+        
         private static TripleWord checkValueFromDB(String value,Type type){
             TripleWord t = null;
             String inputValue = "";
             List<TableInfo> tables = DBInfoUtil.getDBInfo().getTables();
-            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-            Session session = sessionFactory.openSession();
+            SessionFactory sesFactory = HibernateUtil.getSessionFactory();
+            Session session = sesFactory.openSession();
             try {
                 for (int i = 0; i < tables.size(); i++) {
                     TableInfo tableInfo = tables.get(i);
                     List<ColumnInfo> columns = tableInfo.getColumns();
                     for (int j = 0; j < columns.size(); j++) {
                         ColumnInfo columnInfo = columns.get(j);
-                        if("titleSignature".equals(columnInfo.getName())){
+                        if(TITLESIGNATURE.equals(columnInfo.getName())){
                             inputValue = inputValue.replace(" ","");
                             inputValue = inputValue.replace(".","");
                             inputValue = inputValue.trim();
@@ -81,15 +89,17 @@ public class HibernateUtil {
                         }
                         if (type.equals(columnInfo.getType())) {
                             List result = new ArrayList();                            
-                            System.out.println("from " + tableInfo.getAliasName() + " where " + columnInfo.getName() + " = " + inputValue);
-                            Query q = session.createQuery("from " + tableInfo.getAliasName() + " where " + columnInfo.getName() + " = " + inputValue);
+                            System.out.println(FROM + tableInfo.getAliasName() + WHERE + columnInfo.getName() + EQUAL + inputValue);
+                            Query q = session.createQuery(FROM + tableInfo.getAliasName() + WHERE + columnInfo.getName() + EQUAL + inputValue);
                             q.setMaxResults(1);
                             result = q.list();
                             if (result.size() > 0) {
-                                t = new TripleWord("", "", "");
-                                t.setFirstObject(tableInfo.getAliasName());
-                                t.setRelationWord("has " + columnInfo.getAliasName().toLowerCase());
+                                t = new TripleWord();
+                                t.setFirstObject(tableInfo.getAliasName().toLowerCase());
+                                t.setFirstObjPos(NN);
+                                t.setRelationWord(HAS + columnInfo.getAliasName().toLowerCase());
                                 t.setSecondObject(value);
+                                t.setSecondObjPos(NNP);
                                 return t;
                             }
                         }

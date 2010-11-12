@@ -8,10 +8,15 @@ package uit.qabpss.preprocess;
  *
  * @author ThuanHung
  */
-public class Token {
+public final class Token {
 
     private String value;
     private String pos_value;
+
+    public Token() {
+        setPos_value("");
+        setValue("");
+    }
 
     /**
      * Get the value of value

@@ -17,29 +17,22 @@ import uit.qabpss.util.hibernate.HibernateUtil;
  *
  * @author aa
  */
-public class RelationReg {
+public class ExtractTriple {
+    public static final String CD = "CD";
+    public static final String DO = "do";
+    public static final String DOES = "does";
+    public static final String NN = "NN";
+    public static final String NNP = "NNP";
+    public static final String NNS = "NNS";
 
-    private static String[] rules = new String[]{
-        "WP VB DT NNS --> WP,VB,NNS",
-        "WP VB DT NN --> WP,VB,NN",
-        "WP VB NNS --> WP,VB,NNS",
-        "WP VB NNP --> WP,VB,NNP",
-        "WP NNS VB NN NNP --> NNS,VB,NNP",
-        "NNS VB VB IN NNP --> NNS,VB VB,NNP",
-        "WP NN VB NNP VB --> NN,VB,NNP",
-        "NNS IN DT NNS --> NNS,IN,NNS",
-        "NNS VBN IN NNP --> NNS,VBN,NNP",
-        "NNS IN CD --> NNS,IN,CD",
-        "NNS TO CD --> NNS,TO,CD",
-        "NNS TO CD --> NNS,TO,CD",
-        "NNS IN NNP --> NNS,IN,NNP",
-        "NN VB NNS --> NN,VB,NNS",
-        "NN IN NNP --> NN,IN,NNP",        
-        "NN IN DT NN NNP--> NN,IN,NNP",
-        "NN VB NNP --> NN,VB,NNP",
-        "NN IN CD --> NN,IN,CD",
-    "NN TO CD --> NN,TO,CD",};
+    private static String[] rules = null;
 
+    public ExtractTriple() {
+        if(rules == null){
+            rules = RuleReader.loadRules();
+        }
+    }
+        
     public List<TripleWord> extractTripleWordRel(Token[] tokens) {
         List<TripleWord> result = new ArrayList<TripleWord>();
         Token[] tempTokens = tokens;
@@ -48,31 +41,34 @@ public class RelationReg {
             String in = inoutStr[0].trim();
             String out = inoutStr[1].trim();
             //get results from formular
-            String obj1 = out.split(",")[0].trim();
-            String relWord = out.split(",")[1].trim();
-            String obj2 = out.split(",")[2].trim();
+            String[] rulesTriples = out.split(",");
+            String obj1 = rulesTriples[0].trim();
+            String relWord = rulesTriples[1].trim();
+            String obj2 = rulesTriples[2].trim();
             //
             String posString = SentenseUtil.tokensToPosTagsStr(tempTokens);
-            System.out.println(posString);
-            Pattern pattern = Pattern.compile(in);
+            System.out.println(posString);          
             // Check the formular is matched
+            Pattern pattern = Pattern.compile(in);
             if (pattern.matcher(posString).find()) {
-                TripleWord t = new TripleWord("", "", "");
+                TripleWord t = new TripleWord();
                 //Put the first object to Triple
                 for (int i = 0; i < tempTokens.length; i++) {
                     Token token = tempTokens[i];
                     if (token.getPos_value().equals(obj1)) {
                         t.setFirstObject(token.getValue());
+                        t.setFirstObjPos(token.getPos_value());
                         break;
                     }
                 }
                 //Put the relationship word to Triple
                 int numRel = 0;
+                String[] relWords = relWord.split(" ");
                 for (int i = 0; i < tempTokens.length; i++) {
                     Token token = tempTokens[i];
-                    for (int j = 0; j < relWord.split(" ").length; j++) {
-                        if (token.getPos_value().equals(relWord.split(" ")[j])) {
-                            if (!token.getValue().equals("do") || token.getValue().equals("does")) {
+                    for (int j = 0; j < relWords.length; j++) {
+                        if (token.getPos_value().equals(relWords[j])) {
+                            if (!token.getValue().equals(DO) || token.getValue().equals(DOES)) {
                                 t.setRelationWord(t.getRelationWord() + " " + token.getValue());
                                 numRel++;
                             }
@@ -80,7 +76,7 @@ public class RelationReg {
                         t.setRelationWord(t.getRelationWord().trim());
                         break;
                     }
-                    if (numRel == relWord.split(" ").length) {
+                    if (numRel == relWords.length) {
                         break;
                     }
                 }
@@ -89,17 +85,20 @@ public class RelationReg {
                     Token token = tempTokens[i];
                     if (token.getPos_value().equals(obj2)) {
                         t.setSecondObject(token.getValue());
+                        t.setSecondObjPos(token.getPos_value());
                         break;
                     }
                 }
-                for (int i = 0; i < in.split(" ").length; i++) {
-                    String pos = in.split(" ")[i];
+                //move the recognied objects out of array except NN,NNS
+                String[] removeObjs = in.split(" ");
+                for (int i = 0; i < removeObjs.length; i++) {
+                    String pos = removeObjs[i];
                     for (int j = 0; j < tempTokens.length; j++) {
                         Token tk = tempTokens[j];
-                        if (pos.equals("NN") || pos.equals("NNS")) {
+                        if (pos.equals(NN) || pos.equals(NNS)) {
                             if (j + 1 < tempTokens.length
-                                    && !tempTokens[j + 1].getPos_value().equals("NN")
-                                    && !tempTokens[j + 1].getPos_value().equals("NNS")) {
+                                    && !tempTokens[j + 1].getPos_value().equals(NN)
+                                    && !tempTokens[j + 1].getPos_value().equals(NNS)) {
                                 break;
                             }
                         }
@@ -109,17 +108,15 @@ public class RelationReg {
                         }
                     }
                 }
-
                 result.add(t);
             }
         }
         // recognize remain entities which system does not find
         if (tempTokens.length > 0) {
-            List<Token> remaintokens = new ArrayList<Token>();
-            List<TripleWord> remainTriple = new ArrayList<TripleWord>();
+            List<Token> remaintokens = new ArrayList<Token>();            
             for (int i = 0; i < tempTokens.length; i++) {
                 Token token = tempTokens[i];
-                if ("NNP".equals(token.getPos_value()) || "CD".equals(token.getPos_value())) {
+                if (NNP.equals(token.getPos_value()) || CD.equals(token.getPos_value())) {
                     remaintokens.add(token);
                 }
             }
@@ -144,7 +141,7 @@ public class RelationReg {
             Token token = tokens[i];
             if (!token.getValue().equals(tokenRe.getValue()) || hasRemove == true) {
                 count++;
-                result[count] = new Token("", "");
+                result[count] = new Token();
                 result[count].setValue(token.getValue());
                 result[count].setPos_value(token.getPos_value());
             } else {
@@ -194,8 +191,8 @@ public class RelationReg {
             Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
             tokens = SentenseUtil.optimizePosTags(tokens);
             System.out.println(count+"/ "+SentenseUtil.tokensToStr(tokens));
-            RelationReg relReg = new RelationReg();
-            List<TripleWord> t = relReg.extractTripleWordRel(tokens);
+            ExtractTriple exTriple = new ExtractTriple();
+            List<TripleWord> t = exTriple.extractTripleWordRel(tokens);
             for (int i = 0; i < t.size(); i++) {
                 System.out.println("<" + t.get(i).getFirstObject() + "," + t.get(i).getRelationWord() + "," + t.get(i).getSecondObject() + ">");
             }
