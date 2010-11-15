@@ -80,7 +80,7 @@ public class XMLReader {
                                     if(RELATION_NAME.equals(rel.getNodeName())){
                                         Relation fieldRel = new Relation();
                                         fieldRel.setRelationName(rel.getTextContent());
-                                        fieldRel.setType(RELATION_NAME);
+                                        fieldRel.setType(RELATION);
                                         colInf.addRelation(fieldRel);
                                     }
                                     if(REVERSED_RELATION.equals(rel.getNodeName())){

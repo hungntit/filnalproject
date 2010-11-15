@@ -113,6 +113,41 @@ public class HibernateUtil {
             return null;
         }
 
+        public static boolean valiateValue(ColumnInfo column,TableInfo table, String value){
+            if (column == null || value.isEmpty()) {
+                return false;
+            }
+            if (column.getType().equals(Type.STRING) && value.matches("[0-9].*")) {
+                return false;
+            }
+            if (column.getType().equals(Type.INTEGER) && !value.matches("[0-9].*")) {
+                return false;
+            }
+            String inputValue = value;
+            SessionFactory sesFactory = HibernateUtil.getSessionFactory();
+            Session session = sesFactory.openSession();
+            if (TITLESIGNATURE.equals(column.getName())) {
+                inputValue = inputValue.replace(" ", "");
+                inputValue = inputValue.replace(".", "");
+                inputValue = inputValue.trim();
+            } else {
+                if (column.getType().equals(Type.STRING) || column.getType().equals(Type.CODE)) {
+                    inputValue = "'" + value + "'";
+                } else {
+                    inputValue = value;
+                }
+            }
+            List result = new ArrayList();
+            System.out.println(FROM + table.getAliasName() + WHERE + column.getName() + EQUAL + inputValue);
+            Query q = session.createQuery(FROM + table.getAliasName() + WHERE + column.getName() + EQUAL + inputValue);
+            q.setMaxResults(1);
+            result = q.list();
+            if (result.size() > 0) {
+                return true;
+            }
+            return false;
+        }
+
         public static void main(String[] args){
 //            TripleWord t = HibernateUtil.getTripleFromValue("1999");
 //             TripleWord t = HibernateUtil.getTripleFromValue("ACM");
