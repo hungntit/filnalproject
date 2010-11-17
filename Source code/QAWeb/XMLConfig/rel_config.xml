@@ -33,6 +33,7 @@
                 <relation-name>has source</relation-name>
                 <relation-name>from</relation-name>
                 <relation-name>in</relation-name>
+                <relation-name>result from</relation-name>
             </relation>
             <field-name>source</field-name>
         </field>

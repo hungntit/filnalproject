@@ -21,6 +21,10 @@ public final class TripleWord {
     protected String secondObjPos;
     protected String operator;
 
+    protected String firstObjHeader;
+    protected String relationWordheader;
+    protected String secondObjHeader;
+
     public TripleWord() {
         setFirstObject("");
         setSecondObject("");
@@ -124,6 +128,30 @@ public final class TripleWord {
 
     public void setSecondObjPos(String secondObjPos) {
         this.secondObjPos = secondObjPos;
+    }
+
+    public String getFirstObjHeader() {
+        return firstObjHeader;
+    }
+
+    public void setFirstObjHeader(String firstObjHeader) {
+        this.firstObjHeader = firstObjHeader;
+    }
+
+    public String getRelationWordheader() {
+        return relationWordheader;
+    }
+
+    public void setRelationWordheader(String relationWordheader) {
+        this.relationWordheader = relationWordheader;
+    }
+
+    public String getSecondObjHeader() {
+        return secondObjHeader;
+    }
+
+    public void setSecondObjHeader(String secondObjHeader) {
+        this.secondObjHeader = secondObjHeader;
     }
 
     public static List<TripleWord> getTripleWordFromQuestion(Token[] tokens)

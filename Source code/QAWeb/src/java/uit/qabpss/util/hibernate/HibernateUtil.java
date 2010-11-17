@@ -89,7 +89,7 @@ public class HibernateUtil {
                         }
                         if (type.equals(columnInfo.getType())) {
                             List result = new ArrayList();                            
-                            System.out.println(FROM + tableInfo.getAliasName() + WHERE + columnInfo.getName() + EQUAL + inputValue);
+//                            System.out.println(FROM + tableInfo.getAliasName() + WHERE + columnInfo.getName() + EQUAL + inputValue);
                             Query q = session.createQuery(FROM + tableInfo.getAliasName() + WHERE + columnInfo.getName() + EQUAL + inputValue);
                             q.setMaxResults(1);
                             result = q.list();

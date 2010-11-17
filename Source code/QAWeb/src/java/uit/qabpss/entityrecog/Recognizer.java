@@ -57,33 +57,51 @@ public class Recognizer {
                     for (int l = 0; l < relations.size(); l++) {
                         Relation relation = relations.get(l);
                         if(relation.getRelationName().equals(tripleWord.getRelationWord())){                            
-//                            if (relation.getType().equals(XMLReader.RELATION)) {
-//                                if(HibernateUtil.valiateValue(columnInfo, tableInfo, tripleWord.getSecondObject())){
-//                                    System.out.println("relation: "+relation.getRelationName()+"-"+columnInfo.getName());
-//                                }
-//                            }
-//                            if (relation.getType().equals(XMLReader.REVERSED_RELATION)) {
-//                                if(HibernateUtil.valiateValue(columnInfo, tableInfo, tripleWord.getSecondObject())){
-//                                    System.out.println("relation: "+relation.getRelationName()+"-"+columnInfo.getName());
-//                                }
-//                            }
+                            if(tripleWord.getFirstObjPos().equals(NNP)||tripleWord.getFirstObjPos().equals(CD)){
+                                if(HibernateUtil.valiateValue(columnInfo, tableInfo, tripleWord.getFirstObject())){
+//                                    lst.get(i).setFirstObjHeader(tableInfo.getName());
+//                                    lst.get(i).setRelationWordheader(columnInfo.getRelationType());
+//                                    lst.get(i).setSecondObjHeader(columnInfo.getName());
+                                    System.out.println("First Object");
+                                    System.out.println(tableInfo.getName()+" - "+columnInfo.getRelationType()+" - "+columnInfo.getName());
+                                }
+                            }
+                            if(tripleWord.getSecondObjPos().equals(NNP)||tripleWord.getSecondObjPos().equals(CD)){
+                                if(HibernateUtil.valiateValue(columnInfo, tableInfo, tripleWord.getSecondObject())){
+//                                    lst.get(i).setFirstObjHeader(tableInfo.getName());
+//                                    lst.get(i).setRelationWordheader(columnInfo.getRelationType());
+//                                    lst.get(i).setSecondObjHeader(columnInfo.getName());
+                                    System.out.println("Second Object");
+                                    System.out.println(tableInfo.getName()+" - "+columnInfo.getRelationType()+" - "+columnInfo.getName());
+                                }
+                            }                            
                         }
                     }
                 }
             }
         }
+        System.out.println("------------------------------------");
         return null;
     }
 
     public static void main(String[] args) throws IOException{
-        String[] questions = new String[]{"Who write books in 1999 ?",};
+        String[] questions = new String[]{
+            "Who write books in 1999 ?",
+            "What publications have resulted from the TREC?",
+            "Which books were written by Rafiul Ahad from 1999 to 2010 ?",
+            "Which books were published by O'Reilly  in 1999 ?",
+            "How many papers were written by Rafiul Ahad ?",
+            "Who write books in 1999 ?",
+            "Who write books from 1999 to 2010 ?",
+         };
         int count =1;
         HibernateUtil.getSessionFactory();
-        List<TripleWord> t = null;
+        
         for (String question : questions) {
+            List<TripleWord> t = null;
             Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
             tokens = SentenseUtil.optimizePosTags(tokens);
-            System.out.println(count+"/ "+SentenseUtil.tokensToStr(tokens));
+            System.out.println(count + "/ " + SentenseUtil.tokensToStr(tokens));
             ExtractTriple exTriple = new ExtractTriple();
             t = exTriple.extractTripleWordRel(tokens);
             for (int i = 0; i < t.size(); i++) {
@@ -91,8 +109,9 @@ public class Recognizer {
             }
             count++;
             System.out.println("------------------------------------");
+            Recognizer reg = new Recognizer();
+            reg.tripleRecognize(t);
         }
-        Recognizer reg = new Recognizer();
-        reg.tripleRecognize(t);
+        
     }
 }
