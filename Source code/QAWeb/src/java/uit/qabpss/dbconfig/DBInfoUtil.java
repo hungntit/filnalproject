@@ -30,8 +30,8 @@ public class DBInfoUtil {
         ColumnInfo publisher            =   new ColumnInfo("publisher", "Publisher", Type.STRING);
         ColumnInfo year                 =   new ColumnInfo("year", "Year", Type.INTEGER);
         ColumnInfo type                 =   new ColumnInfo("type", "Type", Type.STRING);
-        ColumnInfo isbn                 =   new ColumnInfo("isbn", "Type", Type.CODE);
-        ColumnInfo doi                  =   new ColumnInfo("doi", "Type", Type.CODE);
+        ColumnInfo isbn                 =   new ColumnInfo("isbn", "Isbn", Type.CODE);
+        ColumnInfo doi                  =   new ColumnInfo("doi", "Doi", Type.CODE);
         
         type.setDefaultValuesSet(dblp_pub_new.getName(), type.name);
         

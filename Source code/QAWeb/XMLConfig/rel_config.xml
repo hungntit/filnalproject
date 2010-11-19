@@ -4,7 +4,6 @@
     <table table-alias="Publication"> <!-- Tên do người dùng đặt thay thế cho dblp_pub_new -->
         <table-name>dblp_pub_new</table-name>
         <field type="String" field-alias="author" visible="false" relation="related table">
-            <!--Thông tin này không được hiển thị cho người dùng-->
             <relation>
                 <relation-name>has author</relation-name> 
                 <relation-name>has writer</relation-name>
@@ -42,8 +41,8 @@
             <relation>
                 <relation-name>has year</relation-name>
                 <relation-name>in</relation-name>
-                <relation-name>from</relation-name>
-                <relation-name>to</relation-name>
+                <relation-name value="&gt;=">from</relation-name>
+                <relation-name value="&lt;=">to</relation-name>
             </relation>
             <field-name>year</field-name>
         </field>

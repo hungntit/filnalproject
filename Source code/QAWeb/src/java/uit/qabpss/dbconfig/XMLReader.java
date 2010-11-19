@@ -12,6 +12,7 @@ import org.w3c.dom.NodeList;
 public class XMLReader {
     public static final String DATABASE = "database";
     public static final String DATABASE_NAME = "database-name";
+    public static final String DEFAUFT_OPERATOR = "=";
     public static final String FIELD_NAME = "field-name";
     public static final String PRIMARYKEY = "primary-key";
     public static final String RELATED_TABLE = "related-table";
@@ -24,6 +25,7 @@ public class XMLReader {
     public static final String TABLE_ALIAS = "table-alias";
     public static final String RELATION_NAME = "relation-name";
     public static final String TYPE = "type";
+    public static final String VALUE = "value";
     public static final String VISIBLE = "visible";
     private static final String PATH = "xmlconfig\\rel_config.xml";
     public Document doc = null;
@@ -79,12 +81,22 @@ public class XMLReader {
                                     Node rel = relList.item(l);                                    
                                     if(RELATION_NAME.equals(rel.getNodeName())){
                                         Relation fieldRel = new Relation();
+                                        try{                                                                                    
+                                            fieldRel.setOperator(rel.getAttributes().getNamedItem(VALUE).getNodeValue());                                           
+                                        }catch(Exception e){
+                                            fieldRel.setOperator(DEFAUFT_OPERATOR);
+                                        }
                                         fieldRel.setRelationName(rel.getTextContent());
                                         fieldRel.setType(RELATION);
                                         colInf.addRelation(fieldRel);
                                     }
                                     if(REVERSED_RELATION.equals(rel.getNodeName())){
                                         Relation fieldRel = new Relation();
+                                        try{
+                                            fieldRel.setOperator(rel.getAttributes().getNamedItem(VALUE).getNodeValue());                                            
+                                        }catch(Exception e){
+                                            fieldRel.setOperator(DEFAUFT_OPERATOR);
+                                        }
                                         fieldRel.setRelationName(rel.getTextContent());
                                         fieldRel.setType(REVERSED_RELATION);
                                         colInf.addRelation(fieldRel);
