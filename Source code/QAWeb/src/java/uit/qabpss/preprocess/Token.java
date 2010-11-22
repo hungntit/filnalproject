@@ -12,10 +12,18 @@ public final class Token {
 
     private String value;
     private String pos_value;
-
+    private EntityType  entityType;
     public Token() {
         setPos_value("");
         setValue("");
+    }
+
+    public EntityType getEntityType() {
+        return entityType;
+    }
+
+    public void setEntityType(EntityType entityType) {
+        this.entityType = entityType;
     }
 
     /**
@@ -60,7 +68,52 @@ public final class Token {
     }
 
     public Token(Token token) {
+
+
         this.pos_value = token.pos_value;
         this.value = token.value;
+        this.entityType =   token.entityType;
+    }
+    public static Token[] copyTokens(Token[] tokens)
+    {
+
+        if(tokens   ==  null)
+            return null;
+        else
+        {
+            int length  =   tokens.length;
+            Token[] results=    new Token[length];
+            for(int i=0;i<length;i++)
+            {
+                if(tokens[i]!= null)
+                    results[i]  =   new Token(tokens[i]);
+
+            }
+            return results;
+        }
+
+    }
+    public static Token[] removeTokens(Token[] tokens, int start, int end)
+    {
+        Token[] result  ;
+        if(tokens == null)
+            return null;
+
+        if(end> tokens.length)
+            end =   tokens.length;
+        if(start>end)
+            return null;
+        result  =   new Token[tokens.length-(end-start)-1];
+        int pos =   0;
+        for(int i=0;i<tokens.length;i++)
+        {
+            if(i <start || i>end)
+            {
+                result[pos]   =   new Token(tokens[i]);
+                pos++;
+
+            }
+        }
+        return result;
     }
 }

@@ -4,7 +4,9 @@
  */
 package uit.qabpss.preprocess;
 
+import uit.qabpss.extracttriple.TripleToken;
 import java.io.IOException;
+import java.util.List;
 
 /**
  *
@@ -19,22 +21,22 @@ public class Test {
         // TODO code application logic here
         String[] questions = new String[]{
            "Which books were written by Rafiul Ahad and Amelia Carlson in 2010 ? ",
-            "Which books were written by Rafiul Ahad from 1999 to 2010 ?",
+           "Which books were written by Rafiul Ahad from 1999 to 2010 ?",
             "Which books were published by O'Reilly  in 1999 ?",
             "How many papers were written by Rafiul Ahad ?",
             "Who write books in 1999 ?",
             "Who write books from 1999 to 2010 ?",
             "How many papers were written by Rafiul Ahad in 2010 ?",
-            "Who published books from 1999 to 2000 ?",
+           "Who published books from 1999 to 2000 ?",
             "Who published books 1999 ?",
             "What are titles of books written by Marcus Thint ?",
-            "What books did Jennifer Widom write ?",
-            "What books did Jennifer Widom write ?",
-            "Who is the author of  \"Working Models for Uncertain Data\"",
+        //    "What books did Jennifer Widom write ?",
+        //    "What books did Jennifer Widom write ?",
+            "Who is the author of  \"Working Models for Uncertain Data\" and ACM",
             "What book did Philip K. Chan write in 1999?",
             "What book did Philip K. Chan write from 1999 to 2000?",
             "What are the titles of the books published by O’reilly in 1999 ?",
-            "What composer wrote \" Java 2D Graphics\"",
+           "What composer wrote \" Java 2D Graphics\"",
             "What books has isbn 1-56592-484-3",
             "What books has doi 10.1145/360271.360274",
             "What composer wrote books from 1999 in ACM?",
@@ -47,6 +49,12 @@ public class Test {
             Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
             tokens = SentenseUtil.optimizePosTags(tokens);
             System.out.println(SentenseUtil.tokensToStr(tokens));
+            List<TripleToken> list  =   TripleToken.extractTripleWordRelation(tokens);
+            for(TripleToken tripleToken:list)
+            {
+                System.out.println(tripleToken);
+
+            }
 
         }
     }

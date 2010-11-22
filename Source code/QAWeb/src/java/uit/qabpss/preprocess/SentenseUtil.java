@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import opennlp.tools.lang.english.ParserTagger;
+import uit.qabpss.core.wordnet.Wordnet;
 
 
 /**
@@ -27,11 +28,10 @@ import opennlp.tools.lang.english.ParserTagger;
  */
 public class SentenseUtil {
 
-    private static Dictionary  wndict;
     private static ParserTagger    parserTagger ;
     static {
         try {
-            initWordnetDictionary("WordNet");
+            
             initPosTagger();
         } catch (IOException ex) {
             Logger.getLogger(SentenseUtil.class.getName()).log(Level.SEVERE, null, ex);
@@ -42,13 +42,7 @@ public class SentenseUtil {
     {
         parserTagger    =   new ParserTagger("model\\english\\parser\\tag.bin.gz", null);
     }
-    public static void initWordnetDictionary(String WNdir) throws MalformedURLException
-    {
-        String path     =   WNdir+"\\" + "dict";
-        URL url =   new URL("file", null, path);
-        wndict  =   new Dictionary(url);
-        wndict.open();
-    }
+    
 
     public static List<String>  getNERWords(String question)
     {
@@ -221,7 +215,7 @@ public class SentenseUtil {
 
     private static Token[] processForPattern(Token[] tokens,String fomular)
     {
-       WordnetStemmer   wnstemmer   =   new WordnetStemmer(wndict);
+       WordnetStemmer   wnstemmer   =   new WordnetStemmer(Wordnet.wndict);
        String[] inoutStr     =   fomular.split("-->");
        String inputStr      =   inoutStr[0];
        String inStrs[]      =   inputStr.split(" ");
@@ -359,7 +353,7 @@ public class SentenseUtil {
                     if(tokens[nextTokenIdx].getPos_value().equalsIgnoreCase("IN")||tokens[nextTokenIdx].getPos_value().equalsIgnoreCase("RP"))
                     {
                         String joinVerb =   tokens[i].getValue() +" "+ tokens[nextTokenIdx].getValue();
-                        IIndexWord idxWord  =   wndict.getIndexWord(joinVerb, POS.VERB);
+                        IIndexWord idxWord  =   Wordnet.wndict.getIndexWord(joinVerb, POS.VERB);
                         if(idxWord != null)
                         {
                             result[i].setValue(joinVerb);
