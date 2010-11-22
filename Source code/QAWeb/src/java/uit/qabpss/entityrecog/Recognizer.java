@@ -2,13 +2,17 @@
 package uit.qabpss.entityrecog;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import uit.qabpss.core.wordnet.Wordnet;
 import uit.qabpss.dbconfig.ColumnInfo;
 import uit.qabpss.dbconfig.DBInfo;
 import uit.qabpss.dbconfig.Relation;
 import uit.qabpss.dbconfig.TableInfo;
 import uit.qabpss.dbconfig.XMLReader;
 import uit.qabpss.extracttriple.ExtractTriple;
+import uit.qabpss.extracttriple.TripleRelation;
+import uit.qabpss.preprocess.EntityType;
 import uit.qabpss.preprocess.SentenseUtil;
 import uit.qabpss.preprocess.Token;
 import uit.qabpss.preprocess.TripleWord;
@@ -85,33 +89,92 @@ public class Recognizer {
     }
 
     public static void main(String[] args) throws IOException{
-        String[] questions = new String[]{
-            "Who write books in 1999 ?",
-            "What publications have resulted from the TREC?",
-            "Which books were written by Rafiul Ahad from 1999 to 2010 ?",
-            "Which books were published by O'Reilly  in 1999 ?",
-            "How many papers were written by Rafiul Ahad ?",
-            "Who write books in 1999 ?",
-            "Who write books from 1999 to 2010 ?",
-         };
+        /* String[] questions = new String[]{
+        "Who write books in 1999 ?",
+        "What publications have resulted from the TREC?",
+        "Which books were written by Rafiul Ahad from 1999 to 2010 ?",
+        "Which books were published by O'Reilly  in 1999 ?",
+        "How many papers were written by Rafiul Ahad ?",
+        "Who write books in 1999 ?",
+        "Who write books from 1999 to 2010 ?",
+        };
         int count =1;
         HibernateUtil.getSessionFactory();
-        
         for (String question : questions) {
-            List<TripleWord> t = null;
-            Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
-            tokens = SentenseUtil.optimizePosTags(tokens);
-            System.out.println(count + "/ " + SentenseUtil.tokensToStr(tokens));
-            ExtractTriple exTriple = new ExtractTriple();
-            t = exTriple.extractTripleWordRel(tokens);
-            for (int i = 0; i < t.size(); i++) {
-                System.out.println("< " + t.get(i).getFirstObject() + " , " + t.get(i).getRelationWord() + " , " + t.get(i).getSecondObject() + " >");
-            }
-            count++;
-            System.out.println("------------------------------------");
-            Recognizer reg = new Recognizer();
-            reg.tripleRecognize(t);
+        List<TripleWord> t = null;
+        Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
+        tokens = SentenseUtil.optimizePosTags(tokens);
+        System.out.println(count + "/ " + SentenseUtil.tokensToStr(tokens));
+        ExtractTriple exTriple = new ExtractTriple();
+        t = exTriple.extractTripleWordRel(tokens);
+        for (int i = 0; i < t.size(); i++) {
+        System.out.println("< " + t.get(i).getFirstObject() + " , " + t.get(i).getRelationWord() + " , " + t.get(i).getSecondObject() + " >");
         }
-        
+        count++;
+        System.out.println("------------------------------------");
+        Recognizer reg = new Recognizer();
+        reg.tripleRecognize(t);
+        }
+         */
+        Recognizer reg = new Recognizer();
+        List<TripleRelation> tripleRelationFromRelationStr = reg.getTripleRelationFromRelationStr("be write");
+        int a=0;
+
+    }
+     public  List<TripleRelation> getTripleRelationFromRelationStr(String relationStr)
+    {
+        List<TripleRelation> result   =   new ArrayList<TripleRelation>();
+        List<TableInfo> tableInfos    =   dbInf.getTables();
+        for(TableInfo tableInfo:tableInfos)
+        {
+            List<ColumnInfo> columnInfos    =   tableInfo.getColumns();
+            for(ColumnInfo columnInfo:columnInfos)
+            {
+                List<Relation> relations    =   columnInfo.getRelation();
+                for(Relation relation:relations)
+                {
+                   if(relation.getRelationName().equalsIgnoreCase(relationStr))
+                   {
+                       EntityType   firstEntity =   new EntityType(tableInfo, null);
+                       EntityType   secondEntity =   new EntityType(tableInfo, columnInfo);
+                       TripleRelation   tripleRelation  =   new TripleRelation(firstEntity,relation,secondEntity);
+                       result.add(tripleRelation);
+                   }
+                   else
+                   {
+                       if(relationStr.startsWith(BE))
+                       {
+                           if(relation.getRelationName().startsWith(BE))
+                           {
+                                String verb1 =   relation.getRelationName().substring(3);//remove BE in Str
+                                String verb2 =   relationStr.substring(3);//remove BE in Str
+
+                                if(Wordnet.checkSimilarityVerb(verb1, verb2))
+                                {
+                                    EntityType   firstEntity =   new EntityType(tableInfo, null);
+                                    EntityType   secondEntity =   new EntityType(tableInfo, columnInfo);
+                                    TripleRelation   tripleRelation  =   new TripleRelation(firstEntity,relation,secondEntity);
+                                    result.add(tripleRelation);
+                                }
+                           }
+                       }
+                        else
+                       {
+                                String verb1 =   relation.getRelationName();
+                                String verb2 =   relationStr;
+
+                                if(Wordnet.checkSimilarityVerb(verb1, verb2))
+                                {
+                                    EntityType   firstEntity =   new EntityType(tableInfo, null);
+                                    EntityType   secondEntity =   new EntityType(tableInfo, columnInfo);
+                                    TripleRelation   tripleRelation  =   new TripleRelation(firstEntity,relation,secondEntity);
+                                    result.add(tripleRelation);
+                                }
+                        }
+                   }
+                }
+            }
+        }
+        return result;
     }
 }
