@@ -4,6 +4,8 @@ package uit.qabpss.entityrecog;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import uit.qabpss.core.wordnet.Wordnet;
 import uit.qabpss.dbconfig.ColumnInfo;
 import uit.qabpss.dbconfig.DBInfo;
@@ -17,6 +19,7 @@ import uit.qabpss.preprocess.SentenseUtil;
 import uit.qabpss.preprocess.Token;
 import uit.qabpss.preprocess.TripleWord;
 import uit.qabpss.util.hibernate.HibernateUtil;
+import wordnet.similarity.WordNotFoundException;
 
 /**
  *
@@ -28,6 +31,7 @@ public class Recognizer {
     private static final String BE = "be";
     private static DBInfo dbInf = null;
 
+    public static final double SIMILARITY_LIMIT  =   0.7f;
     public Recognizer() {
         if (dbInf == null) {
             XMLReader xmlReader = new XMLReader();
@@ -117,13 +121,104 @@ public class Recognizer {
         }
          */
         Recognizer reg = new Recognizer();
-        List<TripleRelation> tripleRelationFromRelationStr = reg.getTripleRelationFromRelationStr("be write");
+        List<TripleRelation> tripleRelationFromRelationStr = reg.getTripleRelationFromRelationStr("write");
+        tripleRelationFromRelationStr   =   reg.getTripleRelationsFromNonNER(tripleRelationFromRelationStr, new Token("author", "NN"));
         int a=0;
+
+    }
+
+    public List<TripleRelation> getTripleRelationsFromNonNER(List<TripleRelation> existTripleRelations,Token token)
+    {
+        
+        List<TripleRelation> tableresult =   new ArrayList<TripleRelation>();
+        List<TripleRelation> columnresult =   new ArrayList<TripleRelation>();
+        double maxSimilarityNumber    =   0;
+        for(TripleRelation tr:existTripleRelations)
+        {
+            EntityType tableType    =   tr.getFirstEntity();
+            String tableName        =   tableType.getTableInfo().getAliasName();
+            double similarityWithTable =    0;
+            try {
+
+                similarityWithTable = Wordnet.similarityWN.getSimilarity(tableName, token.getValue())+ 0.01F;
+
+            } catch (WordNotFoundException ex) {
+                //Logger.getLogger(Recognizer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(tableName.equalsIgnoreCase(token.getValue()))
+                    similarityWithTable = 1+ 0.01F;
+                if(similarityWithTable > SIMILARITY_LIMIT && similarityWithTable >= maxSimilarityNumber)
+                {
+                    if(similarityWithTable > maxSimilarityNumber)
+                    {
+                        tableresult.clear();
+                        tableresult.add(tr);
+                        maxSimilarityNumber =   similarityWithTable;
+                    }
+                    else
+                    {
+                        tableresult.add(tr);
+                    }
+
+                }
+
+        }
+        if(tableresult.size() > 0)
+        {
+            if(tableresult.size() ==1)
+            {
+                token.setEntityType(tableresult.get(0).getFirstEntity());
+            }
+            return tableresult;
+        }
+        else
+        {
+            for(TripleRelation tr:existTripleRelations)
+            {
+
+                EntityType columnType   =   tr.getSecondEntity();
+                String columnName        =   columnType.getColumnInfo().getAliasName();
+                double similarityWithColumn =   0;
+                try {
+                    similarityWithColumn = Wordnet.similarityWN.getSimilarity(columnName, token.getValue());
+
+                } catch (WordNotFoundException ex) {
+                  //  Logger.getLogger(Recognizer.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    if(columnName.equalsIgnoreCase(token.getValue()))
+                        similarityWithColumn = 1.0F;
+                    if(similarityWithColumn > SIMILARITY_LIMIT && similarityWithColumn >= maxSimilarityNumber)
+                    {
+                        if(similarityWithColumn > maxSimilarityNumber)
+                        {
+                            columnresult.clear();
+                            columnresult.add(tr);
+                            maxSimilarityNumber =   similarityWithColumn;
+                        }
+                        else
+                        {
+                            columnresult.add(tr);
+                        }
+
+                    }
+                if(columnresult.size() > 0)
+                {
+                        if(columnresult.size() ==1)
+                        {
+                            token.setEntityType(columnresult.get(0).getSecondEntity());
+                        }
+
+                        return columnresult;
+                }
+            }
+        }
+        return existTripleRelations;
 
     }
      public  List<TripleRelation> getTripleRelationFromRelationStr(String relationStr)
     {
         List<TripleRelation> result   =   new ArrayList<TripleRelation>();
+        List<TripleRelation> total   =   new ArrayList<TripleRelation>();
         List<TableInfo> tableInfos    =   dbInf.getTables();
         for(TableInfo tableInfo:tableInfos)
         {
@@ -133,12 +228,15 @@ public class Recognizer {
                 List<Relation> relations    =   columnInfo.getRelation();
                 for(Relation relation:relations)
                 {
+                    EntityType   firstEntity =   new EntityType(tableInfo, null);
+                    EntityType   secondEntity =   new EntityType(tableInfo, columnInfo);
+                    TripleRelation   tripleRelation  =   new TripleRelation(firstEntity,relation,secondEntity);
+                    total.add(tripleRelation);
                    if(relation.getRelationName().equalsIgnoreCase(relationStr))
                    {
-                       EntityType   firstEntity =   new EntityType(tableInfo, null);
-                       EntityType   secondEntity =   new EntityType(tableInfo, columnInfo);
-                       TripleRelation   tripleRelation  =   new TripleRelation(firstEntity,relation,secondEntity);
-                       result.add(tripleRelation);
+                       
+                       if(!result.contains(tripleRelation))
+                            result.add(tripleRelation);
                    }
                    else
                    {
@@ -151,10 +249,9 @@ public class Recognizer {
 
                                 if(Wordnet.checkSimilarityVerb(verb1, verb2))
                                 {
-                                    EntityType   firstEntity =   new EntityType(tableInfo, null);
-                                    EntityType   secondEntity =   new EntityType(tableInfo, columnInfo);
-                                    TripleRelation   tripleRelation  =   new TripleRelation(firstEntity,relation,secondEntity);
-                                    result.add(tripleRelation);
+                    
+                                    if(!result.contains(tripleRelation))
+                                        result.add(tripleRelation);
                                 }
                            }
                        }
@@ -165,16 +262,16 @@ public class Recognizer {
 
                                 if(Wordnet.checkSimilarityVerb(verb1, verb2))
                                 {
-                                    EntityType   firstEntity =   new EntityType(tableInfo, null);
-                                    EntityType   secondEntity =   new EntityType(tableInfo, columnInfo);
-                                    TripleRelation   tripleRelation  =   new TripleRelation(firstEntity,relation,secondEntity);
-                                    result.add(tripleRelation);
+                                    if(!result.contains(tripleRelation))
+                                        result.add(tripleRelation);
                                 }
                         }
                    }
                 }
             }
         }
-        return result;
+        if(result.size()>0)
+            return result;
+        return total;
     }
 }

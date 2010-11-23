@@ -20,6 +20,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import wordnet.similarity.SimilarityAssessor;
 
 /**
  *
@@ -27,9 +28,11 @@ import java.util.logging.Logger;
  */
 public class Wordnet {
     public static Dictionary  wndict;
+    public static SimilarityAssessor similarityWN;
 static {
         try {
             initWordnetDictionary("WordNet");
+            initSimilarityWordnet();
         } catch (IOException ex) {
             Logger.getLogger(Wordnet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -43,10 +46,15 @@ static {
         wndict  =   new Dictionary(url);
         wndict.open();
     }
+    public static void initSimilarityWordnet()
+    {
+        similarityWN  =   new SimilarityAssessor();
+
+    }
     public static boolean checkSimilarityVerb(String verb1,String verb2)
     {
-        IIndexWord indexWord1 = wndict.getIndexWord(verb1, POS.NOUN);
-        IIndexWord indexWord2 = wndict.getIndexWord(verb2, POS.NOUN);
+        IIndexWord indexWord1 = wndict.getIndexWord(verb1, POS.VERB);
+        IIndexWord indexWord2 = wndict.getIndexWord(verb2, POS.VERB);
         if(indexWord1 == null)
             return false;
         if(indexWord2 == null)
@@ -83,7 +91,7 @@ static {
 
             }
 
-            List<ISynsetID> troponymSynsets = synset1.getRelatedSynsets(Pointer.VERB_GROUP);
+            List<ISynsetID> troponymSynsets = synset1.getRelatedSynsets(Pointer.HYPONYM);
 
             for(ISynsetID troponymSynsetID:troponymSynsets)
             {

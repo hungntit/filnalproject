@@ -14,7 +14,6 @@ import uit.qabpss.dbconfig.TableInfo;
  */
 public class EntityType {
 
-    protected String entityName;
     protected TableInfo tableInfo;
     protected ColumnInfo columnInfo;
 
@@ -54,23 +53,6 @@ public class EntityType {
         this.tableInfo = tableInfo;
     }
 
-    /**
-     * Get the value of entityName
-     *
-     * @return the value of entityName
-     */
-    public String getEntityName() {
-        return entityName;
-    }
-
-    /**
-     * Set the value of entityName
-     *
-     * @param entityName new value of entityName
-     */
-    public void setEntityName(String entityName) {
-        this.entityName = entityName;
-    }
     public  boolean isTable()
     {
         if(columnInfo == null)
@@ -94,8 +76,19 @@ public class EntityType {
     }
    
 
-    public EntityType() {
-        entityName  =   "";
+    
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null)
+            return false;
+        EntityType entityType   =   (EntityType)obj;
+
+        if(tableInfo == entityType.tableInfo && columnInfo  ==  entityType.columnInfo )
+        {
+            return true;
+        }
+        return false;
     }
 
 }

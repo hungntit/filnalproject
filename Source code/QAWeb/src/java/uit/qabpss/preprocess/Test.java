@@ -6,6 +6,7 @@ package uit.qabpss.preprocess;
 
 import uit.qabpss.extracttriple.TripleToken;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,9 +44,10 @@ public class Test {
             "Who is the author of the paper \"Question Classification using Head Words and their Hypernyms.\"?",
             "Who wrote \"Question Classification using Head Words and their Hypernyms.\"?",
             "What books were written by \"Philip K. Chan\" from ACM?",
-            "How many publisher did \"Philip K. Chan\" works with?"
+            "How many publisher did \"Philip K. Chan\" work with?"
         };
         for (String question : questions) {
+            
             Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
             tokens = SentenseUtil.optimizePosTags(tokens);
             System.out.println(SentenseUtil.tokensToStr(tokens));
