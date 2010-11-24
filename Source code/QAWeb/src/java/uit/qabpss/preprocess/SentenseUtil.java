@@ -5,20 +5,21 @@
 
 package uit.qabpss.preprocess;
 
-import edu.mit.jwi.Dictionary;
 import edu.mit.jwi.item.IIndexWord;
 import edu.mit.jwi.item.POS;
 import edu.mit.jwi.morph.WordnetStemmer;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import opennlp.tools.lang.english.ParserTagger;
+import opennlp.tools.postag.POSModel;
+import opennlp.tools.postag.POSTaggerME;
 import uit.qabpss.core.wordnet.Wordnet;
 
 
@@ -28,7 +29,7 @@ import uit.qabpss.core.wordnet.Wordnet;
  */
 public class SentenseUtil {
 
-    private static ParserTagger    parserTagger ;
+    private static POSTaggerME posTagME ;
     static {
         try {
             
@@ -40,7 +41,16 @@ public class SentenseUtil {
     }
     public static void initPosTagger() throws IOException
     {
-        parserTagger    =   new ParserTagger("model\\english\\parser\\tag.bin.gz", null);
+        InputStream in =null;
+        try{
+        in = new BufferedInputStream(new FileInputStream(
+				"model\\en-pos-maxent.bin"));
+	POSModel model = new POSModel(in);
+	posTagME = new POSTaggerME(model);
+        }catch(IOException e){
+        }finally{
+            in.close();
+        }
     }
     
 
@@ -120,7 +130,7 @@ public class SentenseUtil {
             {
                 tempquestion    =   tempquestion.replaceFirst(nerWords.get(i).trim(), "NER"+(i+1));
             }
-        String posTaggersStr    =   parserTagger.tag(tempquestion);
+        String posTaggersStr    =   posTagME.tag(tempquestion);
         String[] postaggers       =   posTaggersStr.split(" ");
         Token[] results          =   new Token[postaggers.length];
 

@@ -162,10 +162,6 @@ public static List<TripleToken> extractTripleWordRelation(Token[] tokens)
         "(WP|WDT|NNS|NNP|NN)-1 VB-2 (NN|NNS|NNP)-3-NA --> (WP|WDT|NNS|NNP|NN)-1,VB-2,(NN|NNS|NNP)-3-NA ",
         "(WP|WDT|NNS|NNP|NN)-1 IN-2 (NN|NNS|NNP|CD)-3-NA --> (WP|WDT|NNS|NNP|NN)-1,VB-2,(NN|NNS|NNP|CD)-3-NA ",
         "(WP|WDT|NNS|NNP|NN)-1 IN-2 (NN|NNS|NNP|CD)-3 TO-4 (NN|NNS|NNP|CD)-5 --> (WP|WDT|NNS|NNP|NN)-1,TO-4,(NN|NNS|NNP|CD)-5 "
-
-        
-
-
     };
     Token[] tempTokenArr   =   Token.copyTokens(tokens);
     int start = 0,end   =   0;

@@ -31,9 +31,9 @@ public class Test {
            "Who published books from 1999 to 2000 ?",
             "Who published books 1999 ?",
             "What are titles of books written by Marcus Thint ?",
-        //    "What books did Jennifer Widom write ?",
-        //    "What books did Jennifer Widom write ?",
-            "Who is the author of  \"Working Models for Uncertain Data\" and ACM",
+            "What books did Jennifer Widom write ?",
+            "What books did Jennifer Widom write ?",
+            "Who is the author of  \"Working Models for Uncertain Data and ACM",
             "What book did Philip K. Chan write in 1999?",
             "What book did Philip K. Chan write from 1999 to 2000?",
             "What are the titles of the books published by O’reilly in 1999 ?",
@@ -44,8 +44,9 @@ public class Test {
             "Who is the author of the paper \"Question Classification using Head Words and their Hypernyms.\"?",
             "Who wrote \"Question Classification using Head Words and their Hypernyms.\"?",
             "What books were written by \"Philip K. Chan\" from ACM?",
-            "How many publisher did \"Philip K. Chan\" work with?"
+            "How many publisher did \"Philip K. Chan\" cooperate with?"
         };
+        System.out.println("nums test: "+questions.length);
         for (String question : questions) {
             
             Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
