@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import wordnet.similarity.SimilarityAssessor;
+import wordnet.similarity.WordNotFoundException;
 
 /**
  *
@@ -110,6 +111,34 @@ static {
 
         return false;
     }
+    public static double getValueSimilarityNoun(String noun1,String noun2)
+    {
+        double result = 0.0;
+        try {
+            result = similarityWN.getSimilarity(noun1, noun2);
+        } catch (WordNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return result;
+    }
 
+//    public static void main(String[] args){
+//        Wordnet.initSimilarityWordnet();
+//        System.out.println(Wordnet.getValueSimilarityNoun("author", "composer"));//0.6
+//        System.out.println(Wordnet.getValueSimilarityNoun("author", "publisher"));
+//        System.out.println(Wordnet.getValueSimilarityNoun("author", "writer"));
+//        System.out.println(Wordnet.getValueSimilarityNoun("author", "creator"));
+//        System.out.println("----------------------");
+//        System.out.println(Wordnet.getValueSimilarityNoun("publisher", "writer"));
+//        System.out.println(Wordnet.getValueSimilarityNoun("publisher", "composer"));
+//        System.out.println(Wordnet.getValueSimilarityNoun("publisher", "creator"));
+//        System.out.println(Wordnet.getValueSimilarityNoun("publisher", "distributor"));
+//        System.out.println(Wordnet.getValueSimilarityNoun("publisher", "author"));//0.6
+//        System.out.println("----------------------");
+//        System.out.println(Wordnet.getValueSimilarityNoun("publication", "book"));//0.6
+//        System.out.println(Wordnet.getValueSimilarityNoun("publication", "paper"));
+//        System.out.println("----------------------");
+//        System.out.println(Wordnet.getValueSimilarityNoun("title", "heading"));
+//    }
 
 }
