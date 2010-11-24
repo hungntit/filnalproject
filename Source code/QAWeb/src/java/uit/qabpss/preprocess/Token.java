@@ -93,6 +93,30 @@ public final class Token {
         }
 
     }
+    public static Token[] copyTokens(Token[] tokens,int start,int end)
+    {
+
+        if(tokens   ==  null)
+            return null;
+
+        else
+        {
+            int length  =   tokens.length;
+            if(start>length)
+                start   =   length-1;
+            if(end>length)
+                end   =   length-1;
+            Token[] results=    new Token[end-start+1];
+            for(int i=start;i<=end;i++)
+            {
+                if(tokens[i]!= null)
+                    results[i-start]  =   new Token(tokens[i]);
+
+            }
+            return results;
+        }
+
+    }
     public static Token[] removeTokens(Token[] tokens, int start, int end)
     {
         Token[] result  ;
@@ -116,4 +140,10 @@ public final class Token {
         }
         return result;
     }
+
+    @Override
+    public String toString() {
+        return this.pos_value+"/"+this.value;
+    }
+
 }

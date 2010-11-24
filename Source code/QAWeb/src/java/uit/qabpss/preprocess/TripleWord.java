@@ -154,12 +154,5 @@ public final class TripleWord {
         this.secondObjHeader = secondObjHeader;
     }
 
-    public static List<TripleWord> getTripleWordFromQuestion(Token[] tokens)
-    {
-        if(tokens.length==0){
-            return null;
-        }
-        ExtractTriple extractTriple = new ExtractTriple();
-        return extractTriple.extractTripleWordRel(tokens);
-    }
+    
 }

@@ -6,8 +6,8 @@ package uit.qabpss.preprocess;
 
 import uit.qabpss.extracttriple.TripleToken;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
+import uit.qabpss.extracttriple.ExtractTriple;
 
 /**
  *
@@ -47,12 +47,13 @@ public class Test {
             "How many publisher did \"Philip K. Chan\" cooperate with?"
         };
         System.out.println("nums test: "+questions.length);
+        ExtractTriple extract   =   new ExtractTriple();
         for (String question : questions) {
             
             Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
             tokens = SentenseUtil.optimizePosTags(tokens);
             System.out.println(SentenseUtil.tokensToStr(tokens));
-            List<TripleToken> list  =   TripleToken.extractTripleWordRelation(tokens);
+            List<TripleToken> list  =   extract.extractTripleWordRelation(tokens);
             for(TripleToken tripleToken:list)
             {
                 System.out.println(tripleToken);

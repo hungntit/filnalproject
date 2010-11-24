@@ -225,7 +225,7 @@ public class SentenseUtil {
 
     private static Token[] processForPattern(Token[] tokens,String fomular)
     {
-       WordnetStemmer   wnstemmer   =   new WordnetStemmer(Wordnet.wndict);
+       
        String[] inoutStr     =   fomular.split("-->");
        String inputStr      =   inoutStr[0];
        String inStrs[]      =   inputStr.split(" ");
@@ -290,7 +290,7 @@ public class SentenseUtil {
                 String value  = replacedPostagArr[j].getValue();
                 if(!value.equals(""))
                 {
-                    String originOfVerb =   wnstemmer.findStems(result[findPos+j].getValue(), POS.VERB).get(0);
+                    String originOfVerb =   Wordnet.wnstemmer.findStems(result[findPos+j].getValue(), POS.VERB).get(0);
                     if (!originOfVerb.equalsIgnoreCase(value))
                     {
                         notfound    =   true;
@@ -311,8 +311,8 @@ public class SentenseUtil {
                 String afterPostag =   replacedPostagArr[j].getAfterPostag();
                 if(  !afterPostag.equals(""))
                 {
-                    List<String> replaceValues          =   wnstemmer.findStems(result[findPos+j].getValue(), POS.VERB);
-                    if(replaceValues.size()==0)
+                    List<String> replaceValues          =   Wordnet.wnstemmer.findStems(result[findPos+j].getValue(), POS.VERB);
+                    if(replaceValues.isEmpty())
                     {
                                Token replacedToken =   new Token(result[findPos+j].getValue(), "NN");
                                result                       =  replaceTokenIn(result, findPos+j, replacedToken);
@@ -396,7 +396,7 @@ public class SentenseUtil {
         result        = processForPattern(result,"VBD-1 VBN-2-->VB-1 VB-2");                //	VBD(1) + VBN(2)   VB(1) + VB(2)
         result        = processForPattern(result,"VBD-1-->VB-1");                           // 	VBD(1)    VB(1).
         result        = processForPattern(result,"(VBZ|VBP)-1-->VB-1");                     // 	VBZ/VBP(1)    VB(1).
-        result        = optimizeVerb(result);
+       // result        = optimizeVerb(result);
 
         for (int i = 0; i < result.length; i++) {
             Token token = result[i];

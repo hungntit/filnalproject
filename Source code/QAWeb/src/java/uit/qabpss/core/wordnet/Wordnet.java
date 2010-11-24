@@ -14,6 +14,7 @@ import edu.mit.jwi.item.IWordID;
 import edu.mit.jwi.item.POS;
 import edu.mit.jwi.item.Pointer;
 import edu.mit.jwi.item.Synset;
+import edu.mit.jwi.morph.WordnetStemmer;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -30,6 +31,7 @@ import wordnet.similarity.WordNotFoundException;
 public class Wordnet {
     public static Dictionary  wndict;
     public static SimilarityAssessor similarityWN;
+    public static   WordnetStemmer   wnstemmer   ;
 static {
         try {
             initWordnetDictionary("WordNet");
@@ -46,6 +48,7 @@ static {
         URL url =   new URL("file", null, path);
         wndict  =   new Dictionary(url);
         wndict.open();
+         wnstemmer   =   new WordnetStemmer(Wordnet.wndict);
     }
     public static void initSimilarityWordnet()
     {
