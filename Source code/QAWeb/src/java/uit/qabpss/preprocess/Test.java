@@ -47,7 +47,9 @@ public class Test {
             "What books were written by \"Philip K. Chan\" from ACM?",
             "How many publisher did \"Philip K. Chan\" cooperate with?",
             "What books were published by ACM or Springer in 2010?",
-"What publications have resulted from TREC in 1999?",
+            "What publications have resulted from TREC?",
+             "What publications have resulted from TREC in 1999?",//fail test
+             "Which author write \"database\" in 1999",
         };
         System.out.println("nums test: "+questions.length);
         ExtractTriple extract   =   new ExtractTriple();
