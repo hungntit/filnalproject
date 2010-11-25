@@ -353,11 +353,11 @@ public class ExtractTriple {
                             else
                            {
 
-                                if(!checkSamePosTag(temptk, "VB|IN|To").equals("") && i== posTagArr.length-1)
+                                if(!checkSamePosTag(temptk, "VBN|VB|IN|To").equals("") && i== posTagArr.length-1)
                                 {
                                         end--;
                                         cachedPosTag  =   "";
-                                        if(temptk.getPos_value().equals("VB"))
+                                        if(!checkSamePosTag(temptk, "VBN|VB").equals(""))
                                         {
                                             tokensList.remove(tokensList.size()-1);
                                             if(!isAdded)
