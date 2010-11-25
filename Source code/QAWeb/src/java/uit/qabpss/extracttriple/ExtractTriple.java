@@ -400,7 +400,18 @@ public class ExtractTriple {
                int[] relationPosArr            =   new int[relationStrs.length];
                for(int pos=0;pos<relationPosArr.length;pos++ )
                {
-                   relationPosArr[pos]  =   Integer.parseInt(relationStrs[pos].split("-")[1].trim()) -1;
+                   try
+                   {
+                       String relationPosStr[]  =   relationStrs[pos].split("-");
+                        if(relationPosStr.length>1)
+                            relationPosArr[pos]  =   Integer.parseInt(relationPosStr[1].trim()) -1;
+                        else
+                            relationPosArr[pos]  =   -1;
+                   }
+                   catch(NumberFormatException nEx)
+                   {
+                       relationPosArr[pos]  =   -1;
+                   }
 
                }
 
@@ -413,9 +424,14 @@ public class ExtractTriple {
                    tripleToken.setObj1(tokensInList[firstObjPossition]);
                    tripleToken.setObj2(tokensInList[secondObjPossition]);
                    String relation  =   "";
+                   if(relationPosArr[0] == -1)
+                       relation  =   relationStrs[0] ;
+                   else
+                   {
                    for(int pos=0;pos<relationPosArr.length;pos++ )
                     {
                         int relationPos  =   relationPosArr[pos];
+
                         if(tokensInList[relationPos].getPos_value().equals("VBN"))
                         {
                                 List<String> findStems = Wordnet.wnstemmer.findStems(tokensInList[relationPos].getValue(), POS.VERB);
@@ -426,10 +442,12 @@ public class ExtractTriple {
 
                         }
                         else
+                        {
                             relation    +=  tokensInList[relationPos].getValue()+ " ";
-
+                        }
 
                     }
+                   }
                     relation    =   relation.trim();
                     tripleToken.setRelationName(relation);
 

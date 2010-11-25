@@ -49,13 +49,14 @@ public class Test {
         System.out.println("nums test: "+questions.length);
         ExtractTriple extract   =   new ExtractTriple();
         for (String question : questions) {
-            
+            System.out.println("-----------------------------------------------------------");
             Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
             tokens = SentenseUtil.optimizePosTags(tokens);
             System.out.println(SentenseUtil.tokensToStr(tokens));
             List<TripleToken> list  =   extract.extractTripleWordRelation(tokens);
             for(TripleToken tripleToken:list)
             {
+                
                 System.out.println(tripleToken);
 
             }
