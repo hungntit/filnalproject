@@ -22,7 +22,6 @@ import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTaggerME;
 import uit.qabpss.core.wordnet.Wordnet;
 
-
 /**
  *
  * @author ThuanHung
@@ -31,14 +30,14 @@ public class SentenseUtil {
 
     private static POSTaggerME posTagME ;
     static {
-        try {
-            
+        try {            
             initPosTagger();
         } catch (IOException ex) {
             Logger.getLogger(SentenseUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
+    
     public static void initPosTagger() throws IOException
     {
         InputStream in =null;
@@ -400,8 +399,10 @@ public class SentenseUtil {
 
         for (int i = 0; i < result.length; i++) {
             Token token = result[i];
-            if(token.getPos_value().equals("DT")
-                    && (token.getValue().equals("a") || token.getValue().equals("an") || token.getValue().equals("the"))){
+            if (token.getPos_value().equals("DT")
+                    && (token.getValue().equals("a")
+                    || token.getValue().equals("an")
+                    || token.getValue().equals("the"))) {
                 result = removeToken(result, token);
             }
         }

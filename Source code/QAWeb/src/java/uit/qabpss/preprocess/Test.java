@@ -54,22 +54,21 @@ public class Test {
              "What book did Philip K. Chan write in 1999 from ACM?",
              "Name some books Richard L. Muller write for Springer",
              "List all books were published by Springer in 2010",
+             "What year is \"Foundations of Databases.\" written ?",// not solve yet
+             "What books refer to \"Foundations of Databases.\"",// not solve yet
         };
         System.out.println("nums test: "+questions.length);
         ExtractTriple extract   =   new ExtractTriple();
         for (String question : questions) {
-            System.out.println("-----------------------------------------------------------");
+            System.out.println("----------------------------------------------------------------------------");
             Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
             tokens = SentenseUtil.optimizePosTags(tokens);
             System.out.println(SentenseUtil.tokensToStr(tokens));
             List<TripleToken> list  =   extract.extractTripleWordRelation(tokens);
             for(TripleToken tripleToken:list)
             {
-                
                 System.out.println(tripleToken);
-
             }
-
         }
     }
 }
