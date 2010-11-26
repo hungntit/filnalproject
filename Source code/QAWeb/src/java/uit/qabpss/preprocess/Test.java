@@ -50,6 +50,10 @@ public class Test {
             "What publications have resulted from TREC?",
              "What publications have resulted from TREC in 1999?",//fail test
              "Which author write \"database\" in 1999",
+             "Which books did Philip K. Chan or Marcus Thint write in ACM ?",
+             "What book did Philip K. Chan write in 1999 from ACM?",
+             "Name some books Richard L. Muller write for Springer",
+             "List all books were published by Springer in 2010",
         };
         System.out.println("nums test: "+questions.length);
         ExtractTriple extract   =   new ExtractTriple();
