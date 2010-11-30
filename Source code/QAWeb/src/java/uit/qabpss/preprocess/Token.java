@@ -16,6 +16,7 @@ public final class Token {
     public Token() {
         setPos_value("");
         setValue("");
+        entityType  =   new EntityType();
     }
 
     public EntityType getEntityType() {
@@ -65,6 +66,7 @@ public final class Token {
     public Token(String value, String pos_value) {
         this.value = value;
         this.pos_value = pos_value;
+        this.entityType =   new EntityType();
     }
 
     public Token(Token token) {

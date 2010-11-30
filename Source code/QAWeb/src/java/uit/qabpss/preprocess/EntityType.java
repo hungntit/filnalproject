@@ -69,10 +69,20 @@ public class EntityType {
         }
         return false;
     }
-
+    public boolean isNull()
+    {
+        if(tableInfo == null)
+            return true;
+        return false;
+    }
     public EntityType(TableInfo tableInfo, ColumnInfo columnInfo) {
         this.tableInfo = tableInfo;
         this.columnInfo = columnInfo;
+    }
+
+    public EntityType() {
+        this.tableInfo = null;
+        this.columnInfo = null;
     }
    
 

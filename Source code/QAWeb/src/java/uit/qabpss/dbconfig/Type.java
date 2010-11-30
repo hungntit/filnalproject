@@ -71,4 +71,32 @@ public class Type implements Serializable {
         return false;
 
     }
+    public static boolean isNumber(String value)
+    {
+        try
+        {
+
+            Long.parseLong(value);
+            return true;
+        }
+        catch(NumberFormatException nEx)
+        {
+            //do nothing
+        }
+        return false;
+    }
+    public static boolean isDouble(String value)
+    {
+        try
+        {
+
+            Double.parseDouble(value);
+            return true;
+        }
+        catch(NumberFormatException nEx)
+        {
+            //do nothing
+        }
+        return false;
+    }
 }

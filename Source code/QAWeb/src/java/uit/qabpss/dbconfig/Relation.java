@@ -54,4 +54,10 @@ public class Relation implements Serializable {
     public void setType(String type) {
         this.type = type;
     }
+    public boolean isReversedRelation()
+    {
+        if(type.equals(XMLReader.REVERSED_RELATION))
+            return true;
+        return false;
+    }
 }

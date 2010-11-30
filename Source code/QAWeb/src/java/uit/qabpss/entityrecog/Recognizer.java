@@ -4,20 +4,25 @@ package uit.qabpss.entityrecog;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import uit.qabpss.core.search.UtimateSearch;
 import uit.qabpss.core.wordnet.Wordnet;
 import uit.qabpss.dbconfig.ColumnInfo;
 import uit.qabpss.dbconfig.DBInfo;
+import uit.qabpss.dbconfig.DBInfoUtil;
+import uit.qabpss.dbconfig.Param;
 import uit.qabpss.dbconfig.Relation;
 import uit.qabpss.dbconfig.TableInfo;
+import uit.qabpss.dbconfig.Type;
 import uit.qabpss.dbconfig.XMLReader;
-import uit.qabpss.extracttriple.ExtractTriple;
 import uit.qabpss.extracttriple.TripleRelation;
+import uit.qabpss.extracttriple.TripleToken;
 import uit.qabpss.preprocess.EntityType;
-import uit.qabpss.preprocess.SentenseUtil;
 import uit.qabpss.preprocess.Token;
 import uit.qabpss.preprocess.TripleWord;
+import uit.qabpss.util.dao.orm.CustomSQLUtil;
+import uit.qabpss.util.dao.orm.hibernate.QueryPos;
 import uit.qabpss.util.hibernate.HibernateUtil;
 import wordnet.similarity.WordNotFoundException;
 
@@ -38,7 +43,7 @@ public class Recognizer {
             dbInf = xmlReader.loadDBInfo();
         }
     }
-    
+    /*
     public List<TripleWord> tripleRecognize(List<TripleWord> lst){
         if(lst == null){
             return null;
@@ -91,7 +96,7 @@ public class Recognizer {
         System.out.println("------------------------------------");
         return null;
     }
-
+*/
     public static void main(String[] args) throws IOException{
         /* String[] questions = new String[]{
         "Who write books in 1999 ?",
@@ -120,13 +125,74 @@ public class Recognizer {
         reg.tripleRecognize(t);
         }
          */
+       // EntityType tripleFromValue = getTripleFromValue("database");
+        //EntityType tripleFromValue = getEntityTypeFromValue("0-201-59098-0");
+        //EntityType tripleFromValue = getTripleFromValue("database");
+        //EntityType tripleFromValue = getTripleFromValue("database");
+        //EntityType tripleFromValue = getTripleFromValue("database");
         Recognizer reg = new Recognizer();
-        List<TripleRelation> tripleRelationFromRelationStr = reg.getTripleRelationFromRelationStr("write");
-        tripleRelationFromRelationStr   =   reg.getTripleRelationsFromNonNER(tripleRelationFromRelationStr, new Token("author", "NN"));
+       // List<TripleRelation> tripleRelationFromRelationStr = reg.getTripleRelationFromRelationStr("write");
+       // tripleRelationFromRelationStr   =   reg.getTripleRelationsFromNonNER(tripleRelationFromRelationStr, new Token("author", "NN"));
         int a=0;
 
     }
 
+    public  EntityType getEntityTypeFromValue(String value) {
+            if (value.isEmpty()) {
+                return null;
+            }
+            String temp = value;
+            EntityType t = null;
+            // check value is number : year
+            if(Type.isDouble(value)|| Type.isNumber(value))
+            {
+                t = checkValueFromDB(value, Type.DOUBLE);
+                if(t!= null)
+                    return t;
+            }
+            // check value is CODE : isbn, doi
+            if ((value + " ").matches("[0-9].*")) {
+                t = checkValueFromDB(value, Type.CODE);
+                if(t!= null)
+                    return t;
+            }
+            //check to another fields
+            t = checkValueFromDB(value, Type.STRING);
+            if (t != null) {
+                return t;
+            }
+            return null;
+        }
+
+    private  EntityType checkValueFromDB(String value,Type type){
+            TripleWord t = null;
+            String inputValue = "";
+            if(DBInfoUtil.getDBInfo() == null)
+                DBInfoUtil.initDb();
+            List<TableInfo> tables = DBInfoUtil.getDBInfo().getTables();
+            try {
+                for (int i = 0; i < tables.size(); i++) {
+                    TableInfo tableInfo = tables.get(i);
+                    List<ColumnInfo> columns = tableInfo.getColumns();
+                    for (int j = 0; j < columns.size(); j++) {
+                        ColumnInfo columnInfo = columns.get(j);
+                        if(!columnInfo.isIsVisible())
+                            continue;
+                        if (type.equals(columnInfo.getType()) ||(type.isDouble(value) && columnInfo.getType().getIsNumber())) {
+
+                           Param param  =   new Param(tableInfo, columnInfo);
+                           param.setValue(value);
+                           int count    =   UtimateSearch.countLimitByParam(new Param[]{param}, true, null , 1);
+                           if(count>0)
+                               return new EntityType(tableInfo, columnInfo);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                }
+            return null;
+        }
     public List<TripleRelation> getTripleRelationsFromNonNER(List<TripleRelation> existTripleRelations,Token token)
     {
         
@@ -273,5 +339,24 @@ public class Recognizer {
         if(result.size()>0)
             return result;
         return total;
+    }
+
+     public  void identifyTripleToken(TripleToken tripleToken)
+    {
+        String relationStr =   tripleToken.getRelationName();
+        List<TripleRelation> tripleRelationList = getTripleRelationFromRelationStr(relationStr);
+        if(tripleRelationList.size() == 1)
+        {
+            TripleRelation  tripleRelation  =   tripleRelationList.get(0);
+            //Kiem tra quan he nguoc
+            if(tripleRelation.getRelation().isReversedRelation())
+                tripleToken.swapTwoObject();
+            tripleToken.getObj1().setEntityType(tripleRelation.getFirstEntity());
+            tripleToken.getObj2().setEntityType(tripleRelation.getSecondEntity());
+        }
+        else
+        {
+
+        }
     }
 }

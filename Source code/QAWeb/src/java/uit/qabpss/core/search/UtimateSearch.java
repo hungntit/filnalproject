@@ -488,10 +488,159 @@ public static List<String> getListDefaultValueFromColumn(String columnName, Stri
         }
         return null;
 }
+protected static String generateCountLimitQuery(Param[] params,boolean isAndOperator,TableInfo selectTable,int limit)
+    {
+    return generateCountLimitQuery(params, isAndOperator, selectTable, null, limit);
+    }
+protected static String generateCountLimitQuery(Param[] params,boolean isAndOperator,TableInfo selectTable,String keyword,int limit)
+    {
+
+      String AndOroperator;
+      if(isAndOperator)
+          AndOroperator =   "AND";
+      else
+          AndOroperator =   "OR";
+
+      String query      =   "SELECT count(*) as "+ COUNT_VALUE +"\n FROM (SELECT\n";
+      int count         =   params.length;
+      if(count<1)
+          return null;
+      //---------------Select---------------------------------//
+      if(selectTable ==null)
+      {
+          query += "DISTINCT "+params[0]+"\n";
+       }
+      else
+      {
+            query += "DISTINCT "+selectTable.getName()+"."+selectTable.getPrimaryKey()+"\n";
+      }
+      //!---------------End Select----------------------------//
+
+      //---------------From----------------------------------//
+
+      query+="FROM ";
+      List<TableInfo> tables    =       new ArrayList<TableInfo>();
+      for(Param param:params)
+      {
+          if(tables.contains(param.getTable()))
+          {
+              continue;
+          }
+          if(param.getColumn().isIsVisible())
+            tables.add(param.getTable());
+          query +=  "\n"+param.getTable()+",";
+
+      }
+      query =   query.substring(0, query.length()-1);
+      //!---------------End From-----------------------------//
+
+      //---------------Where--------------------------------//
+      query+= "\nWHERE";
+      String condition   =   "";
+      for(Param param:params)
+      {
+          if(!param.getColumn().isIsVisible())
+              continue;
+          if(param.getColumn().getType().equals(Type.STRING))
+          {
+              String keywords[];
+              if(keyword == null)
+                 keywords =   CustomSQLUtil.keywords(param.getValue());
+              else
+                  keywords =   CustomSQLUtil.keywords(keyword);
+              if(keywords.length>0)
+                  condition+= CustomSQLUtil.AND_OR_CONECTOR+" "+ CustomSQLUtil.createOperatorForField(param.toString(), StringPool.LIKE) +"\n";
+
+          }
+          else
+          {
+              if(keyword == null)
+                condition+= CustomSQLUtil.AND_OR_CONECTOR + CustomSQLUtil.createOperatorForField(param.toString(),param.getOperator());
+          }
+
+      }
+      condition =   condition.substring(CustomSQLUtil.AND_OR_CONECTOR.length());
+      query+="\n"+ condition;
+      for(Param param:params)
+      {
+          if(param.getColumn().getType().equals(Type.STRING))
+          {
+              String keywords[];
+              if(keyword == null)
+                 keywords =   CustomSQLUtil.keywords(param.getValue());
+              else
+                  keywords =   CustomSQLUtil.keywords(keyword);
+              query =   CustomSQLUtil.replaceKeywords(query, param.toString(), StringPool.LIKE, true, keywords);
+
+          }
+      }
+      query =   CustomSQLUtil.replaceAndOperator(query,isAndOperator);
+      //!---------------End Where----------------------------//
+      query+=" LIMIT "+limit;
+      query+=") temptable";
+      return query;
+    }
+ /*
+  *
+  */
+
+    public static int countLimitByParam( Param[] params,boolean isAndOperator,TableInfo selectTable,int limit)
+    {
+        String queryStr    =   generateCountLimitQuery(params, isAndOperator, selectTable,limit);
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session =   null;
+        try
+        {
+        session= sessionFactory.openSession();
+
+        SQLQuery   q   = session.createSQLQuery(queryStr);
+        System.out.println(queryStr);
+        q.addScalar(COUNT_VALUE, org.hibernate.Hibernate.LONG);
+        QueryPos    qPos    =   QueryPos.getInstance(q);
+
+        for(Param param:params)
+        {
+            if(param.getColumn().getType().equals(Type.STRING))
+            {
+                String keywords[] =   CustomSQLUtil.keywords(param.getValue());
+                qPos.add(keywords, 2);
+            }
+            else
+            {
+                qPos.add(param.getValue(), param.getColumn().getType());
+            }
+
+        }
+         Iterator<Long> itr = q.list().iterator();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+
+        }
+        catch(Exception ex)
+        {
+
+        }
+        finally
+        {
+
+        }
+        return 0;
+    }
+
+
 
     public static void main(String args[]){
-        TableInfo returnTbl     =       DBInfoUtil.getDBInfo().findTableInfoByName(Table.PUBLICATION);
-        List    list            =       searchByKeyWords(returnTbl.getClassTable(), "Life is", returnTbl, 0 , 30);
+       // TableInfo returnTbl     =       DBInfoUtil.getDBInfo().findTableInfoByName(Table.PUBLICATION);
+       // List    list            =       searchByKeyWords(returnTbl.getClassTable(), "Life is", returnTbl, 0 , 30);
+        Param param =   new Param(new TableInfo("A","a"),new ColumnInfo("B", "b", Type.LONG));
+        String query    =   generateCountLimitQuery(new Param[]{param}, true, null, 1);
         int a=0;
     }
 

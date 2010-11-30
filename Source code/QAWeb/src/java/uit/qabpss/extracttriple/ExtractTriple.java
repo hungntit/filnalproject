@@ -423,6 +423,13 @@ public class ExtractTriple {
                    tripleToken   =   new TripleToken();
                    tripleToken.setObj1(tokensInList[firstObjPossition]);
                    tripleToken.setObj2(tokensInList[secondObjPossition]);
+                   if(secondObjPossition>0)
+                   {
+                       if (!checkSamePosTag(tokensInList[secondObjPossition - 1], "NNS|NN").equals(""))
+                       {
+                            tripleToken.getObj2().setEntityType(tokensInList[secondObjPossition - 1].getEntityType());
+                       }
+                   }
                    String relation  =   "";
                    if(relationPosArr[0] == -1)
                        relation  =   relationStrs[0] ;
@@ -450,7 +457,10 @@ public class ExtractTriple {
                    }
                     relation    =   relation.trim();
                     tripleToken.setRelationName(relation);
-
+                    if(relation.equalsIgnoreCase("be"))
+                    {
+                        tripleToken.getObj1().setEntityType(tripleToken.getObj2().getEntityType());
+                    }
                     result.add(tripleToken);
 
                }
