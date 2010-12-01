@@ -101,4 +101,18 @@ public class EntityType {
         return false;
     }
 
+    @Override
+    public String toString() {
+        if(isNull())
+            return "Not indentified";
+        else
+        {
+            if(isColumn())
+            {
+                return tableInfo.getAliasName()+"."+ columnInfo.getAliasName();
+            }
+            return  tableInfo.getAliasName();
+        }
+    }
+
 }

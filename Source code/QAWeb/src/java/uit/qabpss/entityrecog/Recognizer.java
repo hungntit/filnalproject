@@ -1,6 +1,7 @@
 
 package uit.qabpss.entityrecog;
 
+import edu.mit.jwi.item.POS;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -136,6 +137,50 @@ public class Recognizer {
         int a=0;
 
     }
+    private  List<TripleRelation> getTripleRelationFromObj(List<TripleRelation> existTripleRelations,Token obj,int index)
+    {
+        if(obj == null)
+            return existTripleRelations;
+        EntityType entityType   =   obj.getEntityType();
+        if(entityType.isNull())
+            return existTripleRelations;
+        List<TripleRelation> result     =   new ArrayList<TripleRelation>();
+        if(index    ==  1)
+        {
+            for(TripleRelation tripleRelation:existTripleRelations)
+            {
+                EntityType  firstEntityType =   tripleRelation.getFirstEntity();
+                if(firstEntityType.equals(entityType))
+                {
+                    result.add(tripleRelation);
+                }
+            }
+            if(result.size()>0)
+                return result;
+        }
+        else
+        {
+            for(TripleRelation tripleRelation:existTripleRelations)
+            {
+                EntityType  secondEntityType =   tripleRelation.getFirstEntity();
+                if(secondEntityType.equals(entityType))
+                {
+                    result.add(tripleRelation);
+                }
+            }
+            if(result.size()>0)
+                return result;
+        }
+        return existTripleRelations;
+    }
+    public List<TripleRelation> getTripleRelationsFromFirstObj(List<TripleRelation> existTripleRelations,Token obj)
+    {
+        return getTripleRelationFromObj(existTripleRelations, obj, 1);
+    }
+    public List<TripleRelation> getTripleRelationsFromSecondObj(List<TripleRelation> existTripleRelations,Token obj)
+    {
+        return getTripleRelationFromObj(existTripleRelations, obj, 2);
+    }
 
     public  EntityType getEntityTypeFromValue(String value) {
             if (value.isEmpty()) {
@@ -195,7 +240,12 @@ public class Recognizer {
         }
     public List<TripleRelation> getTripleRelationsFromNonNER(List<TripleRelation> existTripleRelations,Token token)
     {
-        
+        if(token.getPos_value().equalsIgnoreCase("NNS"))
+        {
+            String stemNoun =   Wordnet.wnstemmer.findStems(token.getValue(), POS.NOUN).get(0);
+            token.setPos_value("NN");
+            token.setValue(stemNoun);
+        }
         List<TripleRelation> tableresult =   new ArrayList<TripleRelation>();
         List<TripleRelation> columnresult =   new ArrayList<TripleRelation>();
         double maxSimilarityNumber    =   0;
@@ -308,6 +358,10 @@ public class Recognizer {
                    {
                        if(relationStr.startsWith(BE))
                        {
+                           if(relationStr.equalsIgnoreCase("be"))
+                           {
+                               continue;
+                           }
                            if(relation.getRelationName().startsWith(BE))
                            {
                                 String verb1 =   relation.getRelationName().substring(3);//remove BE in Str
@@ -345,6 +399,7 @@ public class Recognizer {
     {
         String relationStr =   tripleToken.getRelationName();
         List<TripleRelation> tripleRelationList = getTripleRelationFromRelationStr(relationStr);
+
         if(tripleRelationList.size() == 1)
         {
             TripleRelation  tripleRelation  =   tripleRelationList.get(0);
@@ -356,7 +411,212 @@ public class Recognizer {
         }
         else
         {
+            // check ob2 is identified
+            if(tripleToken.getObj2().getEntityType().isNull() == false)
+            {
 
+                if(tripleToken.getObj2().getEntityType().isTable())
+                {
+                    tripleToken.swapTwoObject();
+                    //Now ob1 is obj2
+                    tripleRelationList  =   getTripleRelationsFromFirstObj(tripleRelationList, tripleToken.getObj1());
+                    if(tripleRelationList.size() == 1)
+                    {
+                        tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
+                        return;
+                    }
+                }
+                else
+                {
+                    tripleRelationList  =   getTripleRelationsFromSecondObj(tripleRelationList, tripleToken.getObj2());
+                    if(tripleRelationList.size() == 1)
+                    {
+                        tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
+                        return;
+                    }
+                }
+
+
+            }
+            //end  check ob2 is identified
+            // check ob1 is identified
+            if(tripleToken.getObj1().getEntityType().isNull() == false)
+            {
+
+                if(tripleToken.getObj1().getEntityType().isColumn())
+                {
+                    tripleToken.swapTwoObject();
+                    //Now ob1 is obj2
+                    tripleRelationList  =   getTripleRelationsFromSecondObj(tripleRelationList, tripleToken.getObj2());
+                    if(tripleRelationList.size() == 1)
+                    {
+                        tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
+                        return;
+                    }
+                }
+                else
+                {
+                    tripleRelationList  =   getTripleRelationsFromSecondObj(tripleRelationList, tripleToken.getObj1());
+                    if(tripleRelationList.size() == 1)
+                    {
+                        tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
+                        return;
+                    }
+                }
+
+
+            }
+            //end  check ob1 is identified
+            if(tripleToken.isHavingNonNe())
+            {
+                // check obj2 is non name entity
+                Token   obj2    =   tripleToken.getObj2();
+                if(obj2.getPos_value().equalsIgnoreCase("NN")|| obj2.getPos_value().equalsIgnoreCase("NNS"))
+                {
+                    tripleRelationList  =   getTripleRelationsFromNonNER(tripleRelationList, obj2);
+                    if(tripleRelationList.size() == 1)
+                    {
+                        if(obj2.getEntityType().isTable())
+                        {
+                            tripleToken.swapTwoObject();
+                            tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
+                        }
+                        else
+                        {
+                            tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
+                        }
+                        return;
+                    }
+
+                }
+                // end check obj2 is non name entity
+                // check obj1 is non name entity
+                Token   obj1    =   tripleToken.getObj1();
+                if(obj1.getPos_value().equalsIgnoreCase("NN")||obj1.getPos_value().equalsIgnoreCase("NNS"))
+                {
+                    tripleRelationList  =   getTripleRelationsFromNonNER(tripleRelationList, obj1);
+                    if(tripleRelationList.size() == 1)
+                    {
+                        if(obj1.getEntityType().isColumn())
+                        {
+                            tripleToken.swapTwoObject();
+                            tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
+                        }
+                        else
+                        {
+                            tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
+                        }
+                        return;
+                    }
+
+                }
+
+                // end check obj2 is non name entity
+
+
+
+            }
+
+                //check obj2 is name entity
+                if(tripleToken.getObj2().getPos_value().equalsIgnoreCase("NNP")|| tripleToken.getObj2().getPos_value().equalsIgnoreCase("CD"))
+                {
+                    EntityType tempEntityType   =   tripleToken.getObj2().getEntityType();
+                    EntityType entityType = getEntityTypeFromValue(tripleToken.getObj2().getValue());
+                    tripleToken.getObj2().setEntityType(entityType);
+                    if(tripleToken.getObj2().getEntityType()!= null&&tripleToken.getObj2().getEntityType().isNull() == false)
+                    {
+                        if(tripleToken.getObj2().getEntityType().isTable())
+                        {
+                            tripleToken.swapTwoObject();
+                            //Now ob1 is obj2
+                            int lastSize    =   tripleRelationList.size();
+                            tripleRelationList  =   getTripleRelationsFromFirstObj(tripleRelationList, tripleToken.getObj1());
+                            if(tripleRelationList.size() == 1)
+                            {
+                                tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
+                                return;
+                            }
+                            else
+                            {
+                                if(tripleRelationList.size() == lastSize)// unvalueable
+                                {
+                                    tripleToken.swapTwoObject();
+                                    tripleToken.getObj2().setEntityType(tempEntityType);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            int lastSize        =   tripleRelationList.size();
+                            tripleRelationList  =   getTripleRelationsFromSecondObj(tripleRelationList, tripleToken.getObj2());
+                            if(tripleRelationList.size() == 1)
+                            {
+                                tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
+                                return;
+                            }
+                            else
+                            {
+                                if(tripleRelationList.size() == lastSize)// unvalueable
+                                {
+                                    tripleToken.getObj2().setEntityType(tempEntityType);
+                                }
+                            }
+                        }
+                    }
+                }
+                //end check obj2 is name entity
+                //check obj1 is name entity
+                if(tripleToken.getObj1().getPos_value().equalsIgnoreCase("NNP")|| tripleToken.getObj1().getPos_value().equalsIgnoreCase("CD"))
+                {
+                    EntityType tempEntityType   =   tripleToken.getObj1().getEntityType();
+                    EntityType entityType = getEntityTypeFromValue(tripleToken.getObj1().getValue());
+                    tripleToken.getObj1().setEntityType(entityType);
+                    if(tripleToken.getObj1().getEntityType().isNull() == false)
+                    {
+                        int lastSize    =   tripleRelationList.size();
+                        if(tripleToken.getObj1().getEntityType().isColumn())
+                        {
+                            tripleToken.swapTwoObject();
+                            //Now ob1 is obj2
+
+                            tripleRelationList  =   getTripleRelationsFromSecondObj(tripleRelationList, tripleToken.getObj2());
+                            if(tripleRelationList.size() == 1)
+                            {
+                                tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
+                                return;
+                            }
+                            else
+                            {
+                                if(tripleRelationList.size()    ==  lastSize)
+                                {
+                                    tripleToken.swapTwoObject();
+                                    tripleToken.getObj1().setEntityType(tempEntityType);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            tripleRelationList  =   getTripleRelationsFromSecondObj(tripleRelationList, tripleToken.getObj1());
+                            if(tripleRelationList.size() == 1)
+                            {
+                                tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
+                                return;
+                            }
+                            else
+                            {
+                                if(tripleRelationList.size()    ==  lastSize)
+                                {
+                                    tripleToken.getObj1().setEntityType(tempEntityType);
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+
+                //end check obj1 is name entity
+            
         }
     }
 }

@@ -125,7 +125,27 @@ public class TripleToken {
     public void setObj1(Token obj1) {
         this.obj1 = obj1;
     }
-    
+    public void swapTwoObject()
+    {
+        Token temp  =   obj2;
+        obj2        =   obj1;
+        obj1        =   temp;
+
+    }
+    public boolean isHavingNonNe()
+    {
+        if(obj1.getPos_value().equals("NN")||obj1.getPos_value().equals("NNS"))
+            return true;
+        if(obj2.getPos_value().equals("NN")||obj2.getPos_value().equals("NNS"))
+            return true;
+        return false;
+    }
+    public boolean isNotIdentified()
+    {
+        if(obj1.getEntityType().isNull() || obj2.getEntityType().isNull())
+            return true;
+        return false;
+    }
     public static List<TripleToken> extractTripleWordRelation(Token[] tokens)
     {
         ExtractTriple   extractTriple   =   new ExtractTriple();
