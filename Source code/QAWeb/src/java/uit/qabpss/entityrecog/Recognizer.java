@@ -162,7 +162,7 @@ public class Recognizer {
         {
             for(TripleRelation tripleRelation:existTripleRelations)
             {
-                EntityType  secondEntityType =   tripleRelation.getFirstEntity();
+                EntityType  secondEntityType =   tripleRelation.getSecondEntity();
                 if(secondEntityType.equals(entityType))
                 {
                     result.add(tripleRelation);
@@ -203,6 +203,65 @@ public class Recognizer {
             }
             //check to another fields
             t = checkValueFromDB(value, Type.STRING);
+            if (t != null) {
+                return t;
+            }
+            return null;
+        }
+
+    private  EntityType checkValueFromDB(String value,Type type,List<TripleRelation> tripleRelations){
+            
+            List<EntityType> invisibleEntityTypes   =   new ArrayList<EntityType>();
+            try {
+                
+                    for (int j = 0; j < tripleRelations.size(); j++) {
+                        EntityType entityType   =  tripleRelations.get(j).getSecondEntity();
+                        ColumnInfo columnInfo = entityType.getColumnInfo();
+                        TableInfo tableInfo = entityType.getTableInfo();
+                        if(!columnInfo.isIsVisible())
+                        {
+                            invisibleEntityTypes.add(entityType);
+                            continue;
+                        }
+                            
+                        if (type.equals(columnInfo.getType()) ||(Type.isDouble(value) && columnInfo.getType().getIsNumber())) { 
+
+                           Param param  =   new Param(tableInfo, columnInfo);
+                           param.setValue(value);
+                           int count    =   UtimateSearch.countLimitByParam(new Param[]{param}, true, null , 1);
+                           if(count>0)
+                               return new EntityType(tableInfo, columnInfo);
+                        }
+                    
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                }
+            if(invisibleEntityTypes.size() == 1)
+                return invisibleEntityTypes.get(0);
+            return null;
+        }
+    public  EntityType getEntityTypeFromValue(String value,List<TripleRelation> tripleRelations) {
+            if (value.isEmpty()) {
+                return null;
+            }
+            String temp = value;
+            EntityType t = null;
+            // check value is number : year
+            if(Type.isDouble(value)|| Type.isNumber(value))
+            {
+                t = checkValueFromDB(value, Type.DOUBLE,tripleRelations);
+                if(t!= null)
+                    return t;
+            }
+            // check value is CODE : isbn, doi
+            if ((value + " ").matches("[0-9].*")) {
+                t = checkValueFromDB(value, Type.CODE,tripleRelations);
+                if(t!= null)
+                    return t;
+            }
+            //check to another fields
+            t = checkValueFromDB(value, Type.STRING,tripleRelations);
             if (t != null) {
                 return t;
             }
@@ -521,7 +580,7 @@ public class Recognizer {
                 if(tripleToken.getObj2().getPos_value().equalsIgnoreCase("NNP")|| tripleToken.getObj2().getPos_value().equalsIgnoreCase("CD"))
                 {
                     EntityType tempEntityType   =   tripleToken.getObj2().getEntityType();
-                    EntityType entityType = getEntityTypeFromValue(tripleToken.getObj2().getValue());
+                    EntityType entityType = getEntityTypeFromValue(tripleToken.getObj2().getValue(),tripleRelationList);
                     tripleToken.getObj2().setEntityType(entityType);
                     if(tripleToken.getObj2().getEntityType()!= null&&tripleToken.getObj2().getEntityType().isNull() == false)
                     {
@@ -569,7 +628,7 @@ public class Recognizer {
                 if(tripleToken.getObj1().getPos_value().equalsIgnoreCase("NNP")|| tripleToken.getObj1().getPos_value().equalsIgnoreCase("CD"))
                 {
                     EntityType tempEntityType   =   tripleToken.getObj1().getEntityType();
-                    EntityType entityType = getEntityTypeFromValue(tripleToken.getObj1().getValue());
+                    EntityType entityType = getEntityTypeFromValue(tripleToken.getObj1().getValue(),tripleRelationList);
                     tripleToken.getObj1().setEntityType(entityType);
                     if(tripleToken.getObj1().getEntityType().isNull() == false)
                     {

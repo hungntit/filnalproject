@@ -7,6 +7,7 @@ package uit.qabpss.preprocess;
 import uit.qabpss.extracttriple.TripleToken;
 import java.io.IOException;
 import java.util.List;
+import uit.qabpss.entityrecog.Recognizer;
 import uit.qabpss.extracttriple.ExtractTriple;
 
 /**
@@ -60,6 +61,7 @@ public class Test {
         };
         System.out.println("nums test: " + questions.length);
         ExtractTriple extract = new ExtractTriple();
+        Recognizer  reg     =   new Recognizer();
         for (String question : questions) {
             System.out.println("----------------------------------------------------------------------------");
             Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
@@ -68,7 +70,14 @@ public class Test {
             List<TripleToken> list = extract.extractTripleWordRelation(tokens);
             for(TripleToken tripleToken:list)
             {
+
                 System.out.println(tripleToken);
+                reg.identifyTripleToken(tripleToken);
+                if(!tripleToken.isNotIdentified())
+                {
+                    System.out.println(tripleToken.getObj1().getEntityType().toString() +","+tripleToken.getObj2().getEntityType().toString());
+                }
+
             }
         }
     }
