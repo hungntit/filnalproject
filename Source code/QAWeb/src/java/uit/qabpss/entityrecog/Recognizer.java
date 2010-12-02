@@ -294,6 +294,7 @@ public class Recognizer {
     }
      public  List<TripleRelation> getTripleRelationFromRelationStr(String relationStr)
     {
+        List<TripleRelation> exactResult   =   new ArrayList<TripleRelation>();
         List<TripleRelation> result   =   new ArrayList<TripleRelation>();
         List<TripleRelation> total   =   new ArrayList<TripleRelation>();
         List<TableInfo> tableInfos    =   dbInf.getTables();
@@ -313,7 +314,7 @@ public class Recognizer {
                    {
                        
                        if(!result.contains(tripleRelation))
-                            result.add(tripleRelation);
+                            exactResult.add(tripleRelation);
                    }
                    else
                    {
@@ -351,6 +352,8 @@ public class Recognizer {
                 }
             }
         }
+        if(exactResult.size()>0)
+            return exactResult;
         if(result.size()>0)
             return result;
         return total;
