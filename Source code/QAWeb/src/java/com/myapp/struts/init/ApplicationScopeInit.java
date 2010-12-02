@@ -13,6 +13,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.apache.struts.util.LabelValueBean;
+import uit.qabpss.dbconfig.DBInfo;
+import uit.qabpss.dbconfig.DBInfoUtil;
 import uit.qabpss.util.hibernate.HibernateUtil;
 
 /**
@@ -28,6 +30,7 @@ public class ApplicationScopeInit implements ServletContextListener {
     public void contextInitialized(ServletContextEvent event) {
         try {
             HibernateUtil.getSessionFactory();
+            DBInfoUtil.initDb();
         } catch (Exception e) {
         }
     }

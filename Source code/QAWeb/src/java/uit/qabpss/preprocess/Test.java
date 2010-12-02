@@ -6,9 +6,12 @@ package uit.qabpss.preprocess;
 
 import uit.qabpss.extracttriple.TripleToken;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
+import org.hibernate.Hibernate;
 import uit.qabpss.entityrecog.Recognizer;
 import uit.qabpss.extracttriple.ExtractTriple;
+import uit.qabpss.util.hibernate.HibernateUtil;
 
 /**
  *
@@ -21,12 +24,13 @@ public class Test {
      */
     public static void main(String[] args) throws IOException {
         // List of test questions here
+        HibernateUtil.getSessionFactory();
         String[] questions = new String[]{
             "Which books were written by Rafiul Ahad and Amelia Carlson in 2010 ? ",
             "Which books were written by Rafiul Ahad from 1999 to 2010 ?",
             "Which books were published by O'Reilly  in 1999 ?",
             "How many papers were written by Rafiul Ahad ?",
-            "Who write books in 1999 ?",
+            "Who compose books in 1999 ?",
             "Who write books from 1999 to 2010 ?",
             "How many papers were written by Rafiul Ahad in 2010 ?",
             "Who published books from 1999 to 2000 ?",
@@ -70,7 +74,6 @@ public class Test {
             List<TripleToken> list = extract.extractTripleWordRelation(tokens);
             for(TripleToken tripleToken:list)
             {
-
                 System.out.println(tripleToken);
                 reg.identifyTripleToken(tripleToken);
                 if(!tripleToken.isNotIdentified())

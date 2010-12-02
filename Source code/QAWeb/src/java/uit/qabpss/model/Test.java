@@ -12,7 +12,7 @@ import uit.qabpss.util.hibernate.HibernateUtil;
 public class Test {
 
     public static void main(String[] args) {
-        test11();
+        test3();
     }
 
     public static void test1() {
@@ -55,9 +55,8 @@ public class Test {
         Session session = sessionFactory.openSession();
 
         //get Publication with ID = 1
-        Publication a = (Publication) session.load(Publication.class, 344420);
+        Publication a = (Publication) session.load(Publication.class, 71);
         System.out.println(a.getTitle());
-        System.out.println(a.getRefPubs().get(1).getTitle());
         for (int i = 0; i < a.getRefPubs().size(); i++) {
             Publication object = a.getRefPubs().get(i);
             System.out.println("ref: " + object.getTitle());

@@ -11,7 +11,6 @@
                 <relation-name>be write</relation-name>
                 <relation-name>be compose</relation-name>
                 <reversed-relation>write</reversed-relation>
-                <reversed-relation>compose</reversed-relation>
                 <reversed-relation>has write</reversed-relation>
                 <reversed-relation>has compose</reversed-relation> 
                 <related-table>author</related-table>               
@@ -32,7 +31,7 @@
                 <relation-name>has source</relation-name>
                 <relation-name>from</relation-name>
                 <relation-name>in</relation-name>
-                <relation-name>result from</relation-name>
+                <relation-name>result</relation-name>
             </relation>
             <field-name>source</field-name>
         </field>
@@ -75,6 +74,7 @@
                 <relation-name>has publisher</relation-name>
                 <relation-name>be publish</relation-name>
                 <relation-name>be release</relation-name>
+                <relation-name>for</relation-name>
                 <reversed-relation>publish</reversed-relation>
                 <reversed-relation>has publish</reversed-relation>
                 <reversed-relation>release</reversed-relation>
