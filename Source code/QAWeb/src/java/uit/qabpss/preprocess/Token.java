@@ -24,7 +24,16 @@ public final class Token {
     }
 
     public void setEntityType(EntityType entityType) {
-        this.entityType = entityType;
+        if(entityType == null|| this.entityType == null)
+            this.entityType = entityType;
+        else
+        {
+            this.entityType.tableInfo   =   entityType.tableInfo;
+            this.entityType.columnInfo  =   entityType.columnInfo;
+        }
+    }
+    public void setEntityOfToken(Token token) {
+        this.entityType = token.getEntityType();
     }
 
     /**

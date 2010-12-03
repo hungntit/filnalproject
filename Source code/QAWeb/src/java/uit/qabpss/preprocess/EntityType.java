@@ -104,12 +104,12 @@ public class EntityType {
     @Override
     public String toString() {
         if(isNull())
-            return "Not indentified";
+            return "Not indentified :"+ super.toString();
         else
         {
             if(isColumn())
             {
-                return tableInfo.getAliasName()+"."+ columnInfo.getAliasName();
+                return tableInfo.getAliasName()+"."+ columnInfo.getAliasName()+" : "+super.toString();
             }
             return  tableInfo.getAliasName();
         }
