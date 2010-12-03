@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="config.xsd">
-    <table table-alias="Publication"> <!-- Tên do người dùng đặt thay thế cho dblp_pub_new -->
+    <table table-alias="Publication"> 
         <table-name>dblp_pub_new</table-name>
         <field type="String" field-alias="author" visible="false" relation="related table">
             <relation>
@@ -10,9 +10,6 @@
                 <relation-name>has composer</relation-name>
                 <relation-name>be write</relation-name>
                 <relation-name>be compose</relation-name>
-                <reversed-relation>write</reversed-relation>
-                <reversed-relation>has write</reversed-relation>
-                <reversed-relation>has compose</reversed-relation> 
                 <related-table>author</related-table>               
             </relation>
             <field-name>author</field-name>
@@ -24,6 +21,20 @@
                 <relation-name>has heading</relation-name>
             </relation>
             <field-name>title</field-name>
+        </field>
+
+        <field type="String" field-alias="publisher" visible="true" relation="has attribute">
+            <relation>
+                <relation-name>has publisher</relation-name>
+                <relation-name>be publish</relation-name>
+                <relation-name>be release</relation-name>
+                <relation-name>for</relation-name>
+                <reversed-relation>publish</reversed-relation>
+                <reversed-relation>has publish</reversed-relation>
+                <reversed-relation>release</reversed-relation>
+                <reversed-relation>has release</reversed-relation>
+            </relation>
+            <field-name>publisher</field-name>
         </field>
         
         <field type="String" field-alias="source" visible="true" relation="has attribute">
@@ -44,16 +55,9 @@
                 <relation-name value="&lt;=">to</relation-name>
             </relation>
             <field-name>year</field-name>
-        </field>
-        
-        <field type="String" field-alias="type" visible="true" relation="has attribute">
-            <relation>
-                <relation-name>has type</relation-name>
-            </relation>
-            <field-name>type</field-name>
-        </field>
+        </field>        
 
-        <field type="String" field-alias="isbn" visible="true" relation="has attribute">
+        <field type="Code" field-alias="isbn" visible="true" relation="has attribute">
             <relation>
                 <relation-name>have</relation-name>
                 <relation-name>has</relation-name>
@@ -61,32 +65,43 @@
             <field-name>isbn</field-name>
         </field>
 
-        <field type="String" field-alias="doi" visible="true" relation="has attribute">
+        <field type="Code" field-alias="doi" visible="true" relation="has attribute">
             <relation>
                 <relation-name>have</relation-name>
                 <relation-name>has</relation-name>
             </relation>
             <field-name>isbn</field-name>
         </field>
-        
-        <field type="String" field-alias="publisher" visible="true" relation="has attribute">
-            <relation>
-                <relation-name>has publisher</relation-name>
-                <relation-name>be publish</relation-name>
-                <relation-name>be release</relation-name>
-                <relation-name>for</relation-name>
-                <reversed-relation>publish</reversed-relation>
-                <reversed-relation>has publish</reversed-relation>
-                <reversed-relation>release</reversed-relation>
-                <reversed-relation>has release</reversed-relation>
-            </relation>
-            <field-name>publisher</field-name>
-        </field>
-        
+                        
         <primary-key>id</primary-key>
         
     </table>
-    
+
+    <table table-alias="Author">
+        <table-name>dblp_author_ref_new</table-name>
+
+        <field type="String" field-alias="publication" visible="false" relation="related table">
+            <relation>
+                <relation-name>write</relation-name>
+                <relation-name>has write</relation-name>
+                <relation-name>has compose</relation-name>
+                <related-table>publication</related-table>
+            </relation>            
+            <field-name>title</field-name>
+        </field>
+
+        <field type="String" field-alias="publisher" visible="false" relation="related table">
+            <relation>
+                <relation-name>write for</relation-name>
+                <relation-name>cooperate</relation-name>
+                <related-table>publication</related-table>
+            </relation>
+            <field-name>publisher</field-name>
+        </field>
+
+        <primary-key>pub_id</primary-key>
+    </table>
+
     <database-name>dblp</database-name> 	
  
     <related-table>
@@ -94,4 +109,11 @@
         <related-table-name>dblp_author_ref_new</related-table-name> 
         <table-key>pub_id</table-key>
     </related-table>
+
+    <related-table>
+        <name>publication</name>
+        <related-table-name>dblp_pub_new</related-table-name>
+        <table-key>id</table-key>
+    </related-table>
+
 </database>
