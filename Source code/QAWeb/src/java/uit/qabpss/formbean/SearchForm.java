@@ -74,8 +74,8 @@ public class SearchForm extends org.apache.struts.action.ActionForm {
             errors.add("key word", new ActionMessage("errors.required",new String[]{"key word"}));
             return errors;
         }
-        if (getKeyWord().length() < 2) {
-            errors.add("key word", new ActionMessage("errors.minlength",new String[]{"key word","5"}));
+        if (getKeyWord().length() < 3) {
+            errors.add("key word", new ActionMessage("errors.minlength",new String[]{"key word","3"}));
             return errors;
         }
         return errors;

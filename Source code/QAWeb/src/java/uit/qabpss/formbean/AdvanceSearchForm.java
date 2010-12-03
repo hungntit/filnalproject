@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package uit.qabpss.formbean;
 
 import java.util.ArrayList;
@@ -26,12 +25,11 @@ import uit.qabpss.dbconfig.Type;
  * @author ThuanHung
  */
 public class AdvanceSearchForm extends org.apache.struts.action.ActionForm {
-    
 
     private List<Param> params;
     private ImageButtonBean submit;
-    private TableInfo   tableInfo;
-    private boolean     isAndOperator;
+    private TableInfo tableInfo;
+    private boolean isAndOperator;
 
     public boolean isIsAndOperator() {
         return isAndOperator;
@@ -48,7 +46,7 @@ public class AdvanceSearchForm extends org.apache.struts.action.ActionForm {
     public void setTableInfo(TableInfo tableInfo) {
         this.tableInfo = tableInfo;
     }
-    
+
     public ImageButtonBean getSubmit() {
         return submit;
     }
@@ -64,26 +62,25 @@ public class AdvanceSearchForm extends org.apache.struts.action.ActionForm {
     public void setParams(List<Param> params) {
         this.params = params;
     }
-    public void setParam(int index,Param param)
-    {
-        if(index> params.size())
-        {
+
+    public void setParam(int index, Param param) {
+        if (index > params.size()) {
             params.set(index, param);
         }
     }
 
-    public Param getParam(int index)
-    {
+    public Param getParam(int index) {
         return params.get(index);
     }
+
     /**
      *
      */
     public AdvanceSearchForm() {
         submit = new ImageButtonBean();
-        
-        params  =   new ArrayList<Param>();
-        isAndOperator   =   true;
+
+        params = new ArrayList<Param>();
+        isAndOperator = true;
         // TODO Auto-generated constructor stub
     }
 
@@ -95,35 +92,47 @@ public class AdvanceSearchForm extends org.apache.struts.action.ActionForm {
      */
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
-        MessageResources    msgRes  =   (MessageResources)request.getAttribute(Globals.MESSAGES_KEY);
-        Locale              locale  =   (Locale)request.getSession().getAttribute(Globals.LOCALE_KEY);
-        for(Param param:params)
-        {
-            if(param.getColumn().getType().equals(Type.INTEGER)||param.getColumn().getType().equals(Type.LONG))
-            {
-                System.out.println(param.getValue());
-                try
-                {
-                    Integer.parseInt(param.getValue());
-                }
-                catch(Exception ex)
-                {
-                    String dbName   =   DBInfoUtil.getDBInfo().getName();
-                    if(!dbName.equals(""))
-                        dbName  +=".";
-
-                    String fieldMsg        =   param.getColumn().getAliasName();
-                    if(locale!= null)
-                        fieldMsg    =   msgRes.getMessage(locale,"text."+dbName+param.getColumn().getAliasName().toLowerCase());
-                    else
-                        fieldMsg    =   msgRes.getMessage("text."+dbName+param.getColumn().getAliasName().toLowerCase());
-                    errors.add(param.getColumn().getAliasName(), new ActionMessage("errors.isnumber",new String[]{fieldMsg}));
-                    
-                }
-                
+        MessageResources msgRes = (MessageResources) request.getAttribute(Globals.MESSAGES_KEY);
+        Locale locale = (Locale) request.getSession().getAttribute(Globals.LOCALE_KEY);
+        boolean empty = true;
+        for (int i = 0; i < params.size(); i++) {
+            Param param = params.get(i);
+            if (!param.getValue().isEmpty()) {
+                empty = false;
             }
         }
-        
+        if (empty == false) {
+            for (Param param : params) {
+                if (!param.getValue().isEmpty()) {
+                    if (param.getColumn().getType().equals(Type.INTEGER) || param.getColumn().getType().equals(Type.LONG)) {
+                        System.out.println(param.getValue());
+                        try {
+                            Integer.parseInt(param.getValue());
+                        } catch (Exception ex) {
+                            String dbName = DBInfoUtil.getDBInfo().getName();
+                            if (!dbName.equals("")) {
+                                dbName += ".";
+                            }
+
+                            String fieldMsg = param.getColumn().getAliasName();
+                            if (locale != null) {
+                                fieldMsg = msgRes.getMessage(locale, "text." + dbName + param.getColumn().getAliasName().toLowerCase());
+                            } else {
+                                fieldMsg = msgRes.getMessage("text." + dbName + param.getColumn().getAliasName().toLowerCase());
+                            }
+                            errors.add(param.getColumn().getAliasName(), new ActionMessage("errors.isnumber", new String[]{fieldMsg}));
+                        }
+                    }
+                    if(param.getColumn().getType().equals(Type.STRING)){
+                        if(param.getValue().length()<3){
+                        errors.add( param.getColumn().getAliasName().toLowerCase(), new ActionMessage("errors.minlength",new String[]{ param.getColumn().getAliasName().toLowerCase(),"3"}));
+                        }     
+                    }
+                }
+            }
+        } else {
+            errors.add(null, new ActionMessage("errors.input"));
+        }
         return errors;
     }
 }

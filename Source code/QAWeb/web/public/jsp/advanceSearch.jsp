@@ -71,12 +71,10 @@ request.setAttribute("tables", tables);
 
                                     </logic:notEmpty>
                                     <logic:empty property="column.defaultValuesSet" name="param">
-                                        <html:text name="AdvanceSearchForm" property="param[${id}].value" />
+                                        <html:text name="AdvanceSearchForm" property="param[${id}].value" size="50"/>
                                     </logic:empty>
                                 </logic:notEqual>
-
                             </td>
-
                         </tr>
                     </logic:iterate>
                     <tr>

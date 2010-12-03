@@ -25,7 +25,7 @@
                             <td>
                                 <logic:equal value="true"  property="column.type.isNumber" name="param">
 
-                                    <html:select property="param[${id}].operator" name="AdvanceSearchForm">
+                                    <html:select property="param[${id}].operator" name="AdvanceSearchForm" size="20">
                                         <html:option value="<%=StringPool.EQUAL %>"><bean:message key="operator.equal"/></html:option>
                                         <html:option value="<%=StringPool.GREATER_THAN_OR_EQUAL %>"><bean:message key="operator.greater_than_or_equal"/></html:option>
                                         <html:option value="<%=StringPool.LESS_THAN_OR_EQUAL %>"><bean:message key="operator.less_than_or_equal"/></html:option>
@@ -35,7 +35,7 @@
 
                                 </logic:equal>
                                 <logic:equal value="true"  property="column.type.isBoolean" name="param">
-                                    <html:select property="param[${id}].value" name="AdvanceSearchForm">
+                                    <html:select property="param[${id}].value" name="AdvanceSearchForm" >
                                         <html:option value="true"><bean:message key="text.true"/></html:option>
                                         <html:option value="false"><bean:message key="text.false"/></html:option>
                                     </html:select>
@@ -52,7 +52,7 @@
 
                                     </logic:notEmpty>
                                     <logic:empty property="column.defaultValuesSet" name="param">
-                                        <html:text name="AdvanceSearchForm" property="param[${id}].value" />
+                                        <html:text name="AdvanceSearchForm" property="param[${id}].value"/>
                                     </logic:empty>
                                 </logic:notEqual>
 
