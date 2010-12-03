@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///D:/IT/Final%20Project/DatabaseQAConfig/config.xsd">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="config.xsd">
     <table table-alias="Publication"> <!-- Tên do người dùng đặt thay thế cho dblp_pub_new -->
         <table-name>dblp_pub_new</table-name>
         <field type="String" field-alias="author" visible="false" relation="related table">
