@@ -26,6 +26,7 @@ Which books did Richard L. Muller write in ACM ?
 Which authors write books for ACM?
 Which authors wrote books for Springer from 1999?
 Which books does Rafiul Ahad wrote with Amelia Carlson?
+Which publication have source from TREC in 2010?
 Which papers refer to "Foundations of Databases."?
 Which publications refer to "Foundations of Databases."?
 Which documents cited to "Foundations of Databases."?
@@ -34,8 +35,15 @@ How many papers were written by Rafiul Ahad in 2010 ?
 How many publisher did "Philip K. Chan" cooperate with?
 How many publisher did "Philip K. Chan" work with?
 How many papers were written by Raul Rato and Rui Gomes in 2010?
+How many books have source from TREC ?
+How many papers derived source from TREC ?
+How many authors wrote book in 2009 ?
+How many publisher released book in 2010?
+How many publications refer to "Foundations of Databases."?
+How many books cited to "Foundations of Databases."?
 What are titles of books written by Marcus Thint ?
 What are headings of books written by Marcus Thint ?
+What are names of books written by William Kent ?
 What papers did Jennifer Widom write ?
 What books did Jennifer Widom write ?
 What book did Philip K. Chan write in 1999 ?
@@ -51,5 +59,13 @@ What books were published by ACM or Springer in 2010?
 What publications have resulted from TREC in 1999?
 What books refer to "Foundations of Databases."
 What publications have resulted from TREC?
+Does Rafiul Ahad write books in 2010 ?
+Does Rafiul Ahad write books from 2005 to 2010 ?
+Did IEEE publish books in 2010?
 Name some books Richard L. Muller write for Springer
+Name all publications were publish in 2010
+List some books which are written by Jennifer Widom from 1999
 List all books were published by Springer in 2010
+Find books which are composed by Rafiul Ahad and Amelia Carlson
+Find authors who wrote books for ACM from 2008 to 2009 ?
+Alfred V. Aho is author of "Data Structures and Algorithms." ,isn't it?

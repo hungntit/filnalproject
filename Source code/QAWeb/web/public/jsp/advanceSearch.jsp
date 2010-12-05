@@ -85,7 +85,12 @@ request.setAttribute("tables", tables);
             </html:form>
             </div>
         </div>
-        <!--Show all authors which you search-->
+            <c:if test="${warning != null}">
+                <span style="color: green;">
+                    <bean:message key="${warning}"/>
+                </span>
+            </c:if>
+<%--        Show all authors which you search
         <div style="text-align: left;background-color: transparent;">
             <span style="color: green"><c:out value="${warning}"/></span>
             <ul>
@@ -97,6 +102,6 @@ request.setAttribute("tables", tables);
                 </li>
             </c:forEach>
             </ul>
-        </div>
-    </div
+        </div>            --%>
+</div>
 

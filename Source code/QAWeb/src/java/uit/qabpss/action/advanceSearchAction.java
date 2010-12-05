@@ -5,6 +5,7 @@
 
 package uit.qabpss.action;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ public class advanceSearchAction extends org.apache.struts.action.Action {
     
     /* forward name="success" path="" */
     private static final String SUCCESS = "success";
+    private static final String NORESULT = "noresult";
     
     /**
      * This is the action called from the Struts framework.
@@ -62,14 +64,17 @@ public class advanceSearchAction extends org.apache.struts.action.Action {
         {
             range   =   Integer.parseInt(request.getParameter("range"));
         }
-        List objs =   UtimateSearch.searchByParam(table.getClassTable(), params, advanceSForm.isIsAndOperator(),table , startRow , startRow+range);
-        if(objs.size()>0)
-        {
-            if(objs.get(0) instanceof Comparable)
-            {
-                Collections.sort(objs);
-            }
+        List objs = UtimateSearch.searchByParam(table.getClassTable(), params, advanceSForm.isIsAndOperator(), table, startRow, startRow + range);
+        if(objs.isEmpty()){
+            request.setAttribute("warning", "text.noresult");
+            return mapping.findForward(NORESULT);
         }
+            if (objs.size() > 0) {
+                if (objs.get(0) instanceof Comparable) {
+                    Collections.sort(objs);
+                }
+            }
+     
         request.setAttribute("objs", objs);
         request.setAttribute("startRow", startRow);
         request.setAttribute("range", range);

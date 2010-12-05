@@ -39,7 +39,7 @@
         <action input=".advanceSearchPage" name="AdvanceSearchForm" path="/advanceSearch" scope="session" type="uit.qabpss.action.advanceSearchAction">
             <forward name="publication" path=".publications"/>
             <forward name="author" path=".authors"/>
-
+            <forward name="noresult" path=".advanceSearchPage"/>
         </action>
         <action path="/quicksearch" type="uit.qabpss.action.quickSearchAction">
             <forward name="success" path=".searchPage"/>
