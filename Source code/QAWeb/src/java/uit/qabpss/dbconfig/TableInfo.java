@@ -19,6 +19,15 @@ public class TableInfo implements Serializable{
     protected String aliasName;
     protected Class  classTable;
     protected String primaryKey;
+    protected ColumnInfo presentationField  =   null;
+
+    public ColumnInfo getPresentationField() {
+        return presentationField;
+    }
+
+    public void setPresentationField(ColumnInfo presentationField) {
+        this.presentationField = presentationField;
+    }
 
     /**
      * Get the value of primaryKey
@@ -99,7 +108,12 @@ public class TableInfo implements Serializable{
     }
     public void addColumn(ColumnInfo column)
     {
-        columns.add(column);
+        if(!columns.contains(column))
+            columns.add(column);
+        if(column.isPresentation)
+        {
+            presentationField   =   column;
+        }
     }
     public ColumnInfo findColumnByName(String columnName)
     {

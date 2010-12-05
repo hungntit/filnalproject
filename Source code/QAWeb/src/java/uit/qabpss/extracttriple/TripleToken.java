@@ -140,9 +140,17 @@ public class TripleToken {
             return true;
         return false;
     }
+    public boolean isAllNonNe()
+    {
+        if( (obj1.getPos_value().equals("NN")||obj1.getPos_value().equals("NNS")) && (obj2.getPos_value().equals("NN")||obj2.getPos_value().equals("NNS")) )
+            return true;
+
+        return false;
+    }
+
     public boolean isNotIdentified()
     {
-        if(obj1.getEntityType().isNull() || obj2.getEntityType().isNull())
+        if(obj1.getEntityType()== null || obj2.getEntityType()== null || obj1.getEntityType().isNull() || obj2.getEntityType().isNull())
             return true;
         return false;
     }

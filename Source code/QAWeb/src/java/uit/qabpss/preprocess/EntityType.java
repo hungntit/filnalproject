@@ -109,7 +109,7 @@ public class EntityType {
         {
             if(isColumn())
             {
-                return tableInfo.getAliasName()+"."+ columnInfo.getAliasName()+" : "+super.toString();
+                return tableInfo.getAliasName()+"."+ columnInfo.getAliasName();
             }
             return  tableInfo.getAliasName();
         }

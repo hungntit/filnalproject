@@ -27,6 +27,7 @@ public class XMLReader {
     public static final String TYPE = "type";
     public static final String VALUE = "value";
     public static final String VISIBLE = "visible";
+    public static final String PRESENTATION = "presentation";
     private static final String PATH = "xmlconfig\\rel_config.xml";
     public Document doc = null;
 
@@ -67,6 +68,10 @@ public class XMLReader {
                         NodeList childFields = temp.getChildNodes();
                         colInf.setAliasName(temp.getAttributes().getNamedItem(FIELD_ALIAS).getNodeValue());
                         colInf.setIsVisible(temp.getAttributes().getNamedItem(VISIBLE).getNodeValue());
+                        if(temp.getAttributes().getNamedItem(PRESENTATION)!= null)
+                            colInf.setIsPresentation(true);
+                        else
+                            colInf.setIsPresentation(false);
 //                        colInf.setName(temp.getAttributes().getNamedItem(FIELD_NAME).getNodeValue());
                         colInf.setType(temp.getAttributes().getNamedItem(TYPE).getNodeValue());
                         colInf.setRelationType(temp.getAttributes().getNamedItem(RELATION).getNodeValue());

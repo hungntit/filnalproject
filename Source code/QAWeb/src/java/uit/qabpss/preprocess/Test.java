@@ -38,8 +38,8 @@ public class Test {
             "What are titles of books written by Marcus Thint ?",
             "What papers did Jennifer Widom write ?",
             "What books did Jennifer Widom write ?",
-            "Who is the author of  \"Working Models for Uncertain Data and ACM\" 1999",
-            "Who is the author of  \"Working Models for Uncertain Data and ACM\"",
+            "Who is the author of  \"Working Models for Uncertain Data\" and ACM 1999",
+            "Who is the author of  \"Working Models for Uncertain Data\" and ACM",
             "What book did Philip K. Chan write in 1999?",
             "What book did Philip K. Chan write from 1999 to 2000?",
             "What are the titles of the books published by O’reilly in 1999 ?",
@@ -67,21 +67,27 @@ public class Test {
         ExtractTriple extract = new ExtractTriple();
         Recognizer  reg     =   new Recognizer();
         for (String question : questions) {
+            Date    date    =   new Date();
+            long begin   =   date.getTime();
             System.out.println("----------------------------------------------------------------------------");
             Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
             tokens = SentenseUtil.optimizePosTags(tokens);
             System.out.println(SentenseUtil.tokensToStr(tokens));
             List<TripleToken> list = extract.extractTripleWordRelation(tokens);
+            reg.identifyTripleTokens(list);
             for(TripleToken tripleToken:list)
             {
                 System.out.println(tripleToken);
-                reg.identifyTripleToken(tripleToken);
+                //reg.identifyTripleToken(tripleToken);
                 if(!tripleToken.isNotIdentified())
                 {
-                    System.out.println(tripleToken.getObj1().getEntityType().toString() +","+tripleToken.getObj2().getEntityType().toString());
+                    System.out.println(tripleToken.getObj1().toString()+":"+tripleToken.getObj1().getEntityType().toString() +","+tripleToken.getObj2().toString()+":"+tripleToken.getObj2().getEntityType().toString());
                 }
 
             }
+            date    =   new Date();
+            double end    =   date.getTime();
+            System.out.println("Time: "+(end - begin)/1000);
         }
     }
 }

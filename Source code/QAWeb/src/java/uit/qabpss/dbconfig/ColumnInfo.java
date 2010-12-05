@@ -37,6 +37,25 @@ public class ColumnInfo implements Serializable{
     protected  String relationType;
     protected String relatedTable;
     protected String mappingTable;
+    protected boolean isPresentation;
+
+    /**
+     * Get the value of isPresentation
+     *
+     * @return the value of isPresentation
+     */
+    public boolean isIsPresentation() {
+        return isPresentation;
+    }
+
+    /**
+     * Set the value of isPresentation
+     *
+     * @param isPresentation new value of isPresentation
+     */
+    public void setIsPresentation(boolean isPresentation) {
+        this.isPresentation = isPresentation;
+    }
 
     public  void setDefaultValuesSet(String columnName,String tableName) {
         defaultValuesSet = UtimateSearch.getListDefaultValueFromColumn(tableName, columnName);
@@ -160,7 +179,16 @@ public class ColumnInfo implements Serializable{
     public void setRelationType(String relationType) {
         this.relationType = relationType;
     }
+    public boolean isRelatedField()
+    {
+        if(relationType.equals(RELATED_TABLE))
+        {
+            return true;
 
+        }
+        return false;
+    }
+    public static final String RELATED_TABLE  =   "related table";
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

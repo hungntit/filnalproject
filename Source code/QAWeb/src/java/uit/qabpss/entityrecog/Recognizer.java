@@ -54,7 +54,8 @@ public class Recognizer {
                 EntityType  firstEntityType =   tripleRelation.getFirstEntity();
                 if(firstEntityType.equals(entityType))
                 {
-                    result.add(tripleRelation);
+                    if(!result.contains(tripleRelation))
+                        result.add(tripleRelation);
                 }
             }
             if(result.size()>0)
@@ -67,7 +68,8 @@ public class Recognizer {
                 EntityType  secondEntityType =   tripleRelation.getSecondEntity();
                 if(secondEntityType.equals(entityType))
                 {
-                    result.add(tripleRelation);
+                    if(!result.contains(tripleRelation))
+                        result.add(tripleRelation);
                 }
             }
             if(result.size()>0)
@@ -123,12 +125,17 @@ public class Recognizer {
                         if(!columnInfo.isIsVisible())
                         {
                             invisibleEntityTypes.add(entityType);
-                            continue;
+                            //continue;
                         }
 
                         if (type.equals(columnInfo.getType()) ||(Type.isDouble(value) && columnInfo.getType().getIsNumber())) {
 
                            Param param  =   new Param(tableInfo, columnInfo);
+                           if(columnInfo.isRelatedField())
+                           {
+                               TableInfo relatedTableInfo = dbInf.findTableInfoByAliasName(columnInfo.getRelatedTable());
+                               param = new Param(relatedTableInfo,relatedTableInfo.getPresentationField() );
+                           }
                            param.setValue(value);
                            int count    =   UtimateSearch.countLimitByParam(new Param[]{param}, true, null , 1);
                            if(count>0)
@@ -199,6 +206,21 @@ public class Recognizer {
                 }
             return null;
         }
+    private static boolean checkSameTable(List<TripleRelation> existTripleRelations)
+    {
+
+        if(existTripleRelations.size()==0)
+            return false;
+        EntityType entityType   =    existTripleRelations.get(0).getFirstEntity();
+        for(int i=1;i< existTripleRelations.size();i++)
+        {
+            if(!existTripleRelations.get(i).getFirstEntity().equals(entityType))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     public List<TripleRelation> getTripleRelationsFromNonNER(List<TripleRelation> existTripleRelations,Token token)
     {
         if(token.getPos_value().equalsIgnoreCase("NNS"))
@@ -223,7 +245,7 @@ public class Recognizer {
                 //Logger.getLogger(Recognizer.class.getName()).log(Level.SEVERE, null, ex);
             }
             if(tableName.equalsIgnoreCase(token.getValue()))
-                    similarityWithTable = 1+ 0.01F;
+                    similarityWithTable = 1+ 0.02F;
                 if(similarityWithTable > SIMILARITY_LIMIT && similarityWithTable >= maxSimilarityNumber)
                 {
                     if(similarityWithTable > maxSimilarityNumber)
@@ -234,7 +256,8 @@ public class Recognizer {
                     }
                     else
                     {
-                        tableresult.add(tr);
+                        if(!tableresult.contains(tr))
+                            tableresult.add(tr);
                     }
 
                 }
@@ -362,7 +385,11 @@ public class Recognizer {
      public  void identifyTripleToken(TripleToken tripleToken)
     {
         if(!tripleToken.getObj1().getEntityType().isNull() && !tripleToken.getObj2().getEntityType().isNull())
+        {
+            if(tripleToken.getObj2().getEntityType().isTable())
+                tripleToken.swapTwoObject();
             return;
+        }
         String relationStr =   tripleToken.getRelationName();
         List<TripleRelation> tripleRelationList = getTripleRelationFromRelationStr(relationStr);
 
@@ -372,7 +399,21 @@ public class Recognizer {
             //Kiem tra quan he nguoc
             if(tripleRelation.getRelation().isReversedRelation())
                 tripleToken.swapTwoObject();
-            tripleToken.getObj1().setEntityType(tripleRelation.getFirstEntity());
+            if(tripleToken.getObj1().getEntityType() != null)
+            {
+                if( tripleToken.getObj1().getEntityType().isNull() == false && tripleToken.getObj1().getEntityType().getColumnInfo() != null)
+                {
+                    if(tripleToken.getObj1().getEntityType().getColumnInfo().isRelatedField())
+                    {
+                    Token obj1  =   tripleToken.getObj1();
+                    Token token =   new Token(obj1.getValue() , obj1.getPos_value());
+                    token.setEntityType(tripleRelation.getFirstEntity());
+                    tripleToken.setObj1(token);
+                    }
+                }
+            }
+                tripleToken.getObj1().setEntityType(tripleRelation.getFirstEntity());
+            
             tripleToken.getObj2().setEntityType(tripleRelation.getSecondEntity());
         }
         else
@@ -422,7 +463,7 @@ public class Recognizer {
                 }
                 else
                 {
-                    tripleRelationList  =   getTripleRelationsFromSecondObj(tripleRelationList, tripleToken.getObj1());
+                    tripleRelationList  =   getTripleRelationsFromFirstObj(tripleRelationList, tripleToken.getObj1());
                     if(tripleRelationList.size() == 1)
                     {
                         tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
@@ -440,16 +481,25 @@ public class Recognizer {
                 if(obj2.getPos_value().equalsIgnoreCase("NN")|| obj2.getPos_value().equalsIgnoreCase("NNS"))
                 {
                     tripleRelationList  =   getTripleRelationsFromNonNER(tripleRelationList, obj2);
+                    if(checkSameTable(tripleRelationList))
+                    {
+                        Token token =   new Token(obj2.getValue(), obj2.getPos_value());
+                        //token.setEntityType(new EntityType());
+                        token.setEntityType(tripleRelationList.get(0).getFirstEntity());
+                        tripleToken.setObj2(token);
+                    }
                     if(tripleRelationList.size() == 1)
                     {
                         if(obj2.getEntityType().isTable())
                         {
                             tripleToken.swapTwoObject();
-                            tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
+                            if(tripleToken.getObj2().getEntityType().isNull())
+                                tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
                         }
                         else
                         {
-                            tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
+                            if(tripleToken.getObj1().getEntityType().isNull())
+                                tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
                         }
                         return;
                     }
@@ -585,4 +635,23 @@ public class Recognizer {
 
         }
     }
+     public  void identifyTripleTokens(List<TripleToken> tripleTokens)
+    {
+        for(TripleToken tripleToken:tripleTokens)
+        {
+            if(tripleToken.isAllNonNe())
+            {
+              
+                identifyTripleToken(tripleToken);
+            }
+        }
+        for(TripleToken tripleToken:tripleTokens)
+        {
+            
+            if(!tripleToken.isAllNonNe())
+            {
+                identifyTripleToken(tripleToken);
+            }
+        }
+     }
 }

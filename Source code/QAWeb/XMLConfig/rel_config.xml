@@ -15,7 +15,7 @@
             <field-name>author</field-name>
         </field>
         
-        <field type="String" field-alias="title" visible="true" relation="has attribute">
+        <field type="String" field-alias="title" visible="true" relation="has attribute" presentation="true">
             <relation>
                 <relation-name>has title</relation-name>
                 <relation-name>has heading</relation-name>
