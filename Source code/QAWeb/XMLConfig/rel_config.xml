@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="config.xsd">
-    <table table-alias="Publication"> 
+    <table table-alias="Publication">
         <table-name>dblp_pub_new</table-name>
         <field type="String" field-alias="author" visible="false" relation="related table">
             <relation>
-                <relation-name>has author</relation-name> 
+                <relation-name>has author</relation-name>
                 <relation-name>has writer</relation-name>
                 <relation-name>has composer</relation-name>
                 <relation-name>be write</relation-name>
                 <relation-name>be compose</relation-name>
-                <related-table>author</related-table>               
+                <related-table>author</related-table>
             </relation>
             <field-name>author</field-name>
         </field>
@@ -55,7 +55,8 @@
                 <relation-name value="&lt;=">to</relation-name>
             </relation>
             <field-name>year</field-name>
-        </field>        
+            <pattern>[0-9][0-9][0-9][0-9]</pattern>
+        </field>
 
         <field type="Code" field-alias="isbn" visible="true" relation="has attribute">
             <relation>
@@ -63,6 +64,7 @@
                 <relation-name>has</relation-name>
             </relation>
             <field-name>isbn</field-name>
+            <pattern></pattern>
         </field>
 
         <field type="Code" field-alias="doi" visible="true" relation="has attribute">
@@ -70,9 +72,22 @@
                 <relation-name>have</relation-name>
                 <relation-name>has</relation-name>
             </relation>
-            <field-name>isbn</field-name>
+            <field-name>doi</field-name>
+            <pattern></pattern>
         </field>
-                        
+                      
+        <field type="String" field-alias="publication" visible="false" relation="mapping table">
+            <relation>
+                <relation-name>refer to</relation-name>
+                <relation-name>refer</relation-name>
+                <related-table>cite to</related-table>
+                <related-table>cite</related-table>
+                <mapping-table>pub_and_pub</mapping-table>
+                <related-table>publication</related-table>
+            </relation>
+            <field-name>title</field-name>
+        </field>
+		
         <primary-key>id</primary-key>
         
     </table>
@@ -86,7 +101,7 @@
                 <relation-name>has write</relation-name>
                 <relation-name>has compose</relation-name>
                 <related-table>publication</related-table>
-            </relation>            
+            </relation>
             <field-name>title</field-name>
         </field>
 
@@ -102,18 +117,21 @@
         <primary-key>pub_id</primary-key>
     </table>
 
-    <database-name>dblp</database-name> 	
+    <database-name>dblp</database-name>
  
-    <related-table>
-        <name>author</name>
-        <related-table-name>dblp_author_ref_new</related-table-name> 
+    <related-table name ="author">
+        <related-table-name>dblp_author_ref_new</related-table-name>
         <table-key>pub_id</table-key>
     </related-table>
 
-    <related-table>
-        <name>publication</name>
+    <related-table name ="publication">
         <related-table-name>dblp_pub_new</related-table-name>
         <table-key>id</table-key>
-    </related-table>
+    </related-table>	    
 
+    <mapping-table name="pub_and_pub">
+        <table-key>dblp_key</table-key>
+        <related-table-key>id</related-table-key>
+        <mapping-table-name>dblp_ref_new</mapping-table-name>
+    </mapping-table>
 </database>
