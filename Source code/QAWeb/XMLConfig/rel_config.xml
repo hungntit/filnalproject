@@ -117,17 +117,7 @@
         <primary-key>pub_id</primary-key>
     </table>
 
-    <database-name>dblp</database-name>
- 
-    <related-table name ="author">
-        <related-table-name>dblp_author_ref_new</related-table-name>
-        <table-key>pub_id</table-key>
-    </related-table>
-
-    <related-table name ="publication">
-        <related-table-name>dblp_pub_new</related-table-name>
-        <table-key>id</table-key>
-    </related-table>	    
+    <database-name>dblp</database-name>	    
 
     <mapping-table name="pub_and_pub">
         <table-key>dblp_key</table-key>

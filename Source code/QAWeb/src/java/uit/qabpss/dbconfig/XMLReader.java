@@ -114,7 +114,7 @@ public class XMLReader {
                                         colInf.addRelation(fieldRel);
                                     }
                                     if(RELATED_TABLE.equals(rel.getNodeName())){
-                                        colInf.setRelatedTable(getRelatedTable(rel.getTextContent()));
+                                        colInf.setRelatedTable(dbInfo.findTableInfoByAliasName(rel.getTextContent()));
                                     }
                                     if(MAPPING_TABLE.equals(rel.getNodeName())){ 
                                         colInf.setMappingTable(getMappingTable(rel.getTextContent()));
@@ -132,31 +132,7 @@ public class XMLReader {
             }
         }
         return dbInfo;
-    }
-
-    public TableInfo getRelatedTable(String name){
-        TableInfo result = new TableInfo();        
-        NodeList nodeLst = doc.getElementsByTagName(DATABASE).item(0).getChildNodes();
-        for (int i = 0; i < nodeLst.getLength(); i++) {
-            Node n = nodeLst.item(i);
-            if (RELATED_TABLE.equals(n.getNodeName())) {
-                if(name.equals(n.getAttributes().getNamedItem(NAME).getNodeValue())){
-                    result.setAliasName(name);
-                    NodeList tbChilds = n.getChildNodes();
-                    for (int j = 0; j < tbChilds.getLength(); j++) {
-                        Node childNode = tbChilds.item(j);
-                        if(RELATED_TABLE_NAME.equals(childNode.getNodeName())){
-                            result.setName(childNode.getTextContent());
-                        }
-                        if(TABLE_KEY.equals(childNode.getNodeName())){
-                            result.setPrimaryKey(childNode.getTextContent());
-                        }
-                    }
-                }
-            }
-        }
-        return result;
-    }
+    }   
 
     public MappingTable getMappingTable(String name){
         MappingTable result = new MappingTable();
