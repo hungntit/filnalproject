@@ -450,15 +450,37 @@ public class Recognizer {
             if(tripleToken.getObj1().getEntityType().isNull() == false)
             {
 
-                if(tripleToken.getObj1().getEntityType().isColumn())
+                if(tripleToken.getObj1().getEntityType().isColumn() )
                 {
-                    tripleToken.swapTwoObject();
-                    //Now ob1 is obj2
-                    tripleRelationList  =   getTripleRelationsFromSecondObj(tripleRelationList, tripleToken.getObj2());
-                    if(tripleRelationList.size() == 1)
+                    if(! tripleToken.getObj1().getEntityType().getColumnInfo().isRelatedField())
+                        {
+
+                            tripleToken.swapTwoObject();
+
+                            //Now ob1 is obj2
+                            tripleRelationList  =   getTripleRelationsFromSecondObj(tripleRelationList, tripleToken.getObj2());
+                            if(tripleRelationList.size() == 1)
+                            {
+                                tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
+                                return;
+                            }
+                        }
+                    else
                     {
-                        tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
-                        return;
+                            Token   obj1    =   tripleToken.getObj1();
+                            if(checkSameTable(tripleRelationList))
+                            {
+                                Token   token   =   new Token(obj1.getValue()   , obj1.getPos_value());
+                                token.setEntityType(tripleRelationList.get(0).getFirstEntity());
+                                tripleToken.setObj1(token);
+                            }
+                            tripleRelationList  =   getTripleRelationsFromFirstObj(tripleRelationList, tripleToken.getObj1());
+
+                            if(tripleRelationList.size() == 1)
+                            {
+                                tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
+                                return;
+                            }
                     }
                 }
                 else
@@ -481,13 +503,6 @@ public class Recognizer {
                 if(obj2.getPos_value().equalsIgnoreCase("NN")|| obj2.getPos_value().equalsIgnoreCase("NNS"))
                 {
                     tripleRelationList  =   getTripleRelationsFromNonNER(tripleRelationList, obj2);
-                    if(checkSameTable(tripleRelationList))
-                    {
-                        Token token =   new Token(obj2.getValue(), obj2.getPos_value());
-                        //token.setEntityType(new EntityType());
-                        token.setEntityType(tripleRelationList.get(0).getFirstEntity());
-                        tripleToken.setObj2(token);
-                    }
                     if(tripleRelationList.size() == 1)
                     {
                         if(obj2.getEntityType().isTable())
