@@ -14,8 +14,14 @@ public class XMLReader {
     public static final String DATABASE_NAME = "database-name";
     public static final String DEFAUFT_OPERATOR = "=";
     public static final String FIELD_NAME = "field-name";
+    public static final String MAPPING_TABLE = "mapping-table";    
+    public static final String MAPPING_TABLE_NAME = "mapping-table-name";
+    public static final String NAME = "name";
+    public static final String PATTERN = "pattern";
     public static final String PRIMARYKEY = "primary-key";
     public static final String RELATED_TABLE = "related-table";
+    public static final String RELATED_TABLE_KEY = "related-table-key";
+    public static final String RELATED_TABLE_NAME = "related-table-name";
     public static final String REVERSED_RELATION = "reversed-relation";
     public static final String TABLE = "table";
     public static final String TABLENAME = "table-name";
@@ -24,6 +30,7 @@ public class XMLReader {
     public static final String FIELD_ALIAS = "field-alias";
     public static final String TABLE_ALIAS = "table-alias";
     public static final String RELATION_NAME = "relation-name";
+    public static final String TABLE_KEY = "table-key";
     public static final String TYPE = "type";
     public static final String VALUE = "value";
     public static final String VISIBLE = "visible";
@@ -107,9 +114,15 @@ public class XMLReader {
                                         colInf.addRelation(fieldRel);
                                     }
                                     if(RELATED_TABLE.equals(rel.getNodeName())){
-                                        colInf.setRelatedTable(rel.getTextContent());
-                                    }                                                                      
+                                        colInf.setRelatedTable(getRelatedTable(rel.getTextContent()));
+                                    }
+                                    if(MAPPING_TABLE.equals(rel.getNodeName())){ 
+                                        colInf.setMappingTable(getMappingTable(rel.getTextContent()));
+                                    }
                                 }
+                            }
+                            if(PATTERN.equals(childField.getNodeName())){
+                                colInf.setPattern(childField.getTextContent());
                             }
                         }
                         tbInf.addColumn(colInf);
@@ -120,83 +133,56 @@ public class XMLReader {
         }
         return dbInfo;
     }
-    
-//    public String relationWordMapping(String word) {
-//        String firstObj = null;
-//        String secondObj = null;
-//        String rel = null;
-//        boolean isReverse = false;
-//        Node temp = null;
-//        Node n = null;
-//        doc.getDocumentElement().normalize();
-//        // get relation from tags relation name
-//        NodeList nodeLst = doc.getElementsByTagName(RELATION_NAME);
-//        for (int i = 0; i < nodeLst.getLength(); i++) {
-//            n = nodeLst.item(i);
-//            if (word.equals(n.getTextContent())) {
-//                temp = n.getParentNode();
-//            }
-//        }
-//        // get reversed relation from tags relation name
-//        if (temp == null) {
-//            isReverse = true;
-//            nodeLst = doc.getElementsByTagName(REVERSED_RELATION);
-//            for (int i = 0; i < nodeLst.getLength(); i++) {
-//                n = nodeLst.item(i);
-//                if (word.equals(n.getTextContent())) {
-//                    System.out.println(n.getTextContent());
-//                    temp = n.getParentNode();
-//                }
-//            }
-//        }
-//        // not found any relations
-//        if (temp == null) {
-//            return null;
-//        }
-//        // get first object, second object and their relationship
-//        while (temp != null) {
-//            if (TABLE.equals(temp.getNodeName())
-//                    && temp.getAttributes().getNamedItem(TABLE_ALIAS) != null) {
-//                firstObj = temp.getAttributes().getNamedItem(TABLE_ALIAS).getNodeValue();
-//            }
-//            if (FIELD.equals(temp.getNodeName())
-//                    && temp.getAttributes().getNamedItem(FIELD_ALIAS) != null) {
-//                secondObj = temp.getAttributes().getNamedItem(FIELD_ALIAS).getNodeValue();
-//                rel = temp.getAttributes().getNamedItem(RELATION).getNodeValue();
-//            }
-//            temp = temp.getParentNode();
-//        }
-//
-//        if (!isReverse) {
-//            return firstObj + "-" + rel + "-" + secondObj;
-//        } else {
-//            return secondObj + "-" + rel + "-" + firstObj;
-//        }
-//    }
-//
-//    public String getValueElement(String aliasTableName,String tagName){
-//        String result = null;
-//        if(aliasTableName.isEmpty() || tagName.isEmpty()){
-//            return null;
-//        }
-//
-//        try{
-//        doc.getDocumentElement().normalize();
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//
-//        Node n = null;
-//        // get relation from tags relation name
-//        NodeList nodeLst = doc.getElementsByTagName(TABLE);
-//        for (int i = 0; i < nodeLst.getLength(); i++) {
-//            n = nodeLst.item(i);
-//            if (aliasTableName.equals(n.getAttributes().getNamedItem(TABLE_ALIAS).getNodeValue())) {
-//                result = n.getOwnerDocument().getElementsByTagName(tagName).item(0).getTextContent();
-//            }
-//        }
-//        return result;
-//    }
 
+    public TableInfo getRelatedTable(String name){
+        TableInfo result = new TableInfo();        
+        NodeList nodeLst = doc.getElementsByTagName(DATABASE).item(0).getChildNodes();
+        for (int i = 0; i < nodeLst.getLength(); i++) {
+            Node n = nodeLst.item(i);
+            if (RELATED_TABLE.equals(n.getNodeName())) {
+                if(name.equals(n.getAttributes().getNamedItem(NAME).getNodeValue())){
+                    result.setAliasName(name);
+                    NodeList tbChilds = n.getChildNodes();
+                    for (int j = 0; j < tbChilds.getLength(); j++) {
+                        Node childNode = tbChilds.item(j);
+                        if(RELATED_TABLE_NAME.equals(childNode.getNodeName())){
+                            result.setName(childNode.getTextContent());
+                        }
+                        if(TABLE_KEY.equals(childNode.getNodeName())){
+                            result.setPrimaryKey(childNode.getTextContent());
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    public MappingTable getMappingTable(String name){
+        MappingTable result = new MappingTable();
+        NodeList nodeLst = doc.getElementsByTagName(DATABASE).item(0).getChildNodes();
+        for (int i = 0; i < nodeLst.getLength(); i++) {
+            Node n = nodeLst.item(i);
+            if (MAPPING_TABLE.equals(n.getNodeName())) {
+                if(name.equals(n.getAttributes().getNamedItem(NAME).getNodeValue())){
+                    result.setName(name);
+                    NodeList tbChilds = n.getChildNodes();
+                    for (int j = 0; j < tbChilds.getLength(); j++) {
+                        Node childNode = tbChilds.item(j);
+                        if(TABLE_KEY.equals(childNode.getNodeName())){
+                            result.setTableKey(childNode.getTextContent());
+                        }
+                        if(RELATED_TABLE_KEY.equals(childNode.getNodeName())){
+                            result.setRelatedTableKey(childNode.getTextContent());
+                        }
+                        if(MAPPING_TABLE_NAME.equals(childNode.getNodeName())){
+                            result.setMappingTableName(childNode.getTextContent());
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
     
 }

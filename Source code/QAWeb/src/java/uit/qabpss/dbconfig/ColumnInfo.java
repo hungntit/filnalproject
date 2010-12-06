@@ -35,10 +35,21 @@ public class ColumnInfo implements Serializable{
     protected List<Relation> relation;
     protected  List<String> defaultValuesSet  = null;
     protected  String relationType;
-    protected String relatedTable;
-    protected String mappingTable;
+    protected TableInfo relatedTable;
+    protected MappingTable mappingTable;
     protected boolean isPresentation;
+    protected String pattern;
 
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
+//    protected TableInfo mappingTable;
+
+    
     /**
      * Get the value of isPresentation
      *
@@ -61,19 +72,19 @@ public class ColumnInfo implements Serializable{
         defaultValuesSet = UtimateSearch.getListDefaultValueFromColumn(tableName, columnName);
     }
 
-    public String getMappingTable() {
+    public MappingTable getMappingTable() {
         return mappingTable;
     }
 
-    public void setMappingTable(String mappingTable) {
+    public void setMappingTable(MappingTable mappingTable) {
         this.mappingTable = mappingTable;
     }
 
-    public String getRelatedTable() {
+    public TableInfo getRelatedTable() {
         return relatedTable;
     }
 
-    public void setRelatedTable(String relatedTable) {
+    public void setRelatedTable(TableInfo relatedTable) {
         this.relatedTable = relatedTable;
     }
     

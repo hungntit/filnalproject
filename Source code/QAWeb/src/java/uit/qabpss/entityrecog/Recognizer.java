@@ -133,7 +133,7 @@ public class Recognizer {
                            Param param  =   new Param(tableInfo, columnInfo);
                            if(columnInfo.isRelatedField())
                            {
-                               TableInfo relatedTableInfo = dbInf.findTableInfoByAliasName(columnInfo.getRelatedTable());
+                               TableInfo relatedTableInfo = columnInfo.getRelatedTable();
                                param = new Param(relatedTableInfo,relatedTableInfo.getPresentationField() );
                            }
                            param.setValue(value);
