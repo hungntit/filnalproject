@@ -500,9 +500,16 @@ public class Recognizer {
             {
                 // check obj2 is non name entity
                 Token   obj2    =   tripleToken.getObj2();
-                if(obj2.getPos_value().equalsIgnoreCase("NN")|| obj2.getPos_value().equalsIgnoreCase("NNS"))
+
+                if(obj2.getPos_value().equalsIgnoreCase("NN")|| obj2.getPos_value().equalsIgnoreCase("NNS") && obj2.getEntityType().isNull())
                 {
                     tripleRelationList  =   getTripleRelationsFromNonNER(tripleRelationList, obj2);
+                    if(checkSameTable(tripleRelationList) && tripleToken.getObj1().isWP())
+                    {
+                        
+                        obj2.setEntityType(tripleRelationList.get(0).getFirstEntity());
+                        return;
+                    }
                     if(tripleRelationList.size() == 1)
                     {
                         if(obj2.getEntityType().isTable())
@@ -523,25 +530,26 @@ public class Recognizer {
                 // end check obj2 is non name entity
                 // check obj1 is non name entity
                 Token   obj1    =   tripleToken.getObj1();
-                if(obj1.getPos_value().equalsIgnoreCase("NN")||obj1.getPos_value().equalsIgnoreCase("NNS"))
-                {
-                    tripleRelationList  =   getTripleRelationsFromNonNER(tripleRelationList, obj1);
-                    if(tripleRelationList.size() == 1)
+                if(obj1.getEntityType().isNull()){
+                    if(obj1.getPos_value().equalsIgnoreCase("NN")||obj1.getPos_value().equalsIgnoreCase("NNS") )
                     {
-                        if(obj1.getEntityType().isColumn())
+                        tripleRelationList  =   getTripleRelationsFromNonNER(tripleRelationList, obj1);
+                        if(tripleRelationList.size() == 1)
                         {
-                            tripleToken.swapTwoObject();
-                            tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
+                            if(obj1.getEntityType().isColumn())
+                            {
+                                tripleToken.swapTwoObject();
+                                tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
+                            }
+                            else
+                            {
+                                tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
+                            }
+                            return;
                         }
-                        else
-                        {
-                            tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
-                        }
-                        return;
+
                     }
-
                 }
-
                 // end check obj2 is non name entity
 
 
@@ -669,4 +677,30 @@ public class Recognizer {
             }
         }
      }
+     
+     public EntityType recognizeEntityOfQuestion(Token[] tokens)
+    {
+         EntityType entityType =    null;
+         for(Token token:tokens)
+         {
+             if(token.isWP())
+             {
+                 if(token.getEntityType().isNull()  ==  false)
+                 {
+                     return token.getEntityType();
+                 }
+             }
+             if(token.isNonNe())
+             {
+                 if(token.getEntityType().isNull()  ==  false && entityType == null)
+                 {
+                      entityType    =   token.getEntityType();
+                 }
+             }
+
+         }
+         return entityType;
+
+     }
+
 }

@@ -18,7 +18,24 @@ public final class Token {
         setValue("");
         entityType  =   new EntityType();
     }
-
+    public boolean isNe()
+    {
+        if(pos_value.equals("NNP"))
+            return true;
+        return false;
+    }
+    public boolean isNonNe()
+    {
+        if(pos_value.equals("NN") || pos_value.equals("NNS"))
+            return true;
+        return false;
+    }
+    public boolean isWP()
+    {
+        if(pos_value.equals("WP"))
+            return true;
+        return false;
+    }
     public EntityType getEntityType() {
         return entityType;
     }

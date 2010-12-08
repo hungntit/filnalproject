@@ -11,6 +11,7 @@ import java.util.List;
 import org.hibernate.Hibernate;
 import uit.qabpss.entityrecog.Recognizer;
 import uit.qabpss.extracttriple.ExtractTriple;
+import uit.qabpss.generatequery.GenSQLQuery;
 import uit.qabpss.util.hibernate.HibernateUtil;
 
 /**
@@ -26,7 +27,7 @@ public class Test {
         // List of test questions here
         HibernateUtil.getSessionFactory();
         String[] questions = new String[]{
-            "Which books were written by Rafiul Ahad and Amelia Carlson in 2010 ? ",
+           "Which books were written by Rafiul Ahad and Amelia Carlson in 2010 ? ",
             "Which books were written by Rafiul Ahad from 1999 to 2010 ?",
             "Which books were published by O'Reilly  in 1999 ?",
             "How many papers were written by Rafiul Ahad ?",
@@ -75,7 +76,7 @@ public class Test {
             System.out.println(SentenseUtil.tokensToStr(tokens));
             List<TripleToken> list = extract.extractTripleWordRelation(tokens);
             reg.identifyTripleTokens(list);
-            for(TripleToken tripleToken:list)
+            /*for(TripleToken tripleToken:list)
             {
                 System.out.println(tripleToken);
                 //reg.identifyTripleToken(tripleToken);
@@ -84,7 +85,23 @@ public class Test {
                     System.out.println(tripleToken.getObj1().toString()+":"+tripleToken.getObj1().getEntityType().toString() +","+tripleToken.getObj2().toString()+":"+tripleToken.getObj2().getEntityType().toString());
                 }
 
+            }*/
+            for(Token token: tokens)
+            {
+
+                String s    =   token.toString()+"|"+ token.getEntityType().toString()+ " ";
+                if(token.getEntityType().isNull())
+                {
+                    s   =   token.toString()+ " ";
+                }
+                System.out.print(s);
             }
+             System.out.println();
+
+             EntityType entityTypeOfQuestion    =   reg.recognizeEntityOfQuestion(tokens);
+             String selectandFromQuery  =   GenSQLQuery.genQuery(list, entityTypeOfQuestion);
+             System.out.println(selectandFromQuery);
+
             date    =   new Date();
             double end    =   date.getTime();
             System.out.println("Time: "+(end - begin)/1000);
