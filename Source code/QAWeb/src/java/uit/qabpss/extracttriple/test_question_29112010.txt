@@ -61,11 +61,17 @@ What books refer to "Foundations of Databases."
 What publications have resulted from TREC?
 Does Rafiul Ahad write books in 2010 ?
 Does Rafiul Ahad write books from 2005 to 2010 ?
-Did IEEE publish books in 2010?
+Did IEEE publish books in 2010
+Are there any books published by IEEE in 2000 ?
+Are there any books written by Mike Holcombe in 2000 ?
 Name some books Richard L. Muller write for Springer
 Name all publications were publish in 2010
+Name papers which were published from 1999 to 2001 in ACM ?
 List some books which are written by Jennifer Widom from 1999
 List all books were published by Springer in 2010
 Find books which are composed by Rafiul Ahad and Amelia Carlson
 Find authors who wrote books for ACM from 2008 to 2009 ?
+Find publications have resulted from ACM Annual Conference ?
 Alfred V. Aho is author of "Data Structures and Algorithms." ,isn't it?
+Alfred V. Aho write books in 2010, isn't it?
+Tom C. Reyes and Yuri Breitbart are authors of books "Overview of the ADDS System.", aren't they?
