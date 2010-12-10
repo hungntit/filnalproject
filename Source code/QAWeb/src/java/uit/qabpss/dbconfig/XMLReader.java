@@ -1,6 +1,8 @@
 package uit.qabpss.dbconfig;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -50,6 +52,10 @@ public class XMLReader {
     }
 
     public DBInfo loadDBInfo(){
+
+        List<ColumnInfo> columnInfos  =   new ArrayList<ColumnInfo>();
+        List<String>    relatedTable    =   new ArrayList<String>();
+
         DBInfo dbInfo = new DBInfo();
         NodeList nodeLst = doc.getElementsByTagName(DATABASE).item(0).getChildNodes();
         for (int i = 0; i < nodeLst.getLength(); i++) {
@@ -114,7 +120,9 @@ public class XMLReader {
                                         colInf.addRelation(fieldRel);
                                     }
                                     if(RELATED_TABLE.equals(rel.getNodeName())){
-                                        colInf.setRelatedTable(dbInfo.findTableInfoByAliasName(rel.getTextContent()));
+                                        columnInfos.add(colInf);
+                                        relatedTable.add(rel.getTextContent());
+                                        //colInf.setRelatedTable(dbInfo.findTableInfoByAliasName(rel.getTextContent()));
                                     }
                                     if(MAPPING_TABLE.equals(rel.getNodeName())){ 
                                         colInf.setMappingTable(getMappingTable(rel.getTextContent()));
@@ -131,6 +139,13 @@ public class XMLReader {
                 dbInfo.addTable(tbInf);
             }
         }
+        for(int i= 0; i< columnInfos.size();i++)
+        {
+            ColumnInfo columnInfo   = columnInfos.get(i);
+            TableInfo   relatedTableInfo   = dbInfo.findTableInfoByAliasName(relatedTable.get(i))  ;
+            columnInfo.setRelatedTable(relatedTableInfo);
+        }
+
         return dbInfo;
     }   
 

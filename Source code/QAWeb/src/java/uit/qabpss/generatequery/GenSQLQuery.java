@@ -69,9 +69,9 @@ public class GenSQLQuery {
     public  static String genSelectQuery(EntityType entityType)
     {
         if(entityType   ==  null)
-            return null;
+            return "";
         if(entityType.isNull())
-            return null;
+            return "";
         if(entityType.isTable())
             return entityType.getTableInfo().getName()+".* ";
         ColumnInfo  columnInfo  =   entityType.getColumnInfo();
