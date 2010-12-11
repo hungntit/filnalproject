@@ -5,10 +5,7 @@
 
 package uit.qabpss.extracttriple;
 
-import edu.mit.jwi.item.POS;
-import java.util.ArrayList;
 import java.util.List;
-import uit.qabpss.core.wordnet.Wordnet;
 import uit.qabpss.preprocess.Token;
 import uit.qabpss.util.StringPool;
 

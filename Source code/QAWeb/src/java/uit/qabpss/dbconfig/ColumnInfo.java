@@ -192,12 +192,17 @@ public class ColumnInfo implements Serializable{
     }
     public boolean isRelatedField()
     {
-        if(relationType.equals(RELATED_TABLE))
+        if(relatedTable == null)
+            return false;
+        return true;
+    }
+    public boolean isMappingField()
+    {
+        if(mappingTable == null)
         {
-            return true;
-
+            return false;
         }
-        return false;
+        return true;
     }
     public static final String RELATED_TABLE  =   "related table";
     @Override

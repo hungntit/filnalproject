@@ -18,6 +18,7 @@ public class ExtractTriple {
     public static final String NN = "NN";
     public static final String NNP = "NNP";
     public static final String NNS = "NNS";
+    public static final String CC = "CC";
 
     private static String[] rules = null;
 
@@ -116,8 +117,10 @@ public class ExtractTriple {
            int distance =   0;
            boolean found    =   false;
            List<Token[]> tokensList      =   new ArrayList<Token[]>();
+           List<TripleToken> tripleTokens   =   new ArrayList<TripleToken>();
            Token[] foundToken   =   new Token[posTagArr.length];
            tokensList.add(foundToken);
+           tripleTokens.add(new TripleToken());
            for(int i=0;i<posTagArr.length;i++)
            {
 
@@ -126,6 +129,7 @@ public class ExtractTriple {
                     if(!isAdded)
                     {
                         tokensList.remove(tokensList.size()-1);
+                        tripleTokens.remove(tripleTokens.size()-1);
                     }
                     break;
                }
@@ -165,6 +169,7 @@ public class ExtractTriple {
                            if(!isAdded)
                             {
                                      tokensList.remove(tokensList.size() - 1);
+                                     tripleTokens.remove(tripleTokens.size()-1);
                             }
                        }
                        if(!postag.equals(""))
@@ -195,6 +200,7 @@ public class ExtractTriple {
                             {
                                Token[]  coppyTokenArr   =   Token.copyTokens(tokensList.get(0));
                                tokensList.add(coppyTokenArr);
+                               tripleTokens.add(new TripleToken());
                                cachedPosTag =   postag;
 
                             }
@@ -232,7 +238,14 @@ public class ExtractTriple {
                            }
                             else
                            {
-
+                                if(temptk.getPos_value().equals(CC))
+                                {
+                                    TripleToken tripleToken = tripleTokens.get(tripleTokens.size() - 1);
+                                    if(temptk.getValue().equalsIgnoreCase("AND"))
+                                        tripleToken.setIsAndOperator(true);
+                                    else
+                                        tripleToken.setIsAndOperator(false);
+                                }
                                 if(!checkSamePosTag(temptk, "VBN|VB|IN|To").equals("") && i== posTagArr.length-1)
                                 {
                                         end--;
@@ -240,9 +253,11 @@ public class ExtractTriple {
                                         if(!checkSamePosTag(temptk, "VBN|VB").equals(""))
                                         {
                                             tokensList.remove(tokensList.size()-1);
+                                            tripleTokens.remove(tripleTokens.size()-1);
                                             if(!isAdded)
                                             {
                                             tokensList.remove(tokensList.size()-1);
+                                            tripleTokens.remove(tripleTokens.size()-1);
 
                                             }
 
@@ -252,6 +267,7 @@ public class ExtractTriple {
                                             if(!isAdded)
                                             {
                                             tokensList.remove(tokensList.size()-1);
+                                            tripleTokens.remove(tripleTokens.size()-1);
 
                                             }
                                         }
@@ -300,7 +316,7 @@ public class ExtractTriple {
                {
                    TripleToken tripleToken;
                    Token[]  tokensInList    = tokensList.get(index);
-                   tripleToken   =   new TripleToken();
+                   tripleToken   =   tripleTokens.get(index);
                    tripleToken.setObj1(tokensInList[firstObjPossition]);
                    tripleToken.setObj2(tokensInList[secondObjPossition]);
                    if(secondObjPossition>0)

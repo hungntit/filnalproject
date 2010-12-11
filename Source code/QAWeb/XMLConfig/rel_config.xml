@@ -11,6 +11,7 @@
                 <relation-name>be write</relation-name>
                 <relation-name>be compose</relation-name>
                 <related-table>author</related-table>
+                <mapping-table>pub_au</mapping-table>
             </relation>
             <field-name>author</field-name>
         </field>
@@ -101,7 +102,9 @@
                 <relation-name>has write</relation-name>
                 <relation-name>has compose</relation-name>
                 <related-table>publication</related-table>
+                <mapping-table>au_pub</mapping-table>
             </relation>
+
             <field-name>title</field-name>
         </field>
 
@@ -113,8 +116,14 @@
             </relation>
             <field-name>publisher</field-name>
         </field>
+        <field type="String" field-alias="name" visible="true" relation="has attribute" presentation="true">
+            <relation>
+                <relation-name>has name</relation-name>
 
-        <primary-key>pub_id</primary-key>
+            </relation>
+            <field-name>author</field-name>
+        </field>
+        <primary-key>author</primary-key>
     </table>
 
     <database-name>dblp</database-name>	    
@@ -124,4 +133,19 @@
         <related-table-key>id</related-table-key>
         <mapping-table-name>dblp_ref_new</mapping-table-name>
     </mapping-table>
+
+    <mapping-table name="pub_au">
+        <table-key>pub_id</table-key>
+        <related-table-key>author</related-table-key>
+        <mapping-table-name>dblp_author_ref_new</mapping-table-name>
+    </mapping-table>
+
+
+    <mapping-table name="au_pub">
+        <table-key>author</table-key>
+        <related-table-key>pub_id</related-table-key>
+        <mapping-table-name>dblp_author_ref_new</mapping-table-name>
+    </mapping-table>
+
 </database>
+

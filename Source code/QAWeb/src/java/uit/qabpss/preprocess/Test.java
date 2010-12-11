@@ -27,7 +27,7 @@ public class Test {
         // List of test questions here
         HibernateUtil.getSessionFactory();
         String[] questions = new String[]{
-           "Which books were written by Rafiul Ahad and Amelia Carlson in 2010 ? ",
+        /*   "Which books were written by Rafiul Ahad or Amelia Carlson in 2010 ? ",
             "Which books were written by Rafiul Ahad from 1999 to 2010 ?",
             "Which books were published by O'Reilly  in 1999 ?",
             "How many papers were written by Rafiul Ahad ?",
@@ -44,7 +44,7 @@ public class Test {
             "What book did Philip K. Chan write in 1999?",
             "What book did Philip K. Chan write from 1999 to 2000?",
             "What are the titles of the books published by O’reilly in 1999 ?",
-            "What composer wrote \" Java 2D Graphics\"",
+            "What composer wrote \" Java 2D Graphics\"",*/
             "What books has isbn 1-56592-484-3",
             "What books has doi 10.1145/360271.360274",
             "What composer wrote books from 1999 in ACM?",
@@ -76,7 +76,7 @@ public class Test {
             System.out.println(SentenseUtil.tokensToStr(tokens));
             List<TripleToken> list = extract.extractTripleWordRelation(tokens);
             reg.identifyTripleTokens(list);
-            /*for(TripleToken tripleToken:list)
+            for(TripleToken tripleToken:list)
             {
                 System.out.println(tripleToken);
                 //reg.identifyTripleToken(tripleToken);
@@ -85,7 +85,8 @@ public class Test {
                     System.out.println(tripleToken.getObj1().toString()+":"+tripleToken.getObj1().getEntityType().toString() +","+tripleToken.getObj2().toString()+":"+tripleToken.getObj2().getEntityType().toString());
                 }
 
-            }*/
+            }
+            /*
             for(Token token: tokens)
             {
 
@@ -95,7 +96,7 @@ public class Test {
                     s   =   token.toString()+ " ";
                 }
                 System.out.print(s);
-            }
+            }*/
              System.out.println();
 
              EntityType entityTypeOfQuestion    =   reg.recognizeEntityOfQuestion(tokens);

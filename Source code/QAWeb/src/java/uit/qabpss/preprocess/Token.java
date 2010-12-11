@@ -20,7 +20,7 @@ public final class Token {
     }
     public boolean isNe()
     {
-        if(pos_value.equals("NNP"))
+        if(pos_value.equals("NNP") || pos_value.equals("CD"))
             return true;
         return false;
     }

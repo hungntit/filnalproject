@@ -415,6 +415,7 @@ public class Recognizer {
                 tripleToken.getObj1().setEntityType(tripleRelation.getFirstEntity());
             
             tripleToken.getObj2().setEntityType(tripleRelation.getSecondEntity());
+            tripleToken.setOperator(tripleRelation.getRelation().getOperator());
         }
         else
         {
@@ -430,6 +431,7 @@ public class Recognizer {
                     if(tripleRelationList.size() == 1)
                     {
                         tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
+                        tripleToken.setOperator(tripleRelationList.get(0).getRelation().getOperator());
                         return;
                     }
                 }
@@ -439,6 +441,7 @@ public class Recognizer {
                     if(tripleRelationList.size() == 1)
                     {
                         tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
+                        tripleToken.setOperator(tripleRelationList.get(0).getRelation().getOperator());
                         return;
                     }
                 }
@@ -462,6 +465,7 @@ public class Recognizer {
                             if(tripleRelationList.size() == 1)
                             {
                                 tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
+                                tripleToken.setOperator(tripleRelationList.get(0).getRelation().getOperator());
                                 return;
                             }
                         }
@@ -479,6 +483,7 @@ public class Recognizer {
                             if(tripleRelationList.size() == 1)
                             {
                                 tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
+                                tripleToken.setOperator(tripleRelationList.get(0).getRelation().getOperator());
                                 return;
                             }
                     }
@@ -489,6 +494,7 @@ public class Recognizer {
                     if(tripleRelationList.size() == 1)
                     {
                         tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
+                        tripleToken.setOperator(tripleRelationList.get(0).getRelation().getOperator());
                         return;
                     }
                 }
@@ -523,6 +529,7 @@ public class Recognizer {
                             if(tripleToken.getObj1().getEntityType().isNull())
                                 tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
                         }
+                        tripleToken.setOperator(tripleRelationList.get(0).getRelation().getOperator());
                         return;
                     }
 
@@ -545,6 +552,7 @@ public class Recognizer {
                             {
                                 tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
                             }
+                            tripleToken.setOperator(tripleRelationList.get(0).getRelation().getOperator());
                             return;
                         }
 
@@ -573,6 +581,7 @@ public class Recognizer {
                             if(tripleRelationList.size() == 1)
                             {
                                 tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
+                                tripleToken.setOperator(tripleRelationList.get(0).getRelation().getOperator());
                                 return;
                             }
                             else
@@ -591,6 +600,7 @@ public class Recognizer {
                             if(tripleRelationList.size() == 1)
                             {
                                 tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
+                                tripleToken.setOperator(tripleRelationList.get(0).getRelation().getOperator());
                                 return;
                             }
                             else
@@ -622,6 +632,7 @@ public class Recognizer {
                             if(tripleRelationList.size() == 1)
                             {
                                 tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
+                                tripleToken.setOperator(tripleRelationList.get(0).getRelation().getOperator());
                                 return;
                             }
                             else
@@ -639,6 +650,7 @@ public class Recognizer {
                             if(tripleRelationList.size() == 1)
                             {
                                 tripleToken.getObj2().setEntityType(tripleRelationList.get(0).getSecondEntity());
+                                tripleToken.setOperator(tripleRelationList.get(0).getRelation().getOperator());
                                 return;
                             }
                             else
