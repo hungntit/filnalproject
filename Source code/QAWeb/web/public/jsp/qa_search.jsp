@@ -15,10 +15,16 @@
                 <span style="color: red;">
                     <html:errors/>
                 </span>
-                Input your question here:
+                Enter your question here:
                 <br>
-                <textarea cols="120" style="height: 20px;"></textarea>
+                <textarea rows="1"  cols="120" style="height: auto;" ></textarea>
                 <input type="submit" value="Submit">
+                <br>
+                <span style="font-style: italic">
+                    Warning:<br>
+                    - You should wrap your value such as title, author names in double-quote.<br>
+                    - You should write name or heading titles in Upper case
+                </span>
             </div>                    
         </td>
     </tr>

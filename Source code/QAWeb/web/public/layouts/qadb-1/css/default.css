@@ -239,7 +239,7 @@ a:hover {
 .content div div{
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
-    background-color: #FFCC66;
+    background-color: 	#5CB3FF;
 }
 
 .align-justify { text-align: justify; }
@@ -285,7 +285,7 @@ img { border: none; }
 .box_search{
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
-    background-color: #FFCC66;
+    background-color: 	#5CB3FF;
 }
 .left_col{
     width: 100px;
