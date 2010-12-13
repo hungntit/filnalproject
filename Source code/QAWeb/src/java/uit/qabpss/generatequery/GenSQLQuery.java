@@ -128,7 +128,7 @@ public class GenSQLQuery {
         
         if(param.getColumn().getType()!= null)
         {
-        if(param.getColumn().getType().equals(Type.STRING) )
+        if(param.getColumn().getType().equals(Type.STRING)&& param.getOperator().equalsIgnoreCase(StringPool.LIKE) )
           {
               String keywords[];
               
