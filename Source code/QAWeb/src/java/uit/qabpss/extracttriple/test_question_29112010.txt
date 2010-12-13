@@ -30,6 +30,10 @@ Which publication have source from TREC in 2010?
 Which papers refer to "Foundations of Databases."?
 Which publications refer to "Foundations of Databases."?
 Which documents cited to "Foundations of Databases."?
+Which books are published in 1999 and written by "Ken Arnold"?
+Which books are written by "Ken Arnold" and published by IEEE ?
+Which books are written by "Ken Arnold" and have source from DBPL ?
+Which papers are composed by "Ken Arnold" and have source from DBPL ?
 How many papers were written by Rafiul Ahad ?
 How many papers were written by Rafiul Ahad in 2010 ?
 How many publisher did "Philip K. Chan" cooperate with?
@@ -67,11 +71,12 @@ Are there any books written by Mike Holcombe in 2000 ?
 Name some books Richard L. Muller write for Springer
 Name all publications were publish in 2010
 Name papers which were published from 1999 to 2001 in ACM ?
+Name publications which result from DBPL in 2010 ?
 List some books which are written by Jennifer Widom from 1999
 List all books were published by Springer in 2010
 Find books which are composed by Rafiul Ahad and Amelia Carlson
 Find authors who wrote books for ACM from 2008 to 2009 ?
 Find publications have resulted from ACM Annual Conference ?
 Alfred V. Aho is author of "Data Structures and Algorithms." ,isn't it?
-Alfred V. Aho write books in 2010, isn't it?
+Alfred V. Aho write books in 2010, doesn't it?
 Tom C. Reyes and Yuri Breitbart are authors of books "Overview of the ADDS System.", aren't they?

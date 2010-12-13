@@ -7,6 +7,7 @@
 
 <struts-config>
     <form-beans>
+        <form-bean name="QAForm" type="uit.qabpss.formbean.QAForm"/>
         <form-bean name="AdvanceSearchForm" type="uit.qabpss.formbean.AdvanceSearchForm"/>
         <form-bean name="searchForm" type="uit.qabpss.formbean.SearchForm"/>
     </form-beans>
@@ -43,6 +44,9 @@
         </action>
         <action path="/quicksearch" type="uit.qabpss.action.quickSearchAction">
             <forward name="success" path=".searchPage"/>
+        </action>
+        <action input=".qaSearchPage" name="QAForm" path="/doQA" scope="session" type="uit.qabpss.action.questionAnsweringAction" validate="true">
+             <forward name="success" path=".qaSearchPage"/>
         </action>
         
         <action path="/Welcome" forward=".qadb-1"/>

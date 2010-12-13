@@ -17,8 +17,10 @@
                 </span>
                 Enter your question here:
                 <br>
-                <textarea rows="1"  cols="120" style="height: auto;" ></textarea>
-                <input type="submit" value="Submit">
+                <html:form action="/doQA" focus="keyWord" >
+                    <html:textarea property="sentence" cols="120" rows="1"></html:textarea>
+                    <html:image property="submitQA" srcKey="image.submit" altKey="image.submit.alttext" onclick="showLoadingPage();"/>
+                </html:form>
                 <br>
                 <span style="font-style: italic">
                     Warning:<br>
