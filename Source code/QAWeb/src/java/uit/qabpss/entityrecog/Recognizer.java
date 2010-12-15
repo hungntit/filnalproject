@@ -349,14 +349,26 @@ public class Recognizer {
                            }
                            if(relation.getRelationName().startsWith(BE))
                            {
-                                String verb1 =   relation.getRelationName().substring(3);//remove BE in Str
-                                String verb2 =   relationStr.substring(3);//remove BE in Str
-
-                                if(Wordnet.checkSimilarityVerb(verb1, verb2))
+                                String[] verbs1 =   relation.getRelationName().split(" ");//remove BE in Str
+                                String[] verbs2 =   relationStr.split(" ");//remove BE in Str
+                                String verb1    =   verbs1[1];
+                                String verb2    =   verbs2[1];
+                                if(verbs1.length == verbs2.length)
                                 {
+                                    boolean tempflag  =   true;
+                                    if(verbs1.length ==3 && verbs2.length ==3)
+                                    {
+                                        String In1  =   verbs1[2];
+                                        String In2  =   verbs2[2];
+                                        if(!In1.equalsIgnoreCase(In2))
+                                            tempflag    =   false;
+                                    }
+                                    if ( Wordnet.checkSimilarityVerb(verb1, verb2)&& tempflag)
+                                    {
 
-                                    if(!result.contains(tripleRelation))
-                                        result.add(tripleRelation);
+                                        if(!result.contains(tripleRelation))
+                                            result.add(tripleRelation);
+                                    }
                                 }
                            }
                        }

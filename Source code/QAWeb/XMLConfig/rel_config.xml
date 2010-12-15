@@ -8,8 +8,8 @@
                 <relation-name>has author</relation-name>
                 <relation-name>has writer</relation-name>
                 <relation-name>has composer</relation-name>
-                <relation-name>be write</relation-name>
-                <relation-name>be compose</relation-name>
+                <relation-name>be write by</relation-name>
+                <relation-name>be compose by</relation-name>
                 <related-table>author</related-table>
                 <mapping-table>pub_au</mapping-table>
             </relation>
@@ -26,8 +26,8 @@
         <field type="String" field-alias="publisher" visible="true" relation="has attribute">
             <relation>
                 <relation-name>has publisher</relation-name>
-                <relation-name>be publish</relation-name>
-                <relation-name>be release</relation-name>
+                <relation-name>be publish by</relation-name>
+                <relation-name>be release by</relation-name>
                 <relation-name>for</relation-name>
                 <reversed-relation>publish</reversed-relation>
                 <reversed-relation>has publish</reversed-relation>
@@ -53,6 +53,7 @@
                 <relation-name>in</relation-name>
                 <relation-name value="&gt;=">from</relation-name>
                 <relation-name value="&lt;=">to</relation-name>
+                <relation-name>be write in</relation-name>
             </relation>
             <field-name>year</field-name>
             <pattern>[0-9][0-9][0-9][0-9]</pattern>
@@ -109,6 +110,7 @@
                 <relation-name>write for</relation-name>
                 <relation-name>cooperate</relation-name>
                 <related-table>publication</related-table>
+                <mapping-table>au_pub</mapping-table>
             </relation>
             <field-name>publisher</field-name>
         </field>

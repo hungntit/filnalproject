@@ -86,8 +86,12 @@ public class ExtractTriple {
             start   =   0;
             end =   start;
             boolean isAdded =   false;
-            String inputRule =   rule.split("-->")[0];
-           String outputRule    =   rule.split("-->")[1];
+            boolean isRemove    =   false;
+            String rulesStr[]     =   rule.split("-->");
+            String inputRule =   rulesStr[0];
+           String outputRule    =   rulesStr[1];
+           if(rulesStr.length ==3)
+               isRemove =   true;
            String posTagStrInputArr[]   =   inputRule.split(" ");
            Token   posTagArr[]   = new Token[posTagStrInputArr.length];
 
@@ -360,21 +364,13 @@ public class ExtractTriple {
                     result.add(tripleToken);
 
                }
-               Token[]  checkRemoveTokens   =   Token.copyTokens(tempTokenArr, start, end);
-               int countVerb   =   countVerbInTokens(checkRemoveTokens);
+               //Token[]  checkRemoveTokens   =   Token.copyTokens(tempTokenArr, start, end);
+               //int countVerb   =   countVerbInTokens(checkRemoveTokens);
 
-               if(countVerb>1 || hasVBNInTokens(checkRemoveTokens))
+               if(isRemove)
                {
-                   if(countVerb>1)
-                   {
+                  
                    tempTokenArr =   Token.removeTokens(tempTokenArr, start+1,end);
-
-                   }
-                    else
-                   {
-                       tempTokenArr =   Token.removeTokens(tempTokenArr, start+1,end);
-
-                    }
                 start    =   0;
                }
                 else{

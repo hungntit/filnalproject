@@ -84,7 +84,10 @@ public class GenSQLQuery {
         if(columnInfo.isRelatedField())
         {
             TableInfo   tableInfo   =   columnInfo.getRelatedTable();
-            return tableInfo.getName()+".* ";
+            if(columnInfo.getName() == null)
+                return "`"+tableInfo.getName()+"`"+".* ";
+            else
+                return "`"+tableInfo.getName()+"`"+"."+"`"+columnInfo.getName()+"`";
         }
         else
         {

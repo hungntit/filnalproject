@@ -26,7 +26,7 @@ public final class Token {
     }
     public boolean isNonNe()
     {
-        if(pos_value.equals("NN") || pos_value.equals("NNS"))
+        if(pos_value.equals("NN") || pos_value.equals("NNS")||pos_value.equals("NN"))
             return true;
         return false;
     }
