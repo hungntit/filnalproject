@@ -33,8 +33,8 @@ public class Test {
      * * Tester: Hoang Nguyen (revison 241)
      * +++++++++++++++++++++++++++++++++
      * + Num of Test : 18
-     * + Pass : 16
-     * + Fail : 2 (16th, 17th)
+     * + Pass : 17
+     * + Fail : 1 (16th)
      * + Warning: 
      * +++++++++++++++++++++++++++++++++
      *
@@ -77,7 +77,7 @@ public class Test {
             "Name some books which Richard L. Muller writes for Springer",
             "List all books were published by Springer in 2010",
             "What year is \"Foundations of Databases.\" written in?",// not solve yet // FAIL TEST REV 234
-            "What books refer to \"Foundations of Databases.\"",// not solve yet
+            "What books refer to \"Foundations of Databases.\"",
             "What books did Richard L. Muller write for Springer",
         };
         System.out.println("nums test: " + questions.length);
