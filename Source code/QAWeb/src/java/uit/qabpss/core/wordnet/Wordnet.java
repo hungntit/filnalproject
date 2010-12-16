@@ -55,14 +55,14 @@ static {
         similarityWN  =   new SimilarityAssessor();
 
     }
-    public static boolean checkSimilarityVerb(String verb1,String verb2)
+    public static float getSimilarityVerb(String verb1,String verb2)
     {
         IIndexWord indexWord1 = wndict.getIndexWord(verb1, POS.VERB);
         IIndexWord indexWord2 = wndict.getIndexWord(verb2, POS.VERB);
         if(indexWord1 == null)
-            return false;
+            return 0;
         if(indexWord2 == null)
-            return false;
+            return 0;
 
         List<IWordID> wordIDs1 = indexWord1.getWordIDs();
         List<IWordID> wordIDs2 = indexWord2.getWordIDs();
@@ -76,7 +76,7 @@ static {
                 ISynsetID synsetID2 = wordId2.getSynsetID();
                 if(synset1.getOffset() == synsetID2.getOffset())
                 {
-                    return true;
+                    return 1;
                 }
             }
 
@@ -89,7 +89,7 @@ static {
                     {
                         ISynsetID synsetID2 = wordID2.getSynsetID();
                         if(hypernymsynsetID.getOffset() == synsetID2.getOffset())
-                            return true;
+                            return 0.5f;
 
                     }
 
@@ -104,7 +104,7 @@ static {
                     {
                         ISynsetID synsetID2 = wordID2.getSynsetID();
                         if(troponymSynsetID.getOffset() == synsetID2.getOffset())
-                            return true;
+                            return 0.5f;
 
                     }
 
@@ -112,7 +112,7 @@ static {
 
         }
 
-        return false;
+        return 0;
     }
     public static double getValueSimilarityNoun(String noun1,String noun2)
     {

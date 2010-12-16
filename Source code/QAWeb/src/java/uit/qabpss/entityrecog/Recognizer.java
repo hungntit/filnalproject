@@ -321,6 +321,7 @@ public class Recognizer {
         List<TripleRelation> result   =   new ArrayList<TripleRelation>();
         List<TripleRelation> total   =   new ArrayList<TripleRelation>();
         List<TableInfo> tableInfos    =   dbInf.getTables();
+        float maxSimilarity =   0.5f;
         for(TableInfo tableInfo:tableInfos)
         {
             List<ColumnInfo> columnInfos    =   tableInfo.getColumns();
@@ -363,9 +364,14 @@ public class Recognizer {
                                         if(!In1.equalsIgnoreCase(In2))
                                             tempflag    =   false;
                                     }
-                                    if ( Wordnet.checkSimilarityVerb(verb1, verb2)&& tempflag)
+                                    float similarity    =   Wordnet.getSimilarityVerb(verb1, verb2);
+                                    if (similarity >= maxSimilarity && tempflag)
                                     {
-
+                                        if(similarity > maxSimilarity)
+                                        {
+                                            result.clear();
+                                            maxSimilarity = similarity;
+                                        }
                                         if(!result.contains(tripleRelation))
                                             result.add(tripleRelation);
                                     }
@@ -376,9 +382,14 @@ public class Recognizer {
                        {
                                 String verb1 =   relation.getRelationName();
                                 String verb2 =   relationStr;
-
-                                if(Wordnet.checkSimilarityVerb(verb1, verb2))
+                                float similarity    =   Wordnet.getSimilarityVerb(verb1, verb2);
+                                if(similarity >= maxSimilarity )
                                 {
+                                     if(similarity > maxSimilarity)
+                                        {
+                                            result.clear();
+                                            maxSimilarity = similarity;
+                                        }
                                     if(!result.contains(tripleRelation))
                                         result.add(tripleRelation);
                                 }
@@ -522,7 +533,7 @@ public class Recognizer {
                 if(obj2.getPos_value().equalsIgnoreCase("NN")|| obj2.getPos_value().equalsIgnoreCase("NNS") && obj2.getEntityType().isNull())
                 {
                     tripleRelationList  =   getTripleRelationsFromNonNER(tripleRelationList, obj2);
-                    if(checkSameTable(tripleRelationList) && tripleToken.getObj1().isWP())
+                    if(checkSameTable(tripleRelationList) && tripleToken.getObj1().isWP()&&tripleRelationList.size() > 1)
                     {
                         
                         obj2.setEntityType(tripleRelationList.get(0).getFirstEntity());

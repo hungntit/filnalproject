@@ -24,20 +24,38 @@ import uit.qabpss.util.dao.orm.CustomSQLUtil;
  * @author aa
  */
 public class GenSQLQuery {
-    public static List<TableInfo> getSourceForQuery(List<TripleToken> tripleTokens)
+    public static void getSourceForQuery(List<TripleToken> tripleTokens,List<TableInfo> outMTableInfos,List<MappingTable> outMappingTables)
     {
-        List<TableInfo> result  =   new ArrayList<TableInfo>();
+       
         for(TripleToken tripleToken:tripleTokens)
         {
             EntityType   entityType1    =   tripleToken.getObj1().getEntityType();
             EntityType   entityType2    =   tripleToken.getObj2().getEntityType();
-            addTableInfoToFromSource(result, entityType1);
-            addTableInfoToFromSource(result, entityType2);
+            if(entityType1.isColumn())
+            {
+                if(entityType1.getColumnInfo().isMappingField())
+                {
+                    MappingTable mappingTable = entityType1.getColumnInfo().getMappingTable();
+                    if(!outMappingTables.contains(mappingTable))
+                        outMappingTables.add(mappingTable);
+                }
+            }
+            if(entityType2.isColumn())
+            {
+                if(entityType2.getColumnInfo().isMappingField())
+                {
+                    MappingTable mappingTable = entityType2.getColumnInfo().getMappingTable();
+                    if(!outMappingTables.contains(mappingTable))
+                        outMappingTables.add(mappingTable);
+                }
+            }
+            addTableInfoToFromSource(outMTableInfos, entityType1);
+            addTableInfoToFromSource(outMTableInfos, entityType2);
 
 
 
         }
-        return result;
+       
     }
     private static void addTableInfoToFromSource(List<TableInfo> list,EntityType entityType)
     {
@@ -79,29 +97,46 @@ public class GenSQLQuery {
         if(entityType.isNull())
             return "";
         if(entityType.isTable())
-            return entityType.getTableInfo().getName()+".* ";
+            return "`"+entityType.getTableInfo().getAliasName()+"`"+".* ";
         ColumnInfo  columnInfo  =   entityType.getColumnInfo();
         if(columnInfo.isRelatedField())
         {
             TableInfo   tableInfo   =   columnInfo.getRelatedTable();
             if(columnInfo.getName() == null)
-                return "`"+tableInfo.getName()+"`"+".* ";
+                return "`"+tableInfo.getAliasName()+"`"+".* ";
             else
-                return "`"+tableInfo.getName()+"`"+"."+"`"+columnInfo.getName()+"`";
+                return "`"+tableInfo.getAliasName()+"`"+"."+"`"+columnInfo.getName()+"`";
         }
         else
         {
             TableInfo   tableInfo   =   entityType.getTableInfo();
-            return tableInfo.getName()+"."+ columnInfo.getName();
+            return tableInfo.getAliasName()+"."+ columnInfo.getName();
         }
 
     }
-    public  static String genFromQuery(List<TableInfo> tableInfos)
+    public  static String genFromQuery(List<TableInfo> tableInfos,List<MappingTable> mappingTables)
     {
         String result   =  "";
+        for(MappingTable mappingTable:mappingTables)
+        {
+           for(TableInfo tableInfo:tableInfos)
+           {
+               if(mappingTable.getMappingTableName().equals(tableInfo.getName()))
+               {
+                   mappingTables.remove(mappingTable);
+                   break;
+               }
+           }
+            if(mappingTables.isEmpty())
+                   break;
+        }
         for(TableInfo tableInfo:tableInfos)
         {
-            result  +=  tableInfo.getName()+",";
+            result  +=  "`"+tableInfo.getName()+"`"+" "+"`"+tableInfo.getAliasName()+"`"+",";
+        }
+        for(MappingTable mappingTable:mappingTables)
+        {
+            result  += "`"+mappingTable.getMappingTableName()+"`"+",";
         }
         if(result.equals(""))
             return "";
@@ -111,14 +146,16 @@ public class GenSQLQuery {
     public  static String genQuery(List<TripleToken> list,EntityType entitypeOfQuestion)
     {
         String query    =   "";
-        List<TableInfo> tableInfos  =   getSourceForQuery(list);
+         List<TableInfo> tableInfos =   new ArrayList<TableInfo>();
+         List<MappingTable> mappingTables   =   new ArrayList<MappingTable>();
+        getSourceForQuery(list,tableInfos, mappingTables);
         String selectQuery          =   genSelectQuery(entitypeOfQuestion);
         String whereQuery           =   genWhereQuery(list);
 
         if(selectQuery.equals(""))
             return "";
         query   +=  "SELECT "+selectQuery+" \n\r";
-        String fromQuery            =   genFromQuery(tableInfos);
+        String fromQuery            =   genFromQuery(tableInfos,mappingTables);
         query   +=  "FROM "+fromQuery +"\n\r";
         query   +=  "WHERE \n\r" +whereQuery;
 
@@ -138,22 +175,22 @@ public class GenSQLQuery {
                  keywords =   CustomSQLUtil.keywords(param.getValue());
              
               if(keywords.length>0)
-                  condition+= CustomSQLUtil.AND_OR_CONECTOR+" "+ CustomSQLUtil.createOperatorForField(param.toString(), StringPool.LIKE) +"\n";
+                  condition+= CustomSQLUtil.AND_OR_CONECTOR+" "+ CustomSQLUtil.createOperatorForField(param.toStringWithAlias(), StringPool.LIKE) +"\n";
                condition =   condition.substring(CustomSQLUtil.AND_OR_CONECTOR.length());
-              condition =   CustomSQLUtil.replaceKeywords(condition, param.toString(), StringPool.LIKE, true, keywords);   
+              condition =   CustomSQLUtil.replaceKeywords(condition, param.toStringWithAlias(), StringPool.LIKE, true, keywords);
 
           }
 
           else
           {
              
-                condition+= CustomSQLUtil.createOperatorForField(param.toString(),param.getOperator());
+                condition+= CustomSQLUtil.createOperatorForField(param.toStringWithAlias(),param.getOperator());
           }
         }
         else
           {
 
-                condition+= CustomSQLUtil.createOperatorForField(param.toString(),param.getOperator());
+                condition+= CustomSQLUtil.createOperatorForField(param.toStringWithAlias(),param.getOperator());
           }
 
         condition   =   CustomSQLUtil.replaceAndOperator(condition, true);
@@ -190,18 +227,28 @@ public class GenSQLQuery {
             if(columnInfo.isRelatedField() && columnInfo.isMappingField())
             {
                 String  tempConditionQuery1  =   "";
-                String leftSide  = "`"+tableInfo.getName()+"`"+"."+"`"+tableInfo.getPrimaryKey()+"`";
+                String leftSide  = "`"+tableInfo.getAliasName()+"`"+"."+"`"+tableInfo.getPrimaryKey()+"`";
                 String rightSide = "`"+mappingTable.getMappingTableName() + "`" + "." + "`"+mappingTable.getTableKey()+"`";
-                if(! leftSide.equals(rightSide))
+                if(! tableInfo.getName().equalsIgnoreCase(mappingTable.getMappingTableName())  )
                 {
-                    tempConditionQuery1  =   leftSide+" "+StringPool.EQUAL+" "+rightSide;
+                    if(relatedTable.getName().equalsIgnoreCase(mappingTable.getMappingTableName()))
+                    {
+                         leftSide  = "`"+tableInfo.getAliasName()+"`"+"."+"`"+tableInfo.getPrimaryKey()+"`";
+                         rightSide = "`"+relatedTable.getAliasName() + "`" + "." + "`"+mappingTable.getTableKey()+"`";
+                     }
+                     tempConditionQuery1  =   leftSide+" "+StringPool.EQUAL+" "+rightSide;
                 }
 
                 String  tempConditionQuery2  =   "";
-                 leftSide  = "`"+relatedTable.getName()+"`"+"."+"`"+relatedTable.getPrimaryKey()+"`";
+                 leftSide  = "`"+relatedTable.getAliasName()+"`"+"."+"`"+relatedTable.getPrimaryKey()+"`";
                  rightSide = "`"+mappingTable.getMappingTableName() + "`" + "." + "`"+mappingTable.getRelatedTableKey()+"`";
-                if(! leftSide.equals(rightSide))
+                if(! relatedTable.getName().equalsIgnoreCase(mappingTable.getMappingTableName()))
                 {
+                    if(tableInfo.getName().equalsIgnoreCase(mappingTable.getMappingTableName()))
+                    {
+                          leftSide  = "`"+relatedTable.getAliasName()+"`"+"."+"`"+relatedTable.getPrimaryKey()+"`";
+                          rightSide = "`"+tableInfo.getAliasName() + "`" + "." + "`"+mappingTable.getRelatedTableKey()+"`";
+                     }
                     tempConditionQuery2  =   leftSide+" "+StringPool.EQUAL+" "+rightSide;
                 }
 
@@ -217,8 +264,8 @@ public class GenSQLQuery {
             if(columnInfo.isRelatedField() && columnInfo.isMappingField() == false)
             {
                   tempConditionQuery  =   "";
-                String leftSide  = "`"+tableInfo.getName()+"`"+"."+"`"+columnInfo.getName()+"`";
-                String rightSide = "`"+relatedTable.getName() + "`" + "." + "`"+relatedTable.getPrimaryKey()+"`";
+                String leftSide  = "`"+tableInfo.getAliasName()+"`"+"."+"`"+columnInfo.getName()+"`";
+                String rightSide = "`"+relatedTable.getAliasName() + "`" + "." + "`"+relatedTable.getPrimaryKey()+"`";
                 if(! leftSide.equals(rightSide))
                 {
                     tempConditionQuery  =   leftSide+" "+StringPool.EQUAL+" "+rightSide;

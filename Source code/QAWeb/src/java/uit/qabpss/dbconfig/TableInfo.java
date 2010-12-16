@@ -145,7 +145,9 @@ public class TableInfo implements Serializable{
         if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
             return false;
         }
-
+        if ((this.aliasName == null) ? (other.aliasName != null) : !this.aliasName.equals(other.aliasName)) {
+            return false;
+        }
         return true;
     }
 

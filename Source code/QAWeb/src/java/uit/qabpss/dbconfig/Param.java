@@ -116,7 +116,9 @@ public class Param implements Serializable{
     public String toString() {
         return "`"+table+"`"    +"."+   "`"+column+"`";
     }
-
+    public String toStringWithAlias() {
+        return "`"+table.getAliasName()+"`"    +"."+   "`"+column+"`";
+    }
     public static List<Param> getParamsFromTableInfo(TableInfo table)
     {
         List<Param> result  =   new ArrayList<Param>();
