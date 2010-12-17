@@ -1,0 +1,10 @@
+﻿SELECT T1.*
+FROM
+(select * from dblp_pub_new p, dblp_author_ref_new a where p.id = a.pub_id
+and author = 'Rafiul Ahad') as T1,
+(select * from dblp_pub_new p, dblp_author_ref_new a where p.id = a.pub_id
+and author = 'Amelia Carlson') as T2
+WHERE
+T1.id = T2.id
+
+;
