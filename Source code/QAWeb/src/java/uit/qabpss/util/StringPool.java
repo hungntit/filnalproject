@@ -9,6 +9,14 @@ package uit.qabpss.util;
  */
 public class StringPool {
 
+        public static final String AND = "and";
+
+        public static final String OR = "or";
+
+        public static final String POS_CC = "CC";
+
+        public static final String POS_NNP = "NNP";
+
 	public static final String AMPERSAND = "&";
 
 	public static final String AMPERSAND_ENCODED = "&amp;";
