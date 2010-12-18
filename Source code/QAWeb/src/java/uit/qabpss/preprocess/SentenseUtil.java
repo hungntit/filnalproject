@@ -393,24 +393,57 @@ public class SentenseUtil {
      * Ex: What books were written by .... and published by ....
      */
     public static List<List<Token>> checkAndCutSen(Token[] l) {
-//        List<List<Token>> result = new ArrayList<List<Token>>();
-//        boolean containsAndOr = false;
-//        for (int i = 0; i < l.length; i++) {
-//            Token t = l[i];
-//            if (t.getPos_value().equals(StringPool.POS_CC) && (t.getValue().equals(StringPool.AND) || t.getValue().equals(StringPool.OR))) {
-//                if (i < l.length - 1
-//                        && i > 0
-//                        && !l[i + 1].getPos_value().equals(StringPool.POS_NNP)
-//                        && !l[i + 1].getPos_value().equals(l[i-1].getPos_value())) {
-//                    containsAndOr = true;
-//
-//                }
-//            }
-//        }
-//        if(containsAndOr == false){
-//            result.add(Arrays.asList(l));
-//            return result;
-//        }
+        List<List<Token>> result = new ArrayList<List<Token>>();
+        boolean containsAndOr = false;
+        for (int i = 0; i < l.length; i++) {
+            Token t = l[i];
+            if (t.getPos_value().equals(StringPool.POS_CC) && (t.getValue().equals(StringPool.AND) || t.getValue().equals(StringPool.OR))) {
+                if (i < l.length - 1
+                        && i > 0
+                        && !l[i + 1].getPos_value().equals(StringPool.POS_NNP)
+                        && !l[i + 1].getPos_value().equals(l[i-1].getPos_value())) {
+                    if(l[i+1].getPos_value().equals(StringPool.POS_VB)
+                            ||l[i+1].getPos_value().equals(StringPool.POS_VBN)){
+                        // Cut List one 
+                        Token[] listOne = new Token[i];
+                        for (int j = 0; j < i; j++) {
+                            Token token = l[j];
+                            listOne[j] = token;
+                        }                        
+                        result.add(Arrays.asList(listOne));
+                        // get List two
+                        Token[] listSubTwo1 = null;
+                        for (int j = 0; j < listOne.length; j++) {
+                            Token token = listOne[j];
+                            if(token.getPos_value().equals(StringPool.POS_NNS)
+                                    || token.getPos_value().equals(StringPool.POS_NN)){
+                                listSubTwo1 = new Token[j+1];
+                                System.arraycopy(listOne, 0, listSubTwo1, 0, j+1);
+                                break;
+                            }
+                        }
+                        Token[] listSubTwo2 = new Token[l.length - i -1 ];
+                        int index = 0;
+                        for (int j = i +1 ; j < l.length; j++) {
+                            listSubTwo2[index] = l[j];
+                            index++;
+                        }
+                        // merger twos array of list two
+                        Token[] listTwo = new Token[listSubTwo1.length + listSubTwo2.length];
+                        System.arraycopy(listSubTwo1, 0, listTwo, 0, listSubTwo1.length);
+                        System.arraycopy(listSubTwo2, 0, listTwo, listSubTwo1.length, listSubTwo2.length);
+                        //
+                        result.add(Arrays.asList(listTwo));                        
+                        containsAndOr = true;
+                        return result;
+                    }
+                }
+            }
+        }
+        if(containsAndOr == false){
+            result.add(Arrays.asList(l));
+            return result;
+        }
         return null;
     }
 

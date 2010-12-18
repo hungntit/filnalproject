@@ -17,6 +17,14 @@ public class StringPool {
 
         public static final String POS_NNP = "NNP";
 
+        public static final String POS_NN = "NN";
+
+        public static final String POS_NNS = "NNS";
+
+        public static final String POS_VB = "VB";
+
+        public static final String POS_VBN = "VBN";
+
 	public static final String AMPERSAND = "&";
 
 	public static final String AMPERSAND_ENCODED = "&amp;";
