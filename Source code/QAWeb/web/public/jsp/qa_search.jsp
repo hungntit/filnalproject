@@ -8,6 +8,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://struts.apache.org/tags-html-el" prefix="html" %>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <table style="width: 100%">
     <tr>
         <td valign="top">
@@ -17,17 +18,30 @@
                 </span>
                 Enter your question here:
                 <br>
+                <a href="#" onclick="document.QAForm.sentence.value=''">Clear field</a>
                 <html:form action="/doQA" focus="keyWord" >
                     <html:textarea property="sentence" cols="120" rows="1"></html:textarea>
                     <html:image property="submitQA" srcKey="image.submit" altKey="image.submit.alttext" onclick="showLoadingPage();"/>
-                </html:form>
+                </html:form>                                
                 <br>
                 <span style="font-style: italic">
                     Warning:<br>
                     - You should wrap your value such as title, author names in double-quote.<br>
-                    - You should write name or heading titles in Upper case
+                    - You should write name or heading titles in Upper<br>
+                    - System only supports for English questions.
                 </span>
             </div>                    
+        </td>
+    </tr>
+    <tr>
+        <td class="text5">Some example questions:
+            <br>
+            <c:forEach var="q" items="${EXAMPLE_QUESTIONS}">
+                <a href="#" style="text-transform: none;font-size: 14px" onclick="document.QAForm.sentence.value='${q.label}'">
+                    ${q.label}
+                </a>
+                <br>
+            </c:forEach>
         </td>
     </tr>
 </table>
