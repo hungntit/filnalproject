@@ -23,8 +23,8 @@ public class Test {
     /**    
      * +++++++++++++++++++++++++++++++++
      * + Num of Test : 36
-     * + Pass : 18
-     * + Fail : 17 (1st,5th,6th,8th,9th,13th,14th,15th,16th,17th,21th,26th,29th,30th,32th,35th,36th,)
+     * + Pass : 30
+     * + Fail : 5 (1st,13th,26th,30th,35th)
      * + not solve: 1 (28th)
      * + Warning: TEST GENERATE QUERY
      * => FAIL MEANS QUERY CAN NOT RUN
@@ -46,8 +46,8 @@ public class Test {
             "What are titles of books written by Marcus Thint ?",
             "What papers did Jennifer Widom write ?",
             "What books did Jennifer Widom write ?",
-            "Who is the author of  \"Working Models for Uncertain Data\" and ACM 1999",
-            "Who is the author of  \"Working Models for Uncertain Data\" and ACM",
+            "Who is the author of  \"Working Models for Uncertain Data\" and \"Active Database Systems.\"",
+            "Who is the author of  \"Working Models for Uncertain Data\"",
             "What book did Philip K. Chan write in 1999?",
             "What book did Philip K. Chan write from 1999 to 2000?",
             "What are the titles of the books published by O'reilly in 1999 ?",
