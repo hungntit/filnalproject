@@ -20,30 +20,21 @@ import uit.qabpss.util.hibernate.HibernateUtil;
  */
 public class Test {
 
-    /**
-     * @param args the command line arguments
-     *
-     * Tester: Hoang Nguyen (revison 234)
+    /**    
      * +++++++++++++++++++++++++++++++++
-     * + Num of Test : 18
-     * + Pass : 14
-     * + Fail : 4 (7th, 14th, 16th, 17th)
-     * + Warning: DO NOT USE 'LIKE' OPERATOR IN QUERY SENTENCES, REPLACE IT TO '='
+     * + Num of Test : 36
+     * + Pass : 18
+     * + Fail : 17 (1st,5th,6th,8th,9th,13th,14th,15th,16th,17th,21th,26th,29th,30th,32th,35th,36th,)
+     * + not solve: 1 (28th)
+     * + Warning: TEST GENERATE QUERY
+     * => FAIL MEANS QUERY CAN NOT RUN
      * +++++++++++++++++++++++++++++++++
-     * * Tester: Hoang Nguyen (revison 241)
-     * +++++++++++++++++++++++++++++++++
-     * + Num of Test : 18
-     * + Pass : 17
-     * + Fail : 1 (16th)
-     * + Warning: 
-     * +++++++++++++++++++++++++++++++++
-     *
      */
     public static void main(String[] args) throws IOException {
         // List of test questions here
         HibernateUtil.getSessionFactory();
         String[] questions = new String[]{
-        /*   "Which books were written by Rafiul Ahad or Amelia Carlson in 2010 ? ",
+           "Which books were written by Rafiul Ahad and Amelia Carlson in 2010 ? ",           
             "Which books were written by Rafiul Ahad from 1999 to 2010 ?",
             "Which books were published by O'Reilly  in 1999 ?",
             "How many papers were written by Rafiul Ahad ?",
@@ -59,15 +50,15 @@ public class Test {
             "Who is the author of  \"Working Models for Uncertain Data\" and ACM",
             "What book did Philip K. Chan write in 1999?",
             "What book did Philip K. Chan write from 1999 to 2000?",
-            "What are the titles of the books published by O’reilly in 1999 ?",
-            "What composer wrote \" Java 2D Graphics\"",*/
+            "What are the titles of the books published by O'reilly in 1999 ?",
+            "What composer wrote \" Java 2D Graphics\"",
             "What books has isbn 1-56592-484-3",
             "What books has doi 10.1145/360271.360274",
             "What composer wrote books from 1999 in ACM?",
             "Who is the author of the paper \"Question Classification using Head Words and their Hypernyms.\"?",
             "Who wrote \"Question Classification using Head Words and their Hypernyms.\"?",
             "What books were written by \"Philip K. Chan\" from ACM?",
-            "How many publisher did \"Philip K. Chan\" cooperate with?",  
+            "How many publisher did \"Philip K. Chan\" cooperate with?",
             "What books were published by ACM or Springer in 2010?",
             "What publications have resulted from TREC?",
             "What publications have resulted from TREC in 1999?",
@@ -83,12 +74,15 @@ public class Test {
         System.out.println("nums test: " + questions.length);
         ExtractTriple extract = new ExtractTriple();
         Recognizer  reg     =   new Recognizer();
+        int count = 1;
         for (String question : questions) {
             Date    date    =   new Date();
             long begin   =   date.getTime();
             System.out.println("----------------------------------------------------------------------------");
             Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
             tokens = SentenseUtil.optimizePosTags(tokens);
+            System.out.println(count+"/");
+            count++;
             System.out.println(SentenseUtil.tokensToStr(tokens));
             List<TripleToken> list = extract.extractTripleWordRelation(tokens);
             reg.identifyTripleTokens(list);
