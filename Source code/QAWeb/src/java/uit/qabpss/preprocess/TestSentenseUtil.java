@@ -18,10 +18,13 @@ public class TestSentenseUtil {
         String[] questions = new String[]{
             "Which books were written by Rafiul Ahad and Amelia Carlson in 2010 ? ",
             "Which books were written by Rafiul Ahad or Amelia Carlson in 2010 ? ",
-            " Which books are published in 1999 and written by \"Ken Arnold\"?",
+            "Which books are published in 1999 and written by \"Ken Arnold\"?",
             "Which books are written by \"Ken Arnold\" and published by IEEE ?",
+            "How many books are written by \"Ken Arnold\" and published by IEEE ?",
             "Which books are written by \"Ken Arnold\" and have source from DBPL ?",
-            "Which papers are composed by \"Ken Arnold\" and have source from DBPL ?",};
+            "Who wrote books in 2010 and had source from DBPL",
+            "Which papers are composed by \"Ken Arnold\" and have source from DBPL ?",
+            "Who is the author of  \"Working Models for Uncertain Data\" and \"Active Database Systems.\"",};
 
         for (String question : questions) {
             System.out.println("--------");

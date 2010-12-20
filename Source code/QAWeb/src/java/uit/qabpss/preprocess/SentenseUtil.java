@@ -422,6 +422,18 @@ public class SentenseUtil {
                                 break;
                             }
                         }
+                        if(listSubTwo1[0].getValue().equals("What")                           
+                           ||listSubTwo1[0].getValue().equals("Which")){
+                            listSubTwo1 = SentenseUtil.removeTokenIn(listSubTwo1, 0);
+                        }
+                        if (listSubTwo1[0].getValue().equals("How")) {
+                            if (listSubTwo1[1].getPos_value().equals("JJ")) {
+                                listSubTwo1 = SentenseUtil.removeTokenIn(listSubTwo1, 0);
+                                listSubTwo1 = SentenseUtil.removeTokenIn(listSubTwo1, 0);
+                            } else {
+                                listSubTwo1 = SentenseUtil.removeTokenIn(listSubTwo1, 0);
+                            }
+                        }
                         Token[] listSubTwo2 = new Token[l.length - i -1 ];
                         int index = 0;
                         for (int j = i +1 ; j < l.length; j++) {
