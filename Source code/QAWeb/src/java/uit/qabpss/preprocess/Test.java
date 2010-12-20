@@ -23,8 +23,8 @@ public class Test {
     /**    
      * +++++++++++++++++++++++++++++++++
      * + Num of Test : 36
-     * + Pass : 30
-     * + Fail : 5 (1st,13th,26th,30th,35th)
+     * + Pass : 31
+     * + Fail : 4 (1st,13th,26th,30th)
      * + not solve: 1 (28th)
      * + Warning: TEST GENERATE QUERY
      * => FAIL MEANS QUERY CAN NOT RUN
@@ -34,7 +34,7 @@ public class Test {
         // List of test questions here
         HibernateUtil.getSessionFactory();
         String[] questions = new String[]{
-           "Which books were written by Rafiul Ahad and Amelia Carlson in 2010 ? ",           
+            "Which books were written by Rafiul Ahad and Amelia Carlson in 2010 ? ",
             "Which books were written by Rafiul Ahad from 1999 to 2010 ?",
             "Which books were published by O'Reilly  in 1999 ?",
             "How many papers were written by Rafiul Ahad ?",
@@ -69,53 +69,38 @@ public class Test {
             "List all books were published by Springer in 2010",
             "What year is \"Foundations of Databases.\" written in?",// not solve yet // FAIL TEST REV 234
             "What books refer to \"Foundations of Databases.\"",
-            "What books did Richard L. Muller write for Springer",
-        };
+            "What books did Richard L. Muller write for Springer",};
         System.out.println("nums test: " + questions.length);
         ExtractTriple extract = new ExtractTriple();
-        Recognizer  reg     =   new Recognizer();
+        Recognizer reg = new Recognizer();
         int count = 1;
         for (String question : questions) {
-            Date    date    =   new Date();
-            long begin   =   date.getTime();
+            Date date = new Date();
+            long begin = date.getTime();
             System.out.println("----------------------------------------------------------------------------");
             Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
             tokens = SentenseUtil.optimizePosTags(tokens);
-            System.out.println(count+"/");
+            System.out.println(count + "/");
             count++;
             System.out.println(SentenseUtil.tokensToStr(tokens));
             List<TripleToken> list = extract.extractTripleWordRelation(tokens);
             reg.identifyTripleTokens(list);
-            for(TripleToken tripleToken:list)
-            {
+            for (TripleToken tripleToken : list) {
                 System.out.println(tripleToken);
-                //reg.identifyTripleToken(tripleToken);
-                if(!tripleToken.isNotIdentified())
-                {
-                    System.out.println(tripleToken.getObj1().toString()+":"+tripleToken.getObj1().getEntityType().toString() +","+tripleToken.getObj2().toString()+":"+tripleToken.getObj2().getEntityType().toString());
+                if (!tripleToken.isNotIdentified()) {
+                    System.out.println(tripleToken.getObj1().toString() + ":" + tripleToken.getObj1().getEntityType().toString() + "," + tripleToken.getObj2().toString() + ":" + tripleToken.getObj2().getEntityType().toString());
                 }
 
             }
-            /*
-            for(Token token: tokens)
-            {
+            System.out.println();
 
-                String s    =   token.toString()+"|"+ token.getEntityType().toString()+ " ";
-                if(token.getEntityType().isNull())
-                {
-                    s   =   token.toString()+ " ";
-                }
-                System.out.print(s);
-            }*/
-             System.out.println();
+            EntityType entityTypeOfQuestion = reg.recognizeEntityOfQuestion(tokens);
+            String selectandFromQuery = GenSQLQuery.genQuery(list, entityTypeOfQuestion);
+            System.out.println(selectandFromQuery);
 
-             EntityType entityTypeOfQuestion    =   reg.recognizeEntityOfQuestion(tokens);
-             String selectandFromQuery  =   GenSQLQuery.genQuery(list, entityTypeOfQuestion);
-             System.out.println(selectandFromQuery);
-
-            date    =   new Date();
-            double end    =   date.getTime();
-            System.out.println("Time: "+(end - begin)/1000);
+            date = new Date();
+            double end = date.getTime();
+            System.out.println("Time: " + (end - begin) / 1000);
         }
     }
 }
