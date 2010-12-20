@@ -9,6 +9,7 @@
    "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://struts.apache.org/tags-html-el" prefix="html" %>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+<script type="text/javascript" src="public/javascript/Qa_script.js"></script>
 <table style="width: 100%">
     <tr>
         <td valign="top">
@@ -34,14 +35,17 @@
         </td>
     </tr>
     <tr>
-        <td class="text5">Some example questions:
+        <td class="text5">
+            <a href="#" onclick="toggleBox('Sample_Question_Box');">Some example questions:</a>
             <br>
-            <c:forEach var="q" items="${EXAMPLE_QUESTIONS}">
-                <a href="#" style="text-transform: none;font-size: 14px" onclick="document.QAForm.sentence.value='${q.label}'">
-                    ${q.label}
-                </a>
-                <br>
-            </c:forEach>
+            <div id="Sample_Question_Box"style="text-align: left;display: none">
+                <c:forEach var="q" items="${EXAMPLE_QUESTIONS}" varStatus="st">
+                    <c:out value="${st.count}"/><a href="#" style="text-transform: none;font-size: 14px" onclick="document.QAForm.sentence.value='${q.label}'">
+                        ${q.label}
+                    </a>
+                    <br>
+                </c:forEach>
+            </div>
         </td>
     </tr>
 </table>
