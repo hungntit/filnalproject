@@ -24,6 +24,33 @@ import uit.qabpss.util.dao.orm.CustomSQLUtil;
  * @author aa
  */
 public class GenSQLQuery {
+    public static List<List<TripleToken>> groupTripleTokens(List<TripleToken> tripleTokens)
+    {
+        List<List<TripleToken>> list    =   new ArrayList<List<TripleToken>>();
+
+
+        for(int i = 0;i< tripleTokens.size();i++)
+        {
+            TripleToken firstTripleToken =   tripleTokens.get(i);
+            List<TripleToken>   childTripleTokens   =   new ArrayList<TripleToken>();
+            childTripleTokens.add(firstTripleToken);
+            list.add(childTripleTokens);
+            for(int j   = i+1;j<tripleTokens.size();j++)
+            {
+                TripleToken tripleToken = tripleTokens.get(j);
+                if(firstTripleToken.isSameWith(tripleToken))
+                {
+                    childTripleTokens.add(tripleToken);
+                }
+                else
+                {
+                    i=j-1;
+                    break;
+                }
+            }
+        }
+        return list;
+    }
     public static void getSourceForQuery(List<TripleToken> tripleTokens,List<TableInfo> outMTableInfos,List<MappingTable> outMappingTables)
     {
        
@@ -326,7 +353,8 @@ public class GenSQLQuery {
                 andOrOperatorStr    =   " AND";
             else
                 andOrOperatorStr    =   " OR";
-            query+= andOrOperatorStr+condition;//replace and operator here
+            if(!condition.equals(""))
+                query+= andOrOperatorStr+condition;//replace and operator here
             query   =   query.trim();
 
 

@@ -160,6 +160,13 @@ public class TripleToken {
     public String toString() {
         return obj1.getValue()+","+relationName+","+obj2.getValue();
     }
-
+    public boolean isSameWith(TripleToken tripleToken)
+    {
+        if(this.getRelationName().equals(tripleToken.getRelationName()) && (this.obj1.getEntityType() == tripleToken.obj1.getEntityType() && this.obj2.getEntityType() == tripleToken.obj2.getEntityType()))
+        {
+            return true;
+        }
+        return false;
+    }
 
 }

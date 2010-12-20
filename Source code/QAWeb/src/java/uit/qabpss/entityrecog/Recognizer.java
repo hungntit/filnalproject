@@ -622,7 +622,15 @@ public class Recognizer {
                             tripleRelationList  =   getTripleRelationsFromSecondObj(tripleRelationList, tripleToken.getObj2());
                             if(tripleRelationList.size() == 1)
                             {
-                                tripleToken.getObj1().setEntityType(tripleRelationList.get(0).getFirstEntity());
+
+
+                                if(tripleToken.getObj1().getEntityType().isNull() ==false)
+                                {
+                                Token token =   new Token(tripleToken.getObj1().getValue()  , tripleToken.getObj1().getPos_value());
+                                tripleToken.setObj1(token);
+                                }
+                                Token obj1 = tripleToken.getObj1();
+                                obj1.setEntityType(tripleRelationList.get(0).getFirstEntity());
                                 tripleToken.setOperator(tripleRelationList.get(0).getRelation().getOperator());
                                 return;
                             }
