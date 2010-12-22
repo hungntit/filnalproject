@@ -132,7 +132,7 @@ public class GenSQLQuery {
             if(columnInfo.getName() == null)
                 return "`"+tableInfo.getAliasName()+"`"+".* ";
             else
-                return "`"+tableInfo.getAliasName()+"`"+"."+"`"+columnInfo.getName()+"`";
+                return tableInfo.getAliasName()+"."+columnInfo.getName();
         }
         else
         {

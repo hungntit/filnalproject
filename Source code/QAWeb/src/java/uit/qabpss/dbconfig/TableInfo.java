@@ -121,6 +121,8 @@ public class TableInfo implements Serializable{
         if(columnName.trim().equals(""))  return null;
         for(ColumnInfo column: columns)
         {
+            if(column.getName() == null)
+                continue;
             if(column.getName().equalsIgnoreCase(columnName))
                 return column;
         }

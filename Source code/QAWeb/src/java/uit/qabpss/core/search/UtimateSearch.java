@@ -637,8 +637,9 @@ protected static String generateCountLimitQuery(Param[] params,boolean isAndOper
 
 
     public static void main(String args[]){
-       // TableInfo returnTbl     =       DBInfoUtil.getDBInfo().findTableInfoByName(Table.PUBLICATION);
-       // List    list            =       searchByKeyWords(returnTbl.getClassTable(), "Life is", returnTbl, 0 , 30);
+        DBInfoUtil.initDb();
+        TableInfo returnTbl     =       DBInfoUtil.getDBInfo().findTableInfoByName(Table.PUBLICATION);
+        List    list            =       searchByKeyWords(returnTbl.getClassTable(), "Life is", returnTbl, 0 , 30);
         Param param =   new Param(new TableInfo("A","a"),new ColumnInfo("B", "b", Type.LONG));
         String query    =   generateCountLimitQuery(new Param[]{param}, true, null, 1);
         int a=0;

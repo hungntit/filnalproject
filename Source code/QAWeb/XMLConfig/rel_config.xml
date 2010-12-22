@@ -59,7 +59,7 @@
             <pattern>[0-9][0-9][0-9][0-9]</pattern>
         </field>
 
-        <field type="Code" field-alias="isbn" visible="true" relation="has attribute">
+        <field type="String" field-alias="isbn" visible="true" relation="has attribute">
             <relation>
                 <relation-name>have</relation-name>
                 <relation-name>has</relation-name>
@@ -68,7 +68,7 @@
             <pattern></pattern>
         </field>
 
-        <field type="Code" field-alias="doi" visible="true" relation="has attribute">
+        <field type="String" field-alias="doi" visible="true" relation="has attribute">
             <relation>
                 <relation-name>have</relation-name>
                 <relation-name>has</relation-name>
@@ -185,7 +185,7 @@
             <pattern>[0-9][0-9][0-9][0-9]</pattern>
         </field>
 
-        <field type="Code" field-alias="isbn" visible="true" relation="has attribute">
+        <field type="String" field-alias="isbn" visible="true" relation="has attribute">
             <relation>
                 <relation-name>have</relation-name>
                 <relation-name>has</relation-name>
@@ -194,7 +194,7 @@
             <pattern></pattern>
         </field>
 
-        <field type="Code" field-alias="doi" visible="true" relation="has attribute">
+        <field type="String" field-alias="doi" visible="true" relation="has attribute">
             <relation>
                 <relation-name>have</relation-name>
                 <relation-name>has</relation-name>
