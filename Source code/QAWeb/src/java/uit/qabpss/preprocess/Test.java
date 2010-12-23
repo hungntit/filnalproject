@@ -97,7 +97,11 @@ public class Test {
             EntityType entityTypeOfQuestion = reg.recognizeEntityOfQuestion(tokens);
             String selectandFromQuery = GenSQLQuery.genQuery(list, entityTypeOfQuestion);
             System.out.println(selectandFromQuery);
-
+            List<Token> params = GenSQLQuery.getParams(list);
+            for (int i = 0; i < params.size(); i++) {
+                Token token = params.get(i);
+                System.out.println("Params["+i+"] : "+token.getValue());
+            }
             date = new Date();
             double end = date.getTime();
             System.out.println("Time: " + (end - begin) / 1000);

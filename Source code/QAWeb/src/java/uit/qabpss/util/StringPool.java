@@ -23,6 +23,8 @@ public class StringPool {
 
         public static final String POS_VB = "VB";
 
+        public static final String POS_CD = "CD";
+
         public static final String POS_VBN = "VBN";
 
 	public static final String AMPERSAND = "&";
