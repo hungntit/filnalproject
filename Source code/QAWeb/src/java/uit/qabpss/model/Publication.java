@@ -5,6 +5,11 @@ import java.util.List;
 
 public class Publication implements Comparable {
 
+    @Override
+    public String toString() {
+        return "Publication{" + "title=" + title + "authors=" + authors + '}';
+    }
+
     public String getCrossref() {
         return crossref;
     }

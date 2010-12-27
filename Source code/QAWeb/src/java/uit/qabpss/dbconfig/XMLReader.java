@@ -37,7 +37,7 @@ public class XMLReader {
     public static final String VALUE = "value";
     public static final String VISIBLE = "visible";
     public static final String PRESENTATION = "presentation";
-    private static final String PATH = "xmlconfig\\rel_config.xml";
+    private static final String PATH = "resources\\XMLConfig\\rel_config.xml";
     public Document doc = null;
 
     public XMLReader() {

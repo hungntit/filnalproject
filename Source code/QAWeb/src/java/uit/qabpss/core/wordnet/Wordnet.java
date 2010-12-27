@@ -34,7 +34,7 @@ public class Wordnet {
     public static   WordnetStemmer   wnstemmer   ;
 static {
         try {
-            initWordnetDictionary("WordNet");
+            initWordnetDictionary("resources\\WordNet");
             initSimilarityWordnet();
         } catch (IOException ex) {
             Logger.getLogger(Wordnet.class.getName()).log(Level.SEVERE, null, ex);
@@ -53,7 +53,6 @@ static {
     public static void initSimilarityWordnet()
     {
         similarityWN  =   new SimilarityAssessor();
-
     }
     public static float getSimilarityVerb(String verb1,String verb2)
     {

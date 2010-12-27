@@ -43,7 +43,7 @@ public class SentenseUtil {
         InputStream in = null;
         try {
             in = new BufferedInputStream(new FileInputStream(
-                    "model\\en-pos-maxent.bin"));
+                    "resources\\model\\en-pos-maxent.bin"));
             POSModel model = new POSModel(in);
             posTagME = new POSTaggerME(model);
         } catch (IOException e) {

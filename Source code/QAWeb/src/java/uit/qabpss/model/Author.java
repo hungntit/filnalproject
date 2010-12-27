@@ -12,6 +12,11 @@ import java.io.Serializable;
  */
 public class Author implements Serializable{
 
+    @Override
+    public String toString() {
+        return getAuthor();
+    }
+
     public String getAuthor() {
         return author;
     }

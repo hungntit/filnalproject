@@ -45,6 +45,14 @@
                     </a>
                     <br>
                 </c:forEach>
+            </div
+            <div>
+                <c:if test="${results != null}">
+                <c:forEach var="q" items="${results}" varStatus="st">
+                    <c:out value="${q}"/>
+                    <br>
+                </c:forEach>
+                </c:if>
             </div>
         </td>
     </tr>

@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  */
 public class RuleReader {
 
-    public static final String PATH = "src\\java\\uit\\qabpss\\extracttriple\\rules.txt";
+    public static final String PATH = "resources\\rules\\rules.txt";
 
     public static String[] loadRules() {
         List<String> lst = new ArrayList<String>();
