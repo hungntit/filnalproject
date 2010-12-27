@@ -14,7 +14,7 @@ public class Author implements Serializable{
 
     @Override
     public String toString() {
-        return getAuthor();
+        return "<a href=\"showPubsByAuthor.do?authorName="+getAuthor()+"\">"+getAuthor()+"</a>";
     }
 
     public String getAuthor() {

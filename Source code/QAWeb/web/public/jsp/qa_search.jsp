@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://struts.apache.org/tags-html-el" prefix="html" %>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <script type="text/javascript" src="public/javascript/Qa_script.js"></script>
@@ -45,13 +45,17 @@
                     </a>
                     <br>
                 </c:forEach>
-            </div
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
             <div>
                 <c:if test="${results != null}">
-                <c:forEach var="q" items="${results}" varStatus="st">
-                    <c:out value="${q}"/>
-                    <br>
-                </c:forEach>
+                    <c:forEach var="q" items="${results}" varStatus="st">
+                        ${q}
+                        <br>
+                    </c:forEach>
                 </c:if>
             </div>
         </td>
