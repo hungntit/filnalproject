@@ -24,11 +24,11 @@ import uit.qabpss.util.hibernate.HibernateUtil;
  */
 public class ApplicationScopeInit implements ServletContextListener {
 
+    @Override
     public void contextInitialized(ServletContextEvent event) {
         try {
             HibernateUtil.getSessionFactory();
             DBInfoUtil.initDb();
-
             ClassLoader loader = Thread.currentThread().getContextClassLoader();
             //Use context classloader to read states.properties
             InputStream iStream = loader.getResourceAsStream("uit/qabpss/extracttriple/SampleQuestion.properties");
@@ -67,6 +67,7 @@ public class ApplicationScopeInit implements ServletContextListener {
         }
     }
 
+    @Override
     public void contextDestroyed(ServletContextEvent event) {
         HibernateUtil.closeSessionFactory();
     }

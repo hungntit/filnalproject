@@ -17,7 +17,7 @@
                 <span style="color: red;">
                     <html:errors/>
                 </span>
-                Enter your question here:
+                <span style="font-style: italic;color: white">Enter your question here:</span>
                 <br>
                 <a href="#" onclick="document.QAForm.sentence.value=''">Clear field</a>
                 <html:form action="/doQA" focus="keyWord" >
@@ -25,7 +25,7 @@
                     <html:image property="submitQA" srcKey="image.submit" altKey="image.submit.alttext" onclick="showLoadingPage();"/>
                 </html:form>                                
                 <br>
-                <span style="font-style: italic">
+                <span style="font-style: italic;color: white">
                     Warning:<br>
                     - You should wrap your value such as title, author names in double-quote.<br>
                     - You should write name or heading titles in Upper<br>
@@ -36,7 +36,7 @@
     </tr>
     <tr>
         <td class="text5">
-            <a href="#" onclick="toggleBox('Sample_Question_Box');">Some example questions:</a>
+            <a href="#" onclick="toggleBox('Sample_Question_Box');">Some sample questions:</a>
             <br>
             <div id="Sample_Question_Box"style="text-align: left;display: none">
                 <c:forEach var="q" items="${EXAMPLE_QUESTIONS}" varStatus="st">
@@ -50,11 +50,11 @@
     </tr>
     <tr>
         <td>
-            <div>
+            <div class="box_search" style="text-align: left;background-color: whitesmoke" >
                 <c:if test="${results != null}">
                     <c:forEach var="q" items="${results}" varStatus="st">
-                        ${q}
-                        <br>
+                        ${st.count}. ${q}
+                        <hr>
                     </c:forEach>
                 </c:if>
             </div>

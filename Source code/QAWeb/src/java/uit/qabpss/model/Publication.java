@@ -7,7 +7,12 @@ public class Publication implements Comparable {
 
     @Override
     public String toString() {
-        return "Publication{" + "title=" + title + "authors=" + authors + '}';
+        String htmlTitle = "<a href='./showPubDetail.do?id=" + getId() + "' style=\"font-size: 16px;line-height: 22px;\">" + getTitle() + "</a>";
+        String br = "<br>";
+        String htmlAuthor = "Author: " + authors;
+        String htmlYear = " - " + getYear();
+        String htmlSource = "Source: " + source;
+        return htmlTitle + br + htmlAuthor + htmlYear + br + htmlSource;
     }
 
     public String getCrossref() {
@@ -193,7 +198,6 @@ public class Publication implements Comparable {
     public void setAuthors(List<Author> authors) {
         this.authors = authors;
     }
-    
     private int id;
     private String dblp_key;
     private String title;
@@ -221,9 +225,9 @@ public class Publication implements Comparable {
     @Override
     public int compareTo(Object o) {
         Publication temp = (Publication) o;
-        if(temp.year > this.year){
+        if (temp.year > this.year) {
             return 1;
-        }else if( temp.year < this.year){
+        } else if (temp.year < this.year) {
             return -1;
         }
         return 0;

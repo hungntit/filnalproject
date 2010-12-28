@@ -100,17 +100,6 @@ public class RetrieveData {
                 }
 
             }
-            /*
-            for(Token token: tokens)
-            {
-
-                String s    =   token.toString()+"|"+ token.getEntityType().toString()+ " ";
-                if(token.getEntityType().isNull())
-                {
-                    s   =   token.toString()+ " ";
-                }
-                System.out.print(s);
-            }*/
              System.out.println();
 
              EntityType entityTypeOfQuestion    =   reg.recognizeEntityOfQuestion(tokens);
