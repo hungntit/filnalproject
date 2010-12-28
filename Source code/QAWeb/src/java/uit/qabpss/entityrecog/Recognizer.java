@@ -223,12 +223,7 @@ public class Recognizer {
     }
     public List<TripleRelation> getTripleRelationsFromNonNER(List<TripleRelation> existTripleRelations,Token token)
     {
-        if(token.getPos_value().equalsIgnoreCase("NNS"))
-        {
-            String stemNoun =   Wordnet.wnstemmer.findStems(token.getValue(), POS.NOUN).get(0);
-            token.setPos_value("NN");
-            token.setValue(stemNoun);
-        }
+        
         List<TripleRelation> tableresult =   new ArrayList<TripleRelation>();
         List<TripleRelation> columnresult =   new ArrayList<TripleRelation>();
         double maxSimilarityNumber    =   0;
@@ -530,7 +525,7 @@ public class Recognizer {
                 // check obj2 is non name entity
                 Token   obj2    =   tripleToken.getObj2();
 
-                if(obj2.getPos_value().equalsIgnoreCase("NN")|| obj2.getPos_value().equalsIgnoreCase("NNS") && obj2.getEntityType().isNull())
+                if(obj2.getPos_value().equalsIgnoreCase("NN") && obj2.getEntityType().isNull())
                 {
                     tripleRelationList  =   getTripleRelationsFromNonNER(tripleRelationList, obj2);
                     if(checkSameTable(tripleRelationList) && tripleToken.getObj1().isWP()&&tripleRelationList.size() > 1)
@@ -561,7 +556,7 @@ public class Recognizer {
                 // check obj1 is non name entity
                 Token   obj1    =   tripleToken.getObj1();
                 if(obj1.getEntityType().isNull()){
-                    if(obj1.getPos_value().equalsIgnoreCase("NN")||obj1.getPos_value().equalsIgnoreCase("NNS") )
+                    if(obj1.getPos_value().equalsIgnoreCase("NN") )
                     {
                         tripleRelationList  =   getTripleRelationsFromNonNER(tripleRelationList, obj1);
                         if(tripleRelationList.size() == 1)

@@ -6,6 +6,7 @@
 package uit.qabpss.generatequery;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.SQLQuery;
@@ -38,7 +39,7 @@ public class RetrieveData {
         // List of test questions here
         HibernateUtil.getSessionFactory();
         String[] questions = new String[]{
-           "Which books were written by Rafiul Ahad and Amelia Carlson in 2010 ? ",
+           "Which books were written by Rafiul Ahad and Amelia Carlson ? ",
             "Which books were written by Rafiul Ahad from 1999 to 2010 ?",
             "Which books were published by O'Reilly  in 1999 ?",
             "How many papers were written by Rafiul Ahad ?",
@@ -103,9 +104,10 @@ public class RetrieveData {
              System.out.println();
 
              EntityType entityTypeOfQuestion    =   reg.recognizeEntityOfQuestion(tokens);
-             String selectandFromQuery  =   GenSQLQuery.genQuery(list, entityTypeOfQuestion);
+            List<List<TripleToken>> groupTripleTokens = TripleToken.groupTripleTokens(list);
+             String selectandFromQuery  =   GenSQLQuery.genQuery(groupTripleTokens, entityTypeOfQuestion);
              System.out.println(selectandFromQuery);
-            List retrieveData = retrieveData(list, entityTypeOfQuestion, 0, 100);
+            List retrieveData = retrieveData(groupTripleTokens, entityTypeOfQuestion, 0, 100);
             for(Object object: retrieveData)
             {
                 if(object!= null)
@@ -173,10 +175,9 @@ public class RetrieveData {
         return Object.class;
     }
 
-    public static List  retrieveData(List<TripleToken> tripleTokens,EntityType typeOfQuestion,int start,int end)
+    public static List  retrieveDataFromSimpleList(String queryStr,List<TripleToken> tripleTokens,EntityType typeOfQuestion,int start,int end)
     {
         Class typeclass =   getTypeOfEntity(typeOfQuestion);
-        String queryStr    =   GenSQLQuery.genQuery(tripleTokens, typeOfQuestion);
         String genSelectQuery = GenSQLQuery.genSelectQuery(typeOfQuestion);
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session =   null;
@@ -278,4 +279,14 @@ public class RetrieveData {
         }
         return null;
 }
+
+
+    public static List  retrieveData(List<List<TripleToken>> list,EntityType typeOfQuestion,int start,int end)
+    {
+        List<TripleToken> simpleList = TripleToken.createListFromInSameTripleLists(list);
+         String queryStr    =   GenSQLQuery.genQuery(list, typeOfQuestion);
+        List retrieveData = retrieveDataFromSimpleList(queryStr,simpleList, typeOfQuestion, start, end);
+        return retrieveData;
+    }
+
 }

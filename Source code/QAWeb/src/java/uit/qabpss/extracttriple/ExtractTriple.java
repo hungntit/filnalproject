@@ -233,12 +233,15 @@ public class ExtractTriple {
 
                        if(temptk.getPos_value().equals(cachedPosTag))
                            {
+
                                 Token[] tokenArr    =   tokensList.get(tokensList.size()-1);
                                 tokenArr[i].setValue(temptk.getValue());
                                 isAdded =   true;
                                 i--;
                                 distance++;
-
+                                Token[]  coppyTokenArr   =   Token.copyTokens(tokensList.get(0));
+                               tokensList.add(coppyTokenArr);
+                               tripleTokens.add(new TripleToken());
                            }
                             else
                            {
@@ -293,6 +296,11 @@ public class ExtractTriple {
                start++;
            else
            {
+               if(tokensList.size()>1)
+               {
+                    tokensList.remove(tokensList.size()-1);
+                    tripleTokens.remove(tripleTokens.size()-1);
+              }
                String[] outputStrs          =   outputRule.split(",");
                int firstObjPossition        =   Integer.parseInt(outputStrs[0].split("-")[1].trim())-1;
                int secondObjPossition       =   Integer.parseInt(outputStrs[2].split("-")[1].trim())-1;
@@ -325,7 +333,7 @@ public class ExtractTriple {
                    tripleToken.setObj2(tokensInList[secondObjPossition]);
                    if(secondObjPossition>0)
                    {
-                       if (!checkSamePosTag(tokensInList[secondObjPossition - 1], "NNS|NN").equals(""))
+                       if (!checkSamePosTag(tokensInList[secondObjPossition - 1], "NN").equals(""))
                        {
                             tripleToken.getObj2().setEntityOfToken(tokensInList[secondObjPossition - 1]);
                        }

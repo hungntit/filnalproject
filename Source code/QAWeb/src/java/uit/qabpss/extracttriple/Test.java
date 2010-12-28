@@ -85,7 +85,8 @@ public class Test {
                 System.out.println();
 
                 EntityType entityTypeOfQuestion = reg.recognizeEntityOfQuestion(tokens);
-                String selectandFromQuery = GenSQLQuery.genQuery(list, entityTypeOfQuestion);
+                List<List<TripleToken>> groupTripleTokens = TripleToken.groupTripleTokens(list);
+                String selectandFromQuery = GenSQLQuery.genQuery(groupTripleTokens, entityTypeOfQuestion);
                 System.out.println(selectandFromQuery);
 
                 date = new Date();

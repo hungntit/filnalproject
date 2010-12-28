@@ -5,6 +5,7 @@
 
 package uit.qabpss.extracttriple;
 
+import java.util.ArrayList;
 import java.util.List;
 import uit.qabpss.preprocess.Token;
 import uit.qabpss.util.StringPool;
@@ -131,15 +132,15 @@ public class TripleToken {
     }
     public boolean isHavingNonNe()
     {
-        if(obj1.getPos_value().equals("NN")||obj1.getPos_value().equals("NNS"))
+        if(obj1.getPos_value().equals("NN"))
             return true;
-        if(obj2.getPos_value().equals("NN")||obj2.getPos_value().equals("NNS"))
+        if(obj2.getPos_value().equals("NN"))
             return true;
         return false;
     }
     public boolean isAllNonNe()
     {
-        if( (obj1.getPos_value().equals("NN")||obj1.getPos_value().equals("NNS")) && (obj2.getPos_value().equals("NN")||obj2.getPos_value().equals("NNS")) )
+        if( obj1.getPos_value().equals("NN") && obj2.getPos_value().equals("NN") )
             return true;
 
         return false;
@@ -167,6 +168,85 @@ public class TripleToken {
             return true;
         }
         return false;
+    }
+    public static List<List<TripleToken>> createListsFromInSameTriple(List<TripleToken> tripleTokens)
+    {
+        List<List<TripleToken>> complexTripleLists =   new ArrayList<List<TripleToken>>();
+        List<TripleToken> andList   =   new ArrayList<TripleToken>();
+        List<TripleToken> orList   =   new ArrayList<TripleToken>();
+                             for(TripleToken tripleToken:tripleTokens)
+                                {
+                                    if(tripleToken.isIsAndOperator())
+                                    {
+                                        andList.add(tripleToken);
+                                    }
+                                    else
+                                    {
+                                        orList.add(tripleToken);
+                                    }
+                                }
+
+
+                                for(TripleToken tripleToken:andList)
+                                {
+                                    List<TripleToken> arrayList = new ArrayList<TripleToken>();
+                                    arrayList.add(tripleToken);
+                                    arrayList.addAll(orList);
+                                    complexTripleLists.add(arrayList);
+                                }
+                                return complexTripleLists;
+    }
+    public static List<TripleToken> createListFromInSameTripleLists(List<List<TripleToken>> list)
+            {
+                    List<TripleToken> result    =   new ArrayList<TripleToken>();
+                    List<TripleToken> simpleTriples =   new ArrayList<TripleToken>();
+                    List<List<TripleToken>> complexTripleLists =   new ArrayList<List<TripleToken>>();
+                    for(List<TripleToken> tripleTokens: list)
+                    {
+                        if(tripleTokens.size() <=1)
+                        {
+                            simpleTriples.add(tripleTokens.get(0));
+                        }
+                        else
+                        {
+                            complexTripleLists  =   createListsFromInSameTriple(tripleTokens);
+                        }
+                    }
+                    for(List<TripleToken> arrayList : complexTripleLists)    
+                    {
+                        result.addAll(arrayList);
+                    }
+                    result.addAll(simpleTriples);
+                    return result;
+            }
+
+    public static List<List<TripleToken>> groupTripleTokens(List<TripleToken> tripleTokens)
+    {
+        List<List<TripleToken>> list    =   new ArrayList<List<TripleToken>>();
+
+
+        for(int i = 0;i< tripleTokens.size();i++)
+        {
+            TripleToken firstTripleToken =   tripleTokens.get(i);
+            List<TripleToken>   childTripleTokens   =   new ArrayList<TripleToken>();
+            childTripleTokens.add(firstTripleToken);
+            list.add(childTripleTokens);
+            for(int j   = i+1;j<tripleTokens.size();j++)
+            {
+                TripleToken tripleToken = tripleTokens.get(j);
+                if(firstTripleToken.isSameWith(tripleToken))
+                {
+                    childTripleTokens.add(tripleToken);
+                    i++;
+                }
+                else
+                {
+                    i=j-1;
+                    break;
+                }
+            }
+        }
+        return list;
     }
 
 }

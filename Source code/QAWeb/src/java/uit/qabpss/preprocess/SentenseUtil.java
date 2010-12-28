@@ -332,7 +332,25 @@ public class SentenseUtil {
         }
         return tokens;
     }
+     private static Token[] optimizeNoun(Token[] tokens) {
+          if (tokens == null) {
+            return null;
+        }
+           Token[] result = tokens;
+        for (int i = 0; i < result.length; i++) {
+            if (result[i].getPos_value().equalsIgnoreCase("NNS")) {
+                List<String> findStems = Wordnet.wnstemmer.findStems(result[i].getValue(), POS.NOUN);
+                if(findStems!=null)
+                {
+                    result[i].setPos_value("NN");
+                    result[i].setValue(findStems.get(0));
+                }
 
+
+            }
+         }
+        return result;
+     }
     private static Token[] optimizeVerb(Token[] tokens) {
         if (tokens == null) {
             return null;
@@ -376,7 +394,7 @@ public class SentenseUtil {
         result = processForPattern(result, "VBD-1-->VB-1");                           // 	VBD(1)    VB(1).
         result = processForPattern(result, "(VBZ|VBP)-1-->VB-1");                     // 	VBZ/VBP(1)    VB(1).
         // result        = optimizeVerb(result);
-
+         result=   optimizeNoun(result);
         for (int i = 0; i < result.length; i++) {
             Token token = result[i];
             if (token.getPos_value().equals("DT")
