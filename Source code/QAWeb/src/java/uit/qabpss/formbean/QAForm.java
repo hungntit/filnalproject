@@ -57,6 +57,9 @@ public class QAForm extends org.apache.struts.action.ActionForm {
         if (getSentence() == null || getSentence().length() < 1 || getSentence().isEmpty()) {
             errors.add(null, new ActionMessage("errors.input"));
         }
+        if (getSentence().length() < 25) {
+            errors.add(null, new ActionMessage("errors.minsentence"));
+        }
         return errors;
     }
 }

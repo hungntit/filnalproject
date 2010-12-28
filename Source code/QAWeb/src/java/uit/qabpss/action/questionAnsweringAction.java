@@ -59,7 +59,6 @@ public class questionAnsweringAction extends org.apache.struts.action.Action {
 
         }
         System.out.println();
-
         EntityType entityTypeOfQuestion = reg.recognizeEntityOfQuestion(tokens);
         String selectandFromQuery = GenSQLQuery.genQuery(list, entityTypeOfQuestion);
         System.out.println(selectandFromQuery);
