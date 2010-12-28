@@ -41,9 +41,10 @@ public class SentenseUtil {
 
     public static void initPosTagger() throws IOException {
         InputStream in = null;
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            //Use context classloader to read states.properties        
         try {
-            in = new BufferedInputStream(new FileInputStream(
-                    "resources\\model\\en-pos-maxent.bin"));
+            in = loader.getResourceAsStream("uit/qabpss/util/resources/model/en-pos-maxent.bin");
             POSModel model = new POSModel(in);
             posTagME = new POSTaggerME(model);
         } catch (IOException e) {

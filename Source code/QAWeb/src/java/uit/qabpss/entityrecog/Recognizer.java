@@ -5,6 +5,7 @@ import edu.mit.jwi.item.POS;
 import java.util.ArrayList;
 import java.util.List;
 import uit.qabpss.core.search.UtimateSearch;
+import uit.qabpss.core.wordnet.WordNotFoundException;
 import uit.qabpss.core.wordnet.Wordnet;
 import uit.qabpss.dbconfig.ColumnInfo;
 import uit.qabpss.dbconfig.DBInfo;
@@ -19,7 +20,6 @@ import uit.qabpss.extracttriple.TripleToken;
 import uit.qabpss.preprocess.EntityType;
 import uit.qabpss.preprocess.Token;
 import uit.qabpss.preprocess.TripleWord;
-import wordnet.similarity.WordNotFoundException;
 
 /**
  *

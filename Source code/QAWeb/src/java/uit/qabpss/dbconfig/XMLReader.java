@@ -1,6 +1,7 @@
 package uit.qabpss.dbconfig;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,15 +38,17 @@ public class XMLReader {
     public static final String VALUE = "value";
     public static final String VISIBLE = "visible";
     public static final String PRESENTATION = "presentation";
-    private static final String PATH = "resources\\XMLConfig\\rel_config.xml";
+    private static final String PATH = "uit/qabpss/util/resources/XMLConfig/rel_config.xml";
     public Document doc = null;
 
     public XMLReader() {
         try {
-            File file = new File(PATH);
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            //Use context classloader to read states.properties
+            InputStream iStream = loader.getResourceAsStream(PATH);            
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
-            doc = db.parse(file);
+            doc = db.parse(iStream);
         } catch (Exception e) {
             e.printStackTrace();
         }

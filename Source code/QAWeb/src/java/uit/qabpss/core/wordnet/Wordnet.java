@@ -20,9 +20,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import wordnet.similarity.SimilarityAssessor;
-import wordnet.similarity.WordNotFoundException;
+import java.util.logging.Logger; 
 
 /**
  *
@@ -34,7 +32,7 @@ public class Wordnet {
     public static   WordnetStemmer   wnstemmer   ;
 static {
         try {
-            initWordnetDictionary("resources\\WordNet");
+            initWordnetDictionary();
             initSimilarityWordnet();
         } catch (IOException ex) {
             Logger.getLogger(Wordnet.class.getName()).log(Level.SEVERE, null, ex);
@@ -42,10 +40,9 @@ static {
 
     }
 
-    public static void initWordnetDictionary(String WNdir) throws MalformedURLException
-    {
-        String path     =   WNdir+"\\" + "dict";
-        URL url =   new URL("file", null, path);
+    public static void initWordnetDictionary() throws MalformedURLException
+    {        
+        URL url =  Thread.currentThread().getContextClassLoader().getResource("uit/qabpss/util/resources/Wordnet/dict");
         wndict  =   new Dictionary(url);
         wndict.open();
          wnstemmer   =   new WordnetStemmer(Wordnet.wndict);
@@ -124,23 +121,23 @@ static {
         return result;
     }
 
-//    public static void main(String[] args){
-//        Wordnet.initSimilarityWordnet();
-//        System.out.println(Wordnet.getValueSimilarityNoun("author", "composer"));//0.6
-//        System.out.println(Wordnet.getValueSimilarityNoun("author", "publisher"));
-//        System.out.println(Wordnet.getValueSimilarityNoun("author", "writer"));
-//        System.out.println(Wordnet.getValueSimilarityNoun("author", "creator"));
-//        System.out.println("----------------------");
-//        System.out.println(Wordnet.getValueSimilarityNoun("publisher", "writer"));
-//        System.out.println(Wordnet.getValueSimilarityNoun("publisher", "composer"));
-//        System.out.println(Wordnet.getValueSimilarityNoun("publisher", "creator"));
-//        System.out.println(Wordnet.getValueSimilarityNoun("publisher", "distributor"));
-//        System.out.println(Wordnet.getValueSimilarityNoun("publisher", "author"));//0.6
-//        System.out.println("----------------------");
-//        System.out.println(Wordnet.getValueSimilarityNoun("publication", "book"));//0.6
-//        System.out.println(Wordnet.getValueSimilarityNoun("publication", "paper"));
-//        System.out.println("----------------------");
-//        System.out.println(Wordnet.getValueSimilarityNoun("title", "heading"));
-//    }
+    public static void main(String[] args) throws MalformedURLException{
+        Wordnet.initWordnetDictionary();
+        System.out.println(Wordnet.getValueSimilarityNoun("author", "composer"));//0.6
+        System.out.println(Wordnet.getValueSimilarityNoun("author", "publisher"));
+        System.out.println(Wordnet.getValueSimilarityNoun("author", "writer"));
+        System.out.println(Wordnet.getValueSimilarityNoun("author", "creator"));
+        System.out.println("----------------------");
+        System.out.println(Wordnet.getValueSimilarityNoun("publisher", "writer"));
+        System.out.println(Wordnet.getValueSimilarityNoun("publisher", "composer"));
+        System.out.println(Wordnet.getValueSimilarityNoun("publisher", "creator"));
+        System.out.println(Wordnet.getValueSimilarityNoun("publisher", "distributor"));
+        System.out.println(Wordnet.getValueSimilarityNoun("publisher", "author"));//0.6
+        System.out.println("----------------------");
+        System.out.println(Wordnet.getValueSimilarityNoun("publication", "book"));//0.6
+        System.out.println(Wordnet.getValueSimilarityNoun("publication", "paper"));
+        System.out.println("----------------------");
+        System.out.println(Wordnet.getValueSimilarityNoun("title", "heading"));
+    }
 
 }
