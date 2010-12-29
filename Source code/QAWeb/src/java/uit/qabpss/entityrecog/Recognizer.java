@@ -728,7 +728,7 @@ public class Recognizer {
                      return token.getEntityType();
                  }
              }
-             if(token.isNonNe())
+             if(token.isNonNe() || token.isNe())
              {
                  if(token.getEntityType().isNull()  ==  false && entityType == null)
                  {
