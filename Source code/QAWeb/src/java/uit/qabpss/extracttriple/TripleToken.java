@@ -163,7 +163,13 @@ public class TripleToken {
     }
     public boolean isSameWith(TripleToken tripleToken)
     {
-        if(this.getRelationName().equals(tripleToken.getRelationName()) && (this.obj1.getEntityType() == tripleToken.obj1.getEntityType() && this.obj2.getEntityType() == tripleToken.obj2.getEntityType()))
+
+        if(this.getRelationName().equals(tripleToken.getRelationName()) 
+                && (this.obj1.getEntityType().equals(tripleToken.obj1.getEntityType())
+                && this.obj2.getEntityType().equals(tripleToken.obj2.getEntityType()))
+                && this.obj1.getPos_value().equals(tripleToken.obj1.getPos_value())
+                && this.obj2.getPos_value().equals(tripleToken.obj2.getPos_value())
+                )
         {
             return true;
         }

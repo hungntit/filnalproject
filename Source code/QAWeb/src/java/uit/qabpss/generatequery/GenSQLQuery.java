@@ -26,39 +26,7 @@ import uit.qabpss.util.dao.orm.CustomSQLUtil;
  */
 public class GenSQLQuery {
     
-//    public static void getSourceForQuery(List<TripleToken> tripleTokens,List<TableInfo> outMTableInfos,List<MappingTable> outMappingTables)
-//    {
-//
-//        for(TripleToken tripleToken:tripleTokens)
-//        {
-//            EntityType   entityType1    =   tripleToken.getObj1().getEntityType();
-//            EntityType   entityType2    =   tripleToken.getObj2().getEntityType();
-//            if(entityType1.isColumn())
-//            {
-//                if(entityType1.getColumnInfo().isMappingField())
-//                {
-//                    MappingTable mappingTable = entityType1.getColumnInfo().getMappingTable();
-//                    if(!outMappingTables.contains(mappingTable))
-//                        outMappingTables.add(mappingTable);
-//                }
-//            }
-//            if(entityType2.isColumn())
-//            {
-//                if(entityType2.getColumnInfo().isMappingField())
-//                {
-//                    MappingTable mappingTable = entityType2.getColumnInfo().getMappingTable();
-//                    if(!outMappingTables.contains(mappingTable))
-//                        outMappingTables.add(mappingTable);
-//                }
-//            }
-//            addTableInfoToFromSource(outMTableInfos, entityType1);
-//            addTableInfoToFromSource(outMTableInfos, entityType2);
-//
-//
-//
-//        }
-//
-//    }
+
     private static void addTableInfoToFromSource(List<TableInfo> list,EntityType entityType)
     {
 
@@ -195,7 +163,7 @@ public class GenSQLQuery {
             query   =   query.substring(0, query.length()-1);
         return query;
     }
-    public static void getSourceForQuery1(List<List<TripleToken>> list,List<TableInfo> outMTableInfos,List<MappingTable> outMappingTables)
+    public static void getSourceForQuery(List<List<TripleToken>> list,List<TableInfo> outMTableInfos,List<MappingTable> outMappingTables)
     {
 
        for(List<TripleToken> tripleTokens: list)
@@ -378,7 +346,7 @@ public class GenSQLQuery {
          List<TableInfo> tableInfos =   new ArrayList<TableInfo>();
          List<MappingTable> mappingTables   =   new ArrayList<MappingTable>();
 
-        getSourceForQuery1(groupTripleTokens, tableInfos, mappingTables);
+        getSourceForQuery(groupTripleTokens, tableInfos, mappingTables);
         String selectQuery          =   genSelectQuery(entitypeOfQuestion);
         String whereQuery           =   genWhereQueryForNonSameToken(simpleTripleTokens);
         String genFromQuery = genFromQuery(tableInfos, mappingTables);
