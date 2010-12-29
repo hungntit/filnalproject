@@ -115,7 +115,7 @@ public class IndexBroker
     try
     {
       URL url =  Thread.currentThread().getContextClassLoader().getResource(INDEX_DIR);
-      _searcher = new IndexSearcher ( url.getPath() ) ;
+      _searcher = new IndexSearcher ( url.getPath().replace("%20", " ") ) ;
       _parser = new QueryParser ( WORDS , new WhitespaceAnalyzer () ) ;      
     }
     catch ( IOException ex )

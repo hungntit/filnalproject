@@ -23,7 +23,7 @@ public class RuleReader {
         BufferedReader input = null;
         try {
             //use buffering, reading one line at a time
-            input = new BufferedReader(new FileReader(new File(url.getPath())));
+            input = new BufferedReader(new FileReader(new File(url.getPath().replace("%20", " "))));
             String line = null;
             while ((line = input.readLine()) != null) {
                 lst.add(line);

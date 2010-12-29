@@ -60,9 +60,10 @@ public class questionAnsweringAction extends org.apache.struts.action.Action {
         }
         System.out.println();
         EntityType entityTypeOfQuestion = reg.recognizeEntityOfQuestion(tokens);
-        String selectandFromQuery = GenSQLQuery.genQuery(list, entityTypeOfQuestion);
+        List<List<TripleToken>> groupTripleTokens = TripleToken.groupTripleTokens(list);
+        String selectandFromQuery = GenSQLQuery.genQuery(groupTripleTokens, entityTypeOfQuestion);
         System.out.println(selectandFromQuery);
-        List retrieveData = RetrieveData.retrieveData(list, entityTypeOfQuestion, 0, 100);
+        List retrieveData = RetrieveData.retrieveData(groupTripleTokens, entityTypeOfQuestion, 0, 100);
         request.setAttribute("results", retrieveData);
         return mapping.findForward(SUCCESS);
     }
