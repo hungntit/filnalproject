@@ -10,3 +10,6 @@ ALTER TABLE `test`.`dblp_ref_new` CHANGE COLUMN `ref_id` `dblp_key` VARCHAR(150)
  DROP INDEX `dblp_ref_ref_id`,
  ADD INDEX `dblp_ref_ref_id` USING BTREE(`dblp_key`);
 
+UPDATE dblp_pub_new
+  SET title = SUBSTR(title,1,LENGTH(title)-1)
+  WHERE SUBSTR(title,LENGTH(title)) ='.'
