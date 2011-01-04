@@ -26,7 +26,7 @@ import uit.qabpss.util.hibernate.HibernateUtil;
  */
 public class Test {
 
-    public static final String PATH = "src\\java\\uit\\qabpss\\extracttriple\\test_question_29112010.txt";
+    public static final String PATH = "src\\java\\uit\\qabpss\\util\\resources\\test\\test_question_29112010.txt";
 
     public static String[] loadQuestions() {
         List<String> lst = new ArrayList<String>();
