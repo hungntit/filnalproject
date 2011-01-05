@@ -5,6 +5,7 @@ import edu.mit.jwi.item.POS;
 import java.util.ArrayList;
 import java.util.List;
 import uit.qabpss.core.wordnet.Wordnet;
+import uit.qabpss.preprocess.SentenseUtil;
 import uit.qabpss.preprocess.Token;
 
 /**
@@ -78,11 +79,15 @@ public class ExtractTriple {
     public  List<TripleToken> extractTripleWordRelation(Token[] tokens)
     {
     List<TripleToken> result    =   new ArrayList<TripleToken>();
-    Token[] tempTokenArr   =   Token.copyTokens(tokens);
+    List<List<Token>> list = SentenseUtil.checkAndCutSen(tokens);
+    for(List tempTokenList: list)
+        {
+    Token[] tempTokenArr   =   Token.copyTokens((Token[])tempTokenList.toArray());
     int start = 0,end   =   0;
 
         for(String rule:rules)
         {
+            if(rule.trim().equals("")) continue;
             start   =   0;
             end =   start;
             boolean isAdded =   false;
@@ -390,6 +395,7 @@ public class ExtractTriple {
 
         }
     }
+        }
         if(result.size()>0)
             return result;
         return null;

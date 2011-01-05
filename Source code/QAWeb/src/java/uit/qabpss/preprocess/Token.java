@@ -4,6 +4,8 @@
  */
 package uit.qabpss.preprocess;
 
+import java.util.List;
+
 /**
  *
  * @author ThuanHung
@@ -119,6 +121,14 @@ public final class Token {
             }
             return results;
         }
+
+    }
+    public static Token[] copyTokens(List<Token> tokens)
+    {
+
+        if(tokens == null)
+            return null;
+        return copyTokens((Token[])tokens.toArray());
 
     }
     public static Token[] copyTokens(Token[] tokens,int start,int end)
