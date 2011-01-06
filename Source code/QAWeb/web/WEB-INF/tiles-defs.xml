@@ -62,6 +62,12 @@
         <put name="content"   value="/public/jsp/qa_search.jsp" />
     </definition>
 
+    <definition name=".Contact" extends=".qadb-1">
+        <put name="title"  value="Question answer system base on Database - Contact Authors" />
+        <put name="description"  value="These are all authors of this web" />
+        <put name="content"   value="/public/jsp/contact.jsp" />
+    </definition>
+
     <!-- sample tiles definitions
     <definition name=".mainLayout" path="/common/layouts/classicLayout.jsp">
         <put name="title"  value="Sample Page Title" />

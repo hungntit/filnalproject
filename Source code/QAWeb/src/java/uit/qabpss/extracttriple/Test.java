@@ -93,7 +93,7 @@ public class Test {
                 double end = date.getTime();
                 System.out.println("Time: " + (end - begin) / 1000);
             } catch (Exception e) {
-                errors.add(count-1);
+                errors.add(count - 1);
                 continue;
             }
         }
@@ -103,6 +103,6 @@ public class Test {
             e += " " + integer.toString();
         }
         System.out.println(e);
-        System.out.println("Rate :"+ ((float)((questions.length - errors.size())*100)/(float)(questions.length)));
+        System.out.println("Rate :" + ((float) ((questions.length - errors.size()) * 100) / (float) (questions.length)));
     }
 }

@@ -5,16 +5,38 @@
 package uit.qabpss.model;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 /**
  *
  * @author Hoang-PC
  */
-public class Author implements Serializable{
+public class Author implements Serializable {
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Author other = (Author) obj;
+        if ((this.author == null) ? (other.author != null) : !this.author.equals(other.author)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
 
     @Override
     public String toString() {
-        return "<a href=\"showPubsByAuthor.do?authorName="+getAuthor()+"\">"+getAuthor()+"</a>";
+        return "<a href=\"showPubsByAuthor.do?authorName=" + getAuthor() + "\">" + getAuthor() + "</a>";
     }
 
     public String getAuthor() {
@@ -56,7 +78,6 @@ public class Author implements Serializable{
     public void setPublications(Publication publications) {
         this.publications = publications;
     }
-    
     private int id;
     private String author;
     private boolean editor;

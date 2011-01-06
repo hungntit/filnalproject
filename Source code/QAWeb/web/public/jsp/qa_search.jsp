@@ -9,6 +9,7 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://struts.apache.org/tags-html-el" prefix="html" %>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+<%@taglib uri="http://struts.apache.org/tags-bean-el" prefix="bean" %>
 <script type="text/javascript" src="public/javascript/Qa_script.js"></script>
 <table style="width: 100%">
     <tr>
@@ -17,26 +18,23 @@
                 <span style="color: red;">
                     <html:errors/>
                 </span>
-                <span style="font-style: italic;color: white">Enter your question here:</span>
+                <span style="font-style: italic;color: white"><bean:message key="text.qainput"/></span>
                 <br>
-                <a href="#" onclick="document.QAForm.sentence.value=''">Clear field</a>
+                <a href="#" onclick="document.QAForm.sentence.value=''"><bean:message key="text.qaclear"/></a>
                 <html:form action="/doQA" focus="keyWord" >
                     <html:textarea property="sentence" cols="120" rows="1"></html:textarea>
                     <html:image property="submitQA" srcKey="image.submit" altKey="image.submit.alttext" onclick="showLoadingPage();"/>
                 </html:form>                                
                 <br>
                 <span style="font-style: italic;color: white">
-                    Warning:<br>
-                    - You should wrap your value such as title, author names in double-quote.<br>
-                    - You should write name or heading titles in Upper<br>
-                    - System only supports for English questions.
+                    <bean:message key="text.qawarning"/>
                 </span>
             </div>                    
         </td>
     </tr>
     <tr>
         <td class="text5">
-            <a href="#" onclick="toggleBox('Sample_Question_Box');">Some sample questions:</a>
+            <a href="#" onclick="toggleBox('Sample_Question_Box');"><bean:message key="text.qasample"/></a>
             <br>
             <div id="Sample_Question_Box"style="text-align: left;display: none">
                 <c:forEach var="q" items="${EXAMPLE_QUESTIONS}" varStatus="st">

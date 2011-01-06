@@ -16,6 +16,6 @@
         <li><a href="searchPage.do" class="link1"><bean:message  key="text.search"/></a></li>
         <li><a href="qaSearchPage.do" class="link1"><bean:message  key="text.qa"/></a></li>
         <li><a href="loadParams.do" class="link1"><bean:message  key="text.advanceSearch"/></a></li>
-        <li><a href="#" class="link1"><bean:message  key="text.contactUs"/></a></li>
+        <li><a href="Contact.do" class="link1"><bean:message  key="text.contactUs"/></a></li>
     </ul>
 </div>

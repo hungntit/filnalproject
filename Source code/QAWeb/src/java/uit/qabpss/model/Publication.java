@@ -232,4 +232,29 @@ public class Publication implements Comparable {
         }
         return 0;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Publication other = (Publication) obj;
+        if ((this.dblp_key == null) ? (other.dblp_key != null) : !this.dblp_key.equals(other.dblp_key)) {
+            return false;
+        }
+        if ((this.title == null) ? (other.title != null) : !this.title.equals(other.title)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+    
 }
