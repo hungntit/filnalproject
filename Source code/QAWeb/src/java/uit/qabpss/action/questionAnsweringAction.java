@@ -28,6 +28,7 @@ public class questionAnsweringAction extends org.apache.struts.action.Action {
 
     /* forward name="success" path="" */
     private static final String SUCCESS = "success";
+    private static final String FAIL = "fail";
 
     /**
      * This is the action called from the Struts framework.
@@ -43,13 +44,31 @@ public class questionAnsweringAction extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         QAForm f = (QAForm) form;
-        ExtractTriple extract = new ExtractTriple();
-        Recognizer reg = new Recognizer();
-        System.out.println("----------------------------------------------------------------------------");
-        Token[] tokens = SentenseUtil.formatNerWordInQuestion(f.getSentence());
+
+        /*Initiation QA Process*/
+        ExtractTriple extract = null;
+        Recognizer reg = null;
+        Token[] tokens = null;
+        try {
+            extract = new ExtractTriple();
+            reg = new Recognizer();
+        } catch (Exception e) {
+            request.setAttribute("error", "can not load Extractor and Recognizer !");
+            return mapping.findForward(FAIL);
+        }
+        
+        /*-------Step 1: Tokenizer and Pos Tagger-------*/
+        try{
+        tokens = SentenseUtil.formatNerWordInQuestion(f.getSentence());
         tokens = SentenseUtil.optimizePosTags(tokens);
+        }catch(Exception e){
+            request.setAttribute("error", "Sentence tokenize fial !");
+            return mapping.findForward(FAIL);
+        }
         System.out.println(SentenseUtil.tokensToStr(tokens));
-        List<TripleToken> list = extract.extractTripleWordRelation(tokens);
+
+        /*-------Step 2: extract Triples in sentences and recognize-------*/
+        List<TripleToken> list = extract.extractTripleWordRelation(tokens);        
         reg.identifyTripleTokens(list);
         for (TripleToken tripleToken : list) {
             System.out.println(tripleToken);
@@ -58,7 +77,7 @@ public class questionAnsweringAction extends org.apache.struts.action.Action {
             }
 
         }
-        System.out.println();
+                
         EntityType entityTypeOfQuestion = reg.recognizeEntityOfQuestion(tokens);
         List<List<TripleToken>> groupTripleTokens = TripleToken.groupTripleTokens(list);
         String selectandFromQuery = GenSQLQuery.genQuery(groupTripleTokens, entityTypeOfQuestion);

@@ -75,8 +75,9 @@ Name publications which result from DBPL in 2010 ?
 List some books which are written by Jennifer Widom from 1999
 List all books were published by Springer in 2010
 Find books which are composed by Rafiul Ahad and Amelia Carlson
+Find books are composed by Rafiul Ahad and Amelia Carlson
 Find authors who wrote books for ACM from 2008 to 2009 ?
 Find publications have resulted from ACM Annual Conference ?
 Alfred V. Aho is author of "Data Structures and Algorithms" , isn't it?
 Alfred V. Aho write books in 2010 , doesn't it?
-Tom C. Reyes and Yuri Breitbart are authors of books "Overview of the ADDS System", aren't they?
+Tom C. Reyes and Yuri Breitbart are authors of books "Overview of the ADDS System" , aren't they?
