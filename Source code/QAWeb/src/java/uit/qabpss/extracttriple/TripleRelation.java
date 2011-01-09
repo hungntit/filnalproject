@@ -97,5 +97,24 @@ public class TripleRelation {
 
     }
 
+    public boolean isSameTable(TripleRelation tr)
+    {
+        if(this.firstEntity!=null&& tr.firstEntity!=null)
+        {
+            if(!this.firstEntity.getTableInfo().getName().equals(tr.firstEntity.getTableInfo().getName()))
+                return false;
+            else
+            {
+                if(this.secondEntity!=null && tr.secondEntity!=null)
+                {
+                    if(!this.secondEntity.getColumnInfo().getName().equals(tr.secondEntity.getColumnInfo().getName()))
+                        return false;
+                }
+            }
+        }
+        
+
+        return  true;
+    }
 
 }

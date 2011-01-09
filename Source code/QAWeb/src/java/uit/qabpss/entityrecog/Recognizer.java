@@ -116,6 +116,22 @@ public class Recognizer {
     private  EntityType checkValueFromDB(String value,Type type,List<TripleRelation> tripleRelations){
 
             List<EntityType> invisibleEntityTypes   =   new ArrayList<EntityType>();
+            if(tripleRelations.size() == 2)
+            {
+                if(tripleRelations.get(0).isSameTable(tripleRelations.get(1)))
+                {
+                   tripleRelations.remove(1);
+                   if(tripleRelations.get(0).getRelation().isReversedRelation())
+                   {
+                       return tripleRelations.get(0).getFirstEntity();
+                   }
+                    else
+                   {
+                       return tripleRelations.get(0).getSecondEntity();
+                    }
+                }
+
+            }
             try {
 
                     for (int j = 0; j < tripleRelations.size(); j++) {
@@ -136,6 +152,14 @@ public class Recognizer {
                                TableInfo relatedTableInfo = columnInfo.getRelatedTable();
                                param = new Param(relatedTableInfo,relatedTableInfo.getPresentationField() );
                            }
+                            else
+                           {
+                               if(tripleRelations.get(j).getRelation().isReversedRelation())
+                               {
+                                   columnInfo   =   null;
+                                   param = new Param(tableInfo,tableInfo.getPresentationField() );
+                               }
+                            }
                            param.setValue(value);
                            int count    =   UtimateSearch.countLimitByParam(new Param[]{param}, true, null , 1);
                            if(count>0)

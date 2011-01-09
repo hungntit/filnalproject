@@ -184,4 +184,27 @@ public final class Token {
         return this.pos_value+"/"+this.value;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Token other = (Token) obj;
+        if ((this.value == null) ? (other.value != null) : !this.value.equals(other.value)) {
+            return false;
+        }
+        if ((this.pos_value == null) ? (other.pos_value != null) : !this.pos_value.equals(other.pos_value)) {
+            return false;
+        }
+        if (this.entityType != other.entityType && (this.entityType == null || !this.entityType.equals(other.entityType))) {
+            return false;
+        }
+        return true;
+    }
+
+   
+
 }

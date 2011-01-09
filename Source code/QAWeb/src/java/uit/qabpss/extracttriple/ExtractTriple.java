@@ -397,9 +397,35 @@ public class ExtractTriple {
     }
         }
         if(result.size()>0)
+        {
+            optimizeTripleTokens(result);
             return result;
+        }
         return null;
     }
 
+    private static void optimizeTripleTokens(List<TripleToken> tripleTokens)
+    {
+        List<TripleToken> addList = new ArrayList<TripleToken>();
+        List<TripleToken> removeList = new ArrayList<TripleToken>();
+        for(TripleToken tripleToken:tripleTokens)
+        {
+            if(tripleToken.getRelationName().equals("be")&& tripleToken.getObj1().isNe())
+            {
+                for(TripleToken tripleToken1:tripleTokens)
+                {
+                    if(tripleToken.getObj2().equals(tripleToken1.getObj1()))
+                    {
+                        if(!removeList.contains(tripleToken))
+                            removeList.add(tripleToken);
+                        addList.add(new TripleToken(tripleToken.obj1, tripleToken1.obj2, tripleToken1.getRelationName()));
+                    }
+                }
+            }
+
+        }
+        tripleTokens.addAll(addList);
+        tripleTokens.removeAll(removeList);
+    }
     
 }
