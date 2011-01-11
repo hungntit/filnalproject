@@ -8,6 +8,7 @@ Who composed books in 2010?
 Who write books from 1999 to 2010 ?
 Who published books from 1999 to 2000 ?
 Who published books in 1999 ?
+Who released books in 2006 ?
 Who wrote books for Springer in 2010 ?
 Who wrote papers for ACM from 2009 to 2010 ?
 Who wrote "Question Classification using Head Words and their Hypernyms"?
@@ -20,11 +21,15 @@ Which papers were written by Amelia Carlson from 1999?
 Which books were published by O'Reilly or ACM in 1999 ?
 Which publications were published by O'Reilly or ACM in 1999 ?
 Which books were published by O'Reilly  in 1999 ?
+Which books were published by Springer  from 1999 to 2000?
 Which publications were published by O'Reilly or ACM from 2009 to 2010?
 Which books did Richard L. Muller or James Brown write in ACM ?
 Which books did Richard L. Muller write in ACM ?
 Which authors write books for ACM?
 Which authors wrote books for Springer from 1999?
+Which authors composed books for O'Reilly ?
+Which authors composed books in 1999 ?
+Which authors write books in 2010 ?
 Which books does Rafiul Ahad wrote with Amelia Carlson?
 Which publication have source from TREC in 2010?
 Which papers refer to "Foundations of Databases"?
@@ -34,6 +39,9 @@ Which books are published in 1999 and written by "Ken Arnold"?
 Which books are written by "Ken Arnold" and published by IEEE ?
 Which books are written by "Ken Arnold" and have source from DBPL ?
 Which papers are composed by "Ken Arnold" and have source from DBPL ?
+Which publishers released books in 2010 ?
+Which publishers released book "Data Structures and Algorithms"?
+Which publishers released book from 2009 to 2010?
 How many papers were written by Rafiul Ahad ?
 How many papers were written by Rafiul Ahad in 2010 ?
 How many publisher did "Philip K. Chan" cooperate with?
@@ -63,9 +71,11 @@ What books were published by ACM or Springer in 2010?
 What publications have resulted from TREC in 1999?
 What books refer to "Foundations of Databases"
 What publications have resulted from TREC?
+What year is "Foundations of Databases" written in?
+What year is "Java 2D Graphics" written in?
 Does Rafiul Ahad write books in 2010 ?
 Does Rafiul Ahad write books from 2005 to 2010 ?
-Did IEEE publish books in 2010
+Did IEEE publish books in 2010 ?
 Are there any books published by IEEE in 2000 ?
 Are there any books written by Mike Holcombe in 2000 ?
 Name some books Richard L. Muller write for Springer
@@ -74,6 +84,8 @@ Name papers which were published from 1999 to 2001 in ACM ?
 Name publications which result from DBPL in 2010 ?
 List some books which are written by Jennifer Widom from 1999
 List all books were published by Springer in 2010
+List some books were published by ACM 
+List authors Who wrote books for Springer in 2010
 Find books which are composed by Rafiul Ahad and Amelia Carlson
 Find books are composed by Rafiul Ahad and Amelia Carlson
 Find authors who wrote books for ACM from 2008 to 2009 ?
@@ -81,3 +93,4 @@ Find publications have resulted from ACM Annual Conference ?
 Alfred V. Aho is author of "Data Structures and Algorithms" , isn't it?
 Alfred V. Aho write books in 2010 , doesn't it?
 Tom C. Reyes and Yuri Breitbart are authors of books "Overview of the ADDS System" , aren't they?
+
