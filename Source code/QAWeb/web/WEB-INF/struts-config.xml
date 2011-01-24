@@ -48,6 +48,7 @@
         <action input=".qaSearchPage" name="QAForm" path="/doQA" scope="session" type="uit.qabpss.action.questionAnsweringAction" validate="true">
              <forward name="success" path=".qaSearchPage"/>
         </action>
+        <action input="/" name="QAForm" path="/replaceStrInQuestion" scope="session" type="uit.qabpss.action.replaceStrInQuestion"/>
         
         <action path="/Welcome" forward=".qadb-1"/>
         <action path="/searchPage" forward=".searchPage"/>

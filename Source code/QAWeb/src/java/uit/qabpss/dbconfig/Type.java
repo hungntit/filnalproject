@@ -2,6 +2,7 @@
 package uit.qabpss.dbconfig;
 
 import java.io.Serializable;
+import java.util.Date;
 import uit.qabpss.util.StringPool;
 
 /**
@@ -99,4 +100,16 @@ public class Type implements Serializable {
         }
         return false;
     }
+    public static  Class changeTypeToClass(Type    type)
+    {
+    if(type.getIsDateTime())
+        return Date.class;
+    if(type.getIsDouble())
+        return double.class;
+    if(type.getIsNumber())
+        return int.class;
+    if(type.getIsString())
+        return String.class;
+    return null;
+}
 }

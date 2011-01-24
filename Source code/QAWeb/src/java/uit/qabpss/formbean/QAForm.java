@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.util.ImageButtonBean;
+import uit.qabpss.processanswer.ResultAnswer;
 
 /**
  *
@@ -20,7 +21,24 @@ public class QAForm extends org.apache.struts.action.ActionForm {
     
     private String sentence;
     private ImageButtonBean submitQA;
+    private ResultAnswer    resultAnswer;
 
+
+    public ResultAnswer getResultAnswer() {
+        return resultAnswer;
+    }
+
+    public void setResultAnswer(ResultAnswer resultAnswer) {
+        this.resultAnswer = resultAnswer;
+    }
+
+    public ImageButtonBean getSubmitQA() {
+        return submitQA;
+    }
+
+    public void setSubmitQA(ImageButtonBean submitQA) {
+        this.submitQA = submitQA;
+    }
     public ImageButtonBean getSubmit() {
         return submitQA;
     }
@@ -42,7 +60,8 @@ public class QAForm extends org.apache.struts.action.ActionForm {
      */
     public QAForm() {
         sentence="";
-        submitQA = new ImageButtonBean();        
+        submitQA = new ImageButtonBean();
+        resultAnswer    =   null;
     }
 
     /**

@@ -4,21 +4,34 @@
  */
 package uit.qabpss.action;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import uit.qabpss.core.search.UtimateSearch;
+import uit.qabpss.dbconfig.Param;
+import uit.qabpss.dbconfig.Type;
+import uit.qabpss.dblp.HtmlUtil;
+import uit.qabpss.dblp.ObjectsAndToken;
 import uit.qabpss.entityrecog.Recognizer;
 import uit.qabpss.extracttriple.ExtractTriple;
 import uit.qabpss.extracttriple.TripleToken;
 import uit.qabpss.formbean.QAForm;
 import uit.qabpss.generatequery.GenSQLQuery;
 import uit.qabpss.generatequery.RetrieveData;
+import uit.qabpss.model.Author;
+import uit.qabpss.model.Publication;
 import uit.qabpss.preprocess.EntityType;
 import uit.qabpss.preprocess.SentenseUtil;
 import uit.qabpss.preprocess.Token;
+import uit.qabpss.processanswer.ProcessAnswer;
+import uit.qabpss.processanswer.ResultAnswer;
+import uit.qabpss.util.ClassUtil;
+import uit.qabpss.util.ListUtil;
+import uit.qabpss.util.exception.QuestionNotSolveException;
 
 /**
  *
@@ -29,7 +42,8 @@ public class questionAnsweringAction extends org.apache.struts.action.Action {
     /* forward name="success" path="" */
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
-
+    private static final String NOTFOUND    = "notfound";
+    ProcessAnswer   processAnswer       =   null;
     /**
      * This is the action called from the Struts framework.
      * @param mapping The ActionMapping used to select this instance.
@@ -44,46 +58,156 @@ public class questionAnsweringAction extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         QAForm f = (QAForm) form;
+        List results =  null;
+         ResultAnswer resultAnswer    =   f.getResultAnswer();
+        String replaceStr = request.getParameter("replaceStr");
+        String originStr  = request.getParameter("originStr");
+        if(processAnswer    ==  null)
+            processAnswer   =   new ProcessAnswer();
+        
+        try{
+          if(replaceStr != null)
+        {
+             resultAnswer = processAnswer.answerQuestion(resultAnswer, originStr, replaceStr);
+             f.setSentence(resultAnswer.getQuestion());
 
-        /*Initiation QA Process*/
-        ExtractTriple extract = null;
-        Recognizer reg = null;
-        Token[] tokens = null;
-        try {
-            extract = new ExtractTriple();
-            reg = new Recognizer();
-        } catch (Exception e) {
-            request.setAttribute("error", "can not load Extractor and Recognizer !");
+        }
+        else
+            resultAnswer = processAnswer.answerQuestion(f.getSentence());
+         results    =   resultAnswer.getRetrieveData();
+         results    =   toHtmlsList(results);
+         request.setAttribute("results", results);
+        resultAnswer.setRetrieveData(null);
+        }
+        catch(QuestionNotSolveException qnse)
+        {
             return mapping.findForward(FAIL);
+        }
+        if(results.isEmpty())
+        {
+            List<ObjectsAndToken> replacedObjects = getObjectsAndReplacedValueList(resultAnswer.getGroupTripleTokens());
+            if(replacedObjects.isEmpty())
+                return mapping.findForward(FAIL);
+            f.setResultAnswer(resultAnswer);
+            request.setAttribute("replacedObjects", replacedObjects);
+            return mapping.findForward(SUCCESS);
+        }
+        else
+        {
+            return mapping.findForward(SUCCESS);
         }
         
-        /*-------Step 1: Tokenizer and Pos Tagger-------*/
-        try{
-        tokens = SentenseUtil.formatNerWordInQuestion(f.getSentence());
-        tokens = SentenseUtil.optimizePosTags(tokens);
-        }catch(Exception e){
-            request.setAttribute("error", "Sentence tokenize fial !");
-            return mapping.findForward(FAIL);
-        }
-        System.out.println(SentenseUtil.tokensToStr(tokens));
-
-        /*-------Step 2: extract Triples in sentences and recognize-------*/
-        List<TripleToken> list = extract.extractTripleWordRelation(tokens);        
-        reg.identifyTripleTokens(list);
-        for (TripleToken tripleToken : list) {
-            System.out.println(tripleToken);
-            if (!tripleToken.isNotIdentified()) {
-                System.out.println(tripleToken.getObj1().toString() + ":" + tripleToken.getObj1().getEntityType().toString() + "," + tripleToken.getObj2().toString() + ":" + tripleToken.getObj2().getEntityType().toString());
-            }
-
-        }
-                
-        EntityType entityTypeOfQuestion = reg.recognizeEntityOfQuestion(tokens);
-        List<List<TripleToken>> groupTripleTokens = TripleToken.groupTripleTokens(list);
-        String selectandFromQuery = GenSQLQuery.genQuery(groupTripleTokens, entityTypeOfQuestion);
-        System.out.println(selectandFromQuery);
-        List retrieveData = RetrieveData.retrieveData(groupTripleTokens, entityTypeOfQuestion, 0, 100);
-        request.setAttribute("results", retrieveData);
-        return mapping.findForward(SUCCESS);
     }
+
+    private static List searchFromToken(Token token,Class classtype)
+    {
+        if(token.getEntityType() == null)
+            return new ArrayList();
+        EntityType  mainEntityType  =   token.getEntityType().getMainEntityType();
+
+        if(mainEntityType.isTable())
+        {
+           return UtimateSearch.searchByKeyWords(classtype, token.getValue(), mainEntityType.getTableInfo(), 0, 100);
+        }
+        else
+        {
+            Param   param   =   new Param(mainEntityType.getTableInfo(), mainEntityType.getColumnInfo());
+            param.setValue(token.getValue());
+            return UtimateSearch.searchByParam(classtype, new Param[]{param}, true, null, 0, 100);
+
+        }
+    }
+    public static List<ObjectsAndToken> getObjectsAndReplacedValueList(List<List<TripleToken>> groupTripleTokens)
+    {
+            List<ObjectsAndToken>   list    =   new ArrayList<ObjectsAndToken>();
+            for(List<TripleToken> tripleTokens:groupTripleTokens)
+            {
+                for(TripleToken tripleToken:tripleTokens)
+                {
+                    Token token1    =   tripleToken.getObj1();
+                    Token token2    =   tripleToken.getObj2();
+                    if(!list.contains(token1) && token1.isNe())
+                    {
+                        EntityType mainEntityType = token1.getEntityType().getMainEntityType();
+                        Class clss  =   null;
+                        if(mainEntityType.isTable())
+                        {
+
+                            if(mainEntityType.getTableInfo().getAliasName().equalsIgnoreCase("Author"))
+                                clss    =   Author.class;
+                            else
+                            {
+                                if(mainEntityType.getTableInfo().getAliasName().equalsIgnoreCase("Publication"))
+                                    clss    =   Publication.class;
+                                else
+                                    if(mainEntityType.getTableInfo().getAliasName().equalsIgnoreCase("Reference"))
+                                        clss    =   Publication.class;
+                            }
+
+                        }
+                        else
+                        {
+                            clss    =   ClassUtil.changeTypeToClass(mainEntityType.getColumnInfo().getType());
+                        }
+                        if(clss == int.class || clss == long.class)
+                            continue;
+                        List searchFromToken = searchFromToken(token1, clss);
+                        if(!searchFromToken.contains(token1.getValue()))
+                        {
+                            searchFromToken =   ListUtil.distinctList(searchFromToken);
+                            ObjectsAndToken objectsAndToken =   new ObjectsAndToken(token1, searchFromToken);
+                            list.add(objectsAndToken);
+                        }
+
+                    }
+                    if(!list.contains(token2) && token2.isNe())
+                    {
+                        EntityType mainEntityType = token2.getEntityType().getMainEntityType();
+                        Class clss  =   null;
+                        if(mainEntityType.isTable())
+                        {
+
+                            if(mainEntityType.getTableInfo().getAliasName().equalsIgnoreCase("Author"))
+                                clss    =   Author.class;
+                            else
+                            {
+                                if(mainEntityType.getTableInfo().getAliasName().equalsIgnoreCase("Publication"))
+                                    clss    =   Publication.class;
+                                else
+                                    if(mainEntityType.getTableInfo().getAliasName().equalsIgnoreCase("Reference"))
+                                        clss    =   Publication.class;
+                            }
+
+                        }
+                        else
+                        {
+                            clss    =   ClassUtil.changeTypeToClass(mainEntityType.getColumnInfo().getType());
+                        }
+                        if(clss == int.class || clss == long.class)
+                            continue;
+                        List searchFromToken = searchFromToken(token2, clss);
+                        if(!searchFromToken.contains(token2.getValue()))
+                        {
+                             searchFromToken =   ListUtil.distinctList(searchFromToken);
+                            ObjectsAndToken objectsAndToken =   new ObjectsAndToken(token2, searchFromToken);
+                            list.add(objectsAndToken);
+
+                        }
+                    }
+                }
+            }
+            return list;
+    }
+    private static List<String> toHtmlsList(List list)
+    {
+        List<String>    resutls     =   new ArrayList<String>();
+        for(Object obj: list)
+        {
+            String htmlStr  =   HtmlUtil.toHtml(obj);
+            if(!resutls.contains(htmlStr))
+                resutls.add(htmlStr);
+        }
+        return resutls;
+    }
+
 }

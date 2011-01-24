@@ -149,7 +149,7 @@ public class UtimateSearch {
     public static List searchByParam(Class typeclass, Param[] params,boolean isAndOperator,TableInfo selectTable,int start, int end)
     {
         String queryStr    =   generateSelectQuery(params, isAndOperator, selectTable);
-        //System.out.println(queryStr);
+        System.out.println(queryStr);
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session =   null;
         try

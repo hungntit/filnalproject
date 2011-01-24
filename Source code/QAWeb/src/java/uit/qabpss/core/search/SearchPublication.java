@@ -4,11 +4,16 @@
  */
 package uit.qabpss.core.search;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import uit.qabpss.dbconfig.Param;
+import uit.qabpss.dbconfig.Type;
 import uit.qabpss.model.Publication;
+import uit.qabpss.preprocess.EntityType;
+import uit.qabpss.preprocess.Token;
 import uit.qabpss.util.dao.orm.hibernate.QueryPos;
 import uit.qabpss.util.hibernate.HibernateUtil;
 
@@ -65,4 +70,5 @@ public class SearchPublication {
         }
         return null;
     }
+   
 }

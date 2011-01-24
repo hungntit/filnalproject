@@ -18,6 +18,11 @@ public class Author implements Serializable {
         if (obj == null) {
             return false;
         }
+        if(obj.getClass() == String.class)
+        {
+            if(author.equalsIgnoreCase(obj.toString()))
+                return true;
+        }
         if (getClass() != obj.getClass()) {
             return false;
         }
@@ -36,6 +41,10 @@ public class Author implements Serializable {
 
     @Override
     public String toString() {
+        return getAuthor() ;
+    }
+
+    public String toHtmlStr() {
         return "<a href=\"showPubsByAuthor.do?authorName=" + getAuthor() + "\">" + getAuthor() + "</a>";
     }
 

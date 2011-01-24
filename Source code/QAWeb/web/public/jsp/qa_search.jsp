@@ -46,16 +46,40 @@
             </div>
         </td>
     </tr>
+    <c:if test="${results != null}">
     <tr>
         <td>
             <div class="box_search" style="text-align: left;background-color: whitesmoke" >
-                <c:if test="${results != null}">
+                
                     <c:forEach var="q" items="${results}" varStatus="st">
+
                         ${st.count}. ${q}
                         <hr>
                     </c:forEach>
-                </c:if>
+                
             </div>
         </td>
     </tr>
+    </c:if>
+
+    <c:if test="${replacedObjects != null}">
+    <tr>
+        <td>
+            <div class="box_search" style="text-align: left;background-color: whitesmoke" >
+
+                    <c:forEach var="robj" items="${replacedObjects}" >
+                            ${robj.token.value} does not exist.Please replace it by:
+                            <br>
+                            <c:forEach var="rvalue" items="${robj.list}" varStatus="st">
+                                ${st.count}. <a href="doQA.do?replaceStr=${rvalue}&originStr=${robj.token.value}">${rvalue}</a>
+
+                                <hr>
+                            </c:forEach>
+                        <hr>
+                    </c:forEach>
+
+            </div>
+        </td>
+    </tr>
+    </c:if>
 </table>

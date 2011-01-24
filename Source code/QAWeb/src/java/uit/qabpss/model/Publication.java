@@ -7,6 +7,10 @@ public class Publication implements Comparable {
 
     @Override
     public String toString() {
+        return title;
+    }
+    public String toHtmlStr()
+    {
         String htmlTitle = "<a href='./showPubDetail.do?id=" + getId() + "' style=\"font-size: 16px;line-height: 22px;\">" + getTitle() + "</a>";
         String br = "<br>";
         String htmlAuthor = "Author: " + authors;
@@ -14,7 +18,6 @@ public class Publication implements Comparable {
         String htmlSource = "Source: " + source;
         return htmlTitle + br + htmlAuthor + htmlYear + br + htmlSource;
     }
-
     public String getCrossref() {
         return crossref;
     }
@@ -237,6 +240,11 @@ public class Publication implements Comparable {
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
+        }
+        if(obj.getClass() == String.class)
+        {
+            if(title.equalsIgnoreCase(obj.toString()))
+                return true;
         }
         if (getClass() != obj.getClass()) {
             return false;

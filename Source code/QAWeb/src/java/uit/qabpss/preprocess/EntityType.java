@@ -114,5 +114,23 @@ public class EntityType {
             return  tableInfo.getAliasName();
         }
     }
+    public EntityType getMainEntityType()
+    {
+        if(this.isColumn())
+        {
 
+            if(this.getColumnInfo().isRelatedField())
+            {
+                TableInfo   tableInfo   =   this.getColumnInfo().getRelatedTable();
+                ColumnInfo  columnInfo  =   null;
+                if(this.getColumnInfo().getName() != null)
+                {
+                      columnInfo  =   tableInfo.findColumnByName(this.getColumnInfo().getName());
+                }
+                return new EntityType(tableInfo, columnInfo);
+            }
+        }
+        return this;
+
+    }
 }
