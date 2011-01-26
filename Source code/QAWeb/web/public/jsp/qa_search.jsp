@@ -46,6 +46,7 @@
             </div>
         </td>
     </tr>
+    
     <c:if test="${results != null}">
     <tr>
         <td>
@@ -61,7 +62,18 @@
         </td>
     </tr>
     </c:if>
+    <c:if test="${notfound == true}">
+        <tr>
+            <td align="center"><bean:message key="text.noresult"/></td>
 
+        </tr>
+    </c:if>
+    <c:if test="${fail == true}">
+        <tr>
+            <td align="center"><bean:message key="text.fail"/></td>
+
+        </tr>
+    </c:if>
     <c:if test="${replacedObjects != null}">
     <tr>
         <td>

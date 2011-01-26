@@ -13,19 +13,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import uit.qabpss.core.search.UtimateSearch;
 import uit.qabpss.dbconfig.Param;
-import uit.qabpss.dbconfig.Type;
 import uit.qabpss.dblp.HtmlUtil;
 import uit.qabpss.dblp.ObjectsAndToken;
-import uit.qabpss.entityrecog.Recognizer;
-import uit.qabpss.extracttriple.ExtractTriple;
 import uit.qabpss.extracttriple.TripleToken;
 import uit.qabpss.formbean.QAForm;
-import uit.qabpss.generatequery.GenSQLQuery;
-import uit.qabpss.generatequery.RetrieveData;
 import uit.qabpss.model.Author;
 import uit.qabpss.model.Publication;
 import uit.qabpss.preprocess.EntityType;
-import uit.qabpss.preprocess.SentenseUtil;
 import uit.qabpss.preprocess.Token;
 import uit.qabpss.processanswer.ProcessAnswer;
 import uit.qabpss.processanswer.ResultAnswer;
@@ -41,8 +35,8 @@ public class questionAnsweringAction extends org.apache.struts.action.Action {
 
     /* forward name="success" path="" */
     private static final String SUCCESS = "success";
-    private static final String FAIL = "fail";
-    private static final String NOTFOUND    = "notfound";
+    private static final String FAIL = "success";
+    private static final String NOTFOUND    = "success";
     ProcessAnswer   processAnswer       =   null;
     /**
      * This is the action called from the Struts framework.
@@ -81,13 +75,17 @@ public class questionAnsweringAction extends org.apache.struts.action.Action {
         }
         catch(QuestionNotSolveException qnse)
         {
+            request.setAttribute("fail", true);
             return mapping.findForward(FAIL);
         }
         if(results.isEmpty())
         {
             List<ObjectsAndToken> replacedObjects = getObjectsAndReplacedValueList(resultAnswer.getGroupTripleTokens());
             if(replacedObjects.isEmpty())
-                return mapping.findForward(FAIL);
+            {
+                request.setAttribute("notfound", true);
+                return mapping.findForward(NOTFOUND);
+            }
             f.setResultAnswer(resultAnswer);
             request.setAttribute("replacedObjects", replacedObjects);
             return mapping.findForward(SUCCESS);
@@ -152,7 +150,7 @@ public class questionAnsweringAction extends org.apache.struts.action.Action {
                         if(clss == int.class || clss == long.class)
                             continue;
                         List searchFromToken = searchFromToken(token1, clss);
-                        if(!searchFromToken.contains(token1.getValue()))
+                        if(!ListUtil.containAndEquals(searchFromToken, token1.getValue()))
                         {
                             searchFromToken =   ListUtil.distinctList(searchFromToken);
                             ObjectsAndToken objectsAndToken =   new ObjectsAndToken(token1, searchFromToken);
@@ -186,7 +184,7 @@ public class questionAnsweringAction extends org.apache.struts.action.Action {
                         if(clss == int.class || clss == long.class)
                             continue;
                         List searchFromToken = searchFromToken(token2, clss);
-                        if(!searchFromToken.contains(token2.getValue()))
+                        if(!ListUtil.containAndEquals(searchFromToken, token2.getValue()))
                         {
                              searchFromToken =   ListUtil.distinctList(searchFromToken);
                             ObjectsAndToken objectsAndToken =   new ObjectsAndToken(token2, searchFromToken);

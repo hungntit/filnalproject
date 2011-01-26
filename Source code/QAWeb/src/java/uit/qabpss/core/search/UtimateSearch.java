@@ -157,7 +157,15 @@ public class UtimateSearch {
         session= sessionFactory.openSession();
 
         SQLQuery   q   = session.createSQLQuery(queryStr);
-        q.addEntity(typeclass);
+        if(typeclass == String.class)
+            q.addScalar(params[0].toString().replace("`", ""),org.hibernate.Hibernate.STRING);
+        else
+        {
+            if (typeclass == int.class|| typeclass == long.class)
+                q.addScalar(params[0].toString().replace("`", ""),org.hibernate.Hibernate.LONG);
+            else
+                q.addEntity(typeclass);
+         }
         QueryPos    qPos    =   QueryPos.getInstance(q);
         q.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         for(Param param:params)
@@ -177,7 +185,7 @@ public class UtimateSearch {
         }
         catch(Exception ex)
         {
-
+            ex.printStackTrace();
         }
         finally
         {

@@ -23,4 +23,21 @@ public class ListUtil {
         }
         return result;
     }
+    public static boolean containAndEquals(List list,Object value)
+    {
+        if(value == null)
+            return false;
+        List result     =   new ArrayList();
+        for(Object object:list)
+        {
+            if(object == null)
+                continue;
+            else
+            {
+                if(object.toString().equals(value.toString()))
+                    return true;
+            }
+        }
+        return false;
+    }
 }

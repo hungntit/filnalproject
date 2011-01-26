@@ -12,9 +12,11 @@ import java.util.List;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import uit.qabpss.action.questionAnsweringAction;
 import uit.qabpss.dbconfig.ColumnInfo;
 import uit.qabpss.dbconfig.TableInfo;
 import uit.qabpss.dbconfig.Type;
+import uit.qabpss.dblp.ObjectsAndToken;
 import uit.qabpss.entityrecog.Recognizer;
 import uit.qabpss.extracttriple.ExtractTriple;
 import uit.qabpss.extracttriple.TripleToken;
@@ -23,10 +25,13 @@ import uit.qabpss.model.Publication;
 import uit.qabpss.preprocess.EntityType;
 import uit.qabpss.preprocess.SentenseUtil;
 import uit.qabpss.preprocess.Token;
+import uit.qabpss.processanswer.ProcessAnswer;
+import uit.qabpss.processanswer.ResultAnswer;
 import uit.qabpss.util.StringPool;
 import uit.qabpss.util.dao.orm.CustomSQLUtil;
 import uit.qabpss.util.dao.orm.hibernate.QueryPos;
 import uit.qabpss.util.dao.orm.hibernate.QueryUtil;
+import uit.qabpss.util.exception.QuestionNotSolveException;
 import uit.qabpss.util.hibernate.HibernateUtil;
 
 /**
@@ -38,84 +43,107 @@ public class RetrieveData {
     public static void main(String[] args) throws IOException {
         // List of test questions here
         HibernateUtil.getSessionFactory();
-        String[] questions = new String[]{
-           "Which books were written by Rafiul Ahad and Amelia Carlson ? ",
-            "Which books were written by Rafiul Ahad from 1999 to 2010 ?",
-            "Which books were published by O'Reilly  in 1999 ?",
-            "How many papers were written by Rafiul Ahad ?",
-            "Who compose books in 1999 ?",
-            "Who write books from 1999 to 2010 ?",
-            "How many papers were written by Rafiul Ahad in 2010 ?",
-            "Who published books from 1999 to 2000 ?",
-            "Who published books in 1999 ?",
-            "What are titles of books written by Marcus Thint ?",
-            "What papers did Jennifer Widom write ?",
-            "What books did Jennifer Widom write ?",
-            "Who is the author of  \"Working Models for Uncertain Data\" and \"Active Database Systems.\"",
-            "Who is the author of  \"Working Models for Uncertain Data\"",
-            "What book did Philip K. Chan write in 1999?",
-            "What book did Philip K. Chan write from 1999 to 2000?",
-            "What are the titles of the books published by O'reilly in 1999 ?",
-            "What composer wrote \" Java 2D Graphics\"",
-            "What books has isbn 1-56592-484-3",
-            "What books has doi 10.1145/360271.360274",
-            "What composer wrote books from 1999 in ACM?",
-            "Who is the author of the paper \"Question Classification using Head Words and their Hypernyms.\"?",
-            "Who wrote \"Question Classification using Head Words and their Hypernyms.\"?",
-            "What books were written by \"Philip K. Chan\" from ACM?",
-            "How many publisher did \"Richard L. Muller\" cooperate with?",
-            "What books were published by ACM or Springer in 2010?",
-            "What publications have resulted from TREC?",
-            "What publications have resulted from TREC in 1999?",
-            "Which author write \"Foundations of Databases.\" in 1999",
-            "Which books did Philip K. Chan or Marcus Thint write in ACM ?",
-            "What book did Philip K. Chan write in 1999 from ACM?",
-            "Name some books which Richard L. Muller writes for Springer",
-            "List all books were published by Springer in 2010",
-            "What year is \"Foundations of Databases.\" written in?",// not solve yet // FAIL TEST REV 234
-            "What books refer to \"Foundations of Databases.\"",
-            "What books did Richard L. Muller write for Springer",
-        };
-        System.out.println("nums test: " + questions.length);
-        ExtractTriple extract = new ExtractTriple();
-        Recognizer  reg     =   new Recognizer();
-        int count = 1;
-        for (String question : questions) {
-            Date    date    =   new Date();
-            long begin   =   date.getTime();
-            System.out.println("----------------------------------------------------------------------------");
-            Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
-            tokens = SentenseUtil.optimizePosTags(tokens);
-            System.out.println(count+"/");
-            count++;
-            System.out.println(SentenseUtil.tokensToStr(tokens));
-            List<TripleToken> list = extract.extractTripleWordRelation(tokens);
-            reg.identifyTripleTokens(list);
-            for(TripleToken tripleToken:list)
-            {
-                System.out.println(tripleToken);
-                //reg.identifyTripleToken(tripleToken);
-                if(!tripleToken.isNotIdentified())
-                {
-                    System.out.println(tripleToken.getObj1().toString()+":"+tripleToken.getObj1().getEntityType().toString() +","+tripleToken.getObj2().toString()+":"+tripleToken.getObj2().getEntityType().toString());
-                }
+        //        String[] questions = new String[]{
+        //           "What books were written in 2010 ?",
+        //            "Which books were written by Rafiul Ahad from 1999 to 2010 ?",
+        //            "Which books were published by Oxford University Press  in 1999 ?",
+        //            "How many papers were written by Rafiul Ahad ?",
+        //            "Who compose books in 1999 ?",
+        //            "Who write books from 1999 to 2010 ?",
+        //            "How many papers were written by Rafiul Ahad in 1999 ?",
+        //            "Who published books from 1999 to 2000 ?",
+        //            "Who published books in 1999 ?",
+        //            "What are titles of books written by Marcus Thint ?",
+        //            "What papers did Jennifer Widom write ?",
+        //            "What books did Jennifer Widom write ?",
+        //            "Who is the author of  \"Working Models for Uncertain Data.\" and \"Active Database Systems.\"",
+        //            "Who is the author of  \"Working Models for Uncertain Data.\"",
+        //            "What book did Philip K. Chan write in 1999?",
+        //            "What book did Philip K. Chan write from 1999 to 2000?",
+        //            "What are the titles of the books published by Oldenbourg in 1999 ?",
+        //            "What composer wrote \" Java 2D Graphics\"",
+        //            "What books has isbn 1-56592-484-3",
+        //            "What books has doi 10.1145/360271.360274",
+        //            "What composer wrote books from 1999 for Oldenbourg?",
+        //            "Who is the author of the paper \"Question Classification using Head Words and their Hypernyms.\"?",
+        //            "Who wrote \"Question Classification using Head Words and their Hypernyms.\"?",
+        //            "What books were written by Richard L. Muller from ACM?",
+        //            "How many publisher did \"Richard L. Muller\" cooperate with?",
+        //            "What books were published by ACM or Springer in 2010?",
+        //            "What publications have resulted from TREC?",
+        //            "What publications have resulted from TREC in 1999?",
+        //            "Which author write \"Foundations of Databases.\" in 1995",
+        //            "Which books did Richard L. Muller or Marcus Thint write in ACM ?",
+        //            "What book did Richard L. Muller write in 1984 from ACM?",
+        //            "Name some books which Richard L. Muller writes for ACM",
+        //            "List all books were published by Springer in 2010",
+        //            "What year is \"Foundations of Databases.\" written in?",// not solve yet // FAIL TEST REV 234
+        //            "What books refer to \"Foundations of Databases.\"",
+        //            "What books did Richard L. Muller write for ACM",
+        //        };
+        //        System.out.println("nums test: " + questions.length);
+        //        ExtractTriple extract = new ExtractTriple();
+        //        Recognizer  reg     =   new Recognizer();
+        //        int count = 1;
+        //        for (String question : questions) {
+        //            Date    date    =   new Date();
+        //            long begin   =   date.getTime();
+        //            System.out.println("----------------------------------------------------------------------------");
+        //            Token[] tokens = SentenseUtil.formatNerWordInQuestion(question);
+        //            tokens = SentenseUtil.optimizePosTags(tokens);
+        //            System.out.println(count+"/");
+        //            count++;
+        //            System.out.println(SentenseUtil.tokensToStr(tokens));
+        //            List<TripleToken> list = extract.extractTripleWordRelation(tokens);
+        //            reg.identifyTripleTokens(list);
+        //            for(TripleToken tripleToken:list)
+        //            {
+        //                System.out.println(tripleToken);
+        //                //reg.identifyTripleToken(tripleToken);
+        //                if(!tripleToken.isNotIdentified())
+        //                {
+        //                    System.out.println(tripleToken.getObj1().toString()+":"+tripleToken.getObj1().getEntityType().toString() +","+tripleToken.getObj2().toString()+":"+tripleToken.getObj2().getEntityType().toString());
+        //                }
+        //
+        //            }
+        //             System.out.println();
+        //
+        //             EntityType entityTypeOfQuestion    =   reg.recognizeEntityOfQuestion(tokens);
+        //            List<List<TripleToken>> groupTripleTokens = TripleToken.groupTripleTokens(list);
+        //             String selectandFromQuery  =   GenSQLQuery.genQuery(groupTripleTokens, entityTypeOfQuestion);
+        //             System.out.println(selectandFromQuery);
+        //            List retrieveData = retrieveData(groupTripleTokens, entityTypeOfQuestion, 0, 100);
+        //            for(Object object: retrieveData)
+        //            {
+        //                if(object!= null)
+        //                    System.out.println(object.toString());
+        //            }
+        //            date    =   new Date();
+        //            double end    =   date.getTime();
+        //            System.out.println("Time: "+(end - begin)/1000);
+        //        }
+        ProcessAnswer processAnswer = new ProcessAnswer();
+        List results    =   null;
+        ResultAnswer resultAnswer = null;
+        try{
+            resultAnswer = processAnswer.answerQuestion("What composer wrote \" Java 2D\"");
+            results =   resultAnswer.getRetrieveData();
+        }
+        catch(QuestionNotSolveException qnse)
+        {
 
-            }
-             System.out.println();
-
-             EntityType entityTypeOfQuestion    =   reg.recognizeEntityOfQuestion(tokens);
-            List<List<TripleToken>> groupTripleTokens = TripleToken.groupTripleTokens(list);
-             String selectandFromQuery  =   GenSQLQuery.genQuery(groupTripleTokens, entityTypeOfQuestion);
-             System.out.println(selectandFromQuery);
-            List retrieveData = retrieveData(groupTripleTokens, entityTypeOfQuestion, 0, 100);
-            for(Object object: retrieveData)
-            {
-                if(object!= null)
-                    System.out.println(object.toString());
-            }
-            date    =   new Date();
-            double end    =   date.getTime();
-            System.out.println("Time: "+(end - begin)/1000);
+        }
+        if(results.isEmpty())
+        {
+            List<ObjectsAndToken> replacedObjects = questionAnsweringAction.getObjectsAndReplacedValueList(resultAnswer.getGroupTripleTokens());
+            if(replacedObjects.isEmpty())
+                System.out.println("Fail");
+            else
+                System.out.println("Notfound");
+        }
+        else
+        {
+            System.out.println("Success");
         }
     }
 
@@ -286,6 +314,12 @@ public class RetrieveData {
         List<TripleToken> simpleList = TripleToken.createListFromInSameTripleLists(list);
          String queryStr    =   GenSQLQuery.genQuery(list, typeOfQuestion);
         List retrieveData = retrieveDataFromSimpleList(queryStr,simpleList, typeOfQuestion, start, end);
+        return retrieveData;
+    }
+    public static List  retrieveData(String query,List<List<TripleToken>> list,EntityType typeOfQuestion,int start,int end)
+    {
+        List<TripleToken> simpleList = TripleToken.createListFromInSameTripleLists(list);
+        List retrieveData = retrieveDataFromSimpleList(query,simpleList, typeOfQuestion, start, end);
         return retrieveData;
     }
 
