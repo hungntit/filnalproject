@@ -1,0 +1,707 @@
+----------------------------------------------------------------------------
+1/ PASS
+WP/Who VB/be NN/author IN/of NN/book NNP/Question Classification using Head Words and their Hypernyms
+Who,be,author
+Question Classification using Head Words and their Hypernyms,of,author
+book,of,author
+
+Time: 3.062
+----------------------------------------------------------------------------
+2/ PASS
+WP/Who VB/be NN/author IN/of NNP/Working Models for Uncertain Data
+Who,be,author
+author,of,Working Models for Uncertain Data
+
+Time: 1.594
+----------------------------------------------------------------------------
+3/ PASS
+WP/Who VB/be NN/author IN/of NN/paper NNP/Question Classification using Head Words and their Hypernyms
+Who,be,author
+Question Classification using Head Words and their Hypernyms,of,author
+paper,of,author
+
+Time: 1.203
+----------------------------------------------------------------------------
+4/ PASS
+WP/Who VB/be NN/composer IN/of NN/book NNP/Question Classification using Head Words and their Hypernyms
+Who,be,composer
+composer,of,Question Classification using Head Words and their Hypernyms
+composer,of,book
+
+Time: 3.234
+----------------------------------------------------------------------------
+5/ PASS
+WP/Who VB/be NN/creator IN/of NN/book NNP/Question Classification using Head Words and their Hypernyms
+Who,be,creator
+Question Classification using Head Words and their Hypernyms,of,creator
+book,of,creator
+
+Time: 1.407
+----------------------------------------------------------------------------
+6/ PASS
+WP/Who VB/write NN/book IN/in CD/1999
+Who,write,book
+book,in,1999
+
+Time: 0.343
+----------------------------------------------------------------------------
+7/ PASS
+WP/Who VB/compose NN/book IN/in CD/2010
+Who,compose,book
+book,in,2010
+
+Time: 0.063
+----------------------------------------------------------------------------
+8/ PASS
+WP/Who VB/write NN/book IN/from CD/1999 TO/to CD/2010
+Who,write,book
+book,from,1999
+book,to,2010
+
+Time: 0.015
+----------------------------------------------------------------------------
+9/ PASS
+WP/Who VB/publish NN/book IN/from CD/1999 TO/to CD/2000
+book,publish,Who
+book,from,1999
+book,to,2000
+
+Time: 0.032
+----------------------------------------------------------------------------
+10/ PASS
+WP/Who VB/publish NN/book IN/in CD/1999
+book,publish,Who
+book,in,1999
+
+Time: 0.031
+----------------------------------------------------------------------------
+11/ PASS
+WP/Who VB/release NN/book IN/in CD/2006
+book,release,Who
+book,in,2006
+
+Time: 0.016
+----------------------------------------------------------------------------
+12/ PASS
+WP/Who VB/write NN/book IN/for NNP/Springer IN/in CD/2010
+Who,write,book
+book,for,Springer
+book,in,2010
+
+Time: 0.031
+----------------------------------------------------------------------------
+13/ PASS
+WP/Who VB/write NN/paper IN/for NNP/ACM IN/from CD/2009 TO/to CD/2010
+Who,write,paper
+paper,for,ACM
+paper,from,2009
+paper,to,2010
+
+Time: 0.062
+----------------------------------------------------------------------------
+14/ PASS
+WP/Who VB/write NNP/Question Classification using Head Words and their Hypernyms
+Who,write,Question Classification using Head Words and their Hypernyms
+
+Time: 0.0
+----------------------------------------------------------------------------
+15/ PASS
+WP/Who VB/publish NNP/Question Classification using Head Words and their Hypernyms
+Question Classification using Head Words and their Hypernyms,publish,Who
+
+Time: 0.016
+----------------------------------------------------------------------------
+16/ PASS
+WP/Who VB/be NN/publisher IN/of NN/book NNP/Working Models for Uncertain Data
+Who,be,publisher
+Working Models for Uncertain Data,of,publisher
+book,of,publisher
+
+Time: 0.859
+----------------------------------------------------------------------------
+17/ PASS
+WP/Who VB/be NN/distributor IN/of NN/publication NNP/Working Models for Uncertain Data
+Who,be,distributor
+Working Models for Uncertain Data,of,distributor
+publication,of,distributor
+
+Time: 0.485
+----------------------------------------------------------------------------
+18/ PASS
+WDT/Which NN/book VB/be VB/write IN/by NNP/Rafiul Ahad CC/and NNP/Amelia Carlson IN/in CD/2010
+book,be write by,Rafiul Ahad
+book,be write by,Amelia Carlson
+book,in,2010
+
+Time: 0.031
+----------------------------------------------------------------------------
+19/ PASS
+WDT/Which NN/book VB/be VB/write IN/by NNP/Rafiul Ahad IN/from CD/1999 TO/to CD/2010
+book,be write by,Rafiul Ahad
+book,from,1999
+book,to,2010
+
+Time: 0.016
+----------------------------------------------------------------------------
+20/ PASS
+WDT/Which NN/paper VB/be VB/write IN/by NNP/Amelia Carlson IN/from CD/1999
+paper,be write by,Amelia Carlson
+paper,from,1999
+
+Time: 0.14
+----------------------------------------------------------------------------
+21/ PASS
+WDT/Which NN/book VB/be VB/publish IN/by NNP/O'Reilly CC/or NNP/ACM IN/in CD/1999
+book,be publish by,O'Reilly
+book,be publish by,ACM
+book,in,1999
+
+Time: 0.125
+----------------------------------------------------------------------------
+22/ PASS
+WDT/Which NN/publication VB/be VB/publish IN/by NNP/O'Reilly CC/or NNP/ACM IN/in CD/1999
+publication,be publish by,O'Reilly
+publication,be publish by,ACM
+publication,in,1999
+
+Time: 0.016
+----------------------------------------------------------------------------
+23/ PASS
+WDT/Which NN/book VB/be VB/publish IN/by NNP/O'Reilly IN/in CD/1999
+book,be publish by,O'Reilly
+book,in,1999
+
+Time: 0.031
+----------------------------------------------------------------------------
+24/ PASS
+WDT/Which NN/book VB/be VB/publish IN/by NNP/Springer IN/from CD/1999 TO/to CD/2000
+book,be publish by,Springer
+book,from,1999
+book,to,2000
+
+Time: 0.016
+----------------------------------------------------------------------------
+25/ PASS
+WDT/Which NN/publication VB/be VB/publish IN/by NNP/O'Reilly CC/or NNP/ACM IN/from CD/2009 TO/to CD/2010
+publication,be publish by,O'Reilly
+publication,be publish by,ACM
+publication,from,2009
+publication,to,2010
+
+Time: 0.031
+----------------------------------------------------------------------------
+26/ PASS
+WDT/Which NN/book VB/do NNP/Richard L. Muller CC/or NNP/James Brown VB/write IN/in NNP/ACM
+Richard L. Muller,write,book
+James Brown,write,book
+book,in,ACM
+
+Time: 0.016
+----------------------------------------------------------------------------
+27/ PASS
+WDT/Which NN/book VB/do NNP/Richard L. Muller VB/write IN/in NNP/ACM
+Richard L. Muller,write,book
+book,in,ACM
+
+Time: 0.015
+----------------------------------------------------------------------------
+28/ PASS
+WDT/Which NN/author VB/write NN/book IN/for NNP/ACM
+author,write,book
+book,for,ACM
+
+Time: 0.016
+----------------------------------------------------------------------------
+29/ PASS
+WDT/Which NN/author VB/write NN/book IN/for NNP/Springer IN/from CD/1999
+author,write,book
+book,for,Springer
+book,from,1999
+
+Time: 0.015
+----------------------------------------------------------------------------
+30/ FAIL
+WDT/Which NN/author VBN/composed NN/book IN/for NNP/O'Reilly
+book,for,O'Reilly
+
+Time: 0.016
+----------------------------------------------------------------------------
+31/ FAIL
+WDT/Which NN/author VBN/composed NN/book IN/in CD/1999
+book,in,1999
+
+Time: 0.047
+----------------------------------------------------------------------------
+32/ PASS
+WDT/Which NN/author VB/write NN/book IN/in CD/2010
+author,write,book
+book,in,2010
+
+Time: 0.016
+----------------------------------------------------------------------------
+33/ PASS
+WDT/Which NN/book VB/do NNP/Rafiul Ahad VB/write IN/with NNP/Amelia Carlson
+Rafiul Ahad,write,book
+book,with,Amelia Carlson
+
+Time: 0.234
+----------------------------------------------------------------------------
+34/ FAIL
+WDT/Which NN/publication VB/have NN/source IN/from NNP/TREC IN/in CD/2010
+publication,have,source
+source,from,TREC
+source,in,2010
+
+----------------------------------------------------------------------------
+35/ PASS
+WDT/Which NN/paper VB/refer TO/to NNP/Foundations of Databases
+paper,refer,Foundations of Databases
+
+Time: 0.0
+----------------------------------------------------------------------------
+36/ PASS
+WDT/Which NN/publication VB/refer TO/to NNP/Foundations of Databases
+publication,refer,Foundations of Databases
+
+Time: 0.0
+----------------------------------------------------------------------------
+37/ PASS
+WDT/Which NN/document VB/cite TO/to NNP/Foundations of Databases
+document,cite,Foundations of Databases
+
+Time: 0.094
+---------- ------------------------------------------------------------------
+38/ PASS
+WDT/Which NN/book VB/be VB/publish IN/in CD/1999 CC/and VBN/written IN/by NNP/Ken Arnold
+book,be publish in,1999
+book,be write by,Ken Arnold
+
+Time: 0.031
+----------------------------------------------------------------------------
+39/ PASS
+WDT/Which NN/book VB/be VB/write IN/by NNP/Ken Arnold CC/and VBN/published IN/by NNP/IEEE
+book,be write by,Ken Arnold
+book,be publish by,IEEE
+
+Time: 0.016
+----------------------------------------------------------------------------
+40/ PASS
+WDT/Which NN/book VB/be VB/write IN/by NNP/Ken Arnold CC/and VB/have NN/source IN/from NNP/DBPL
+book,be write by,Ken Arnold
+book,have,source
+source,from,DBPL
+
+Time: 0.312
+----------------------------------------------------------------------------
+41/ PASS
+WDT/Which NN/paper VB/be VB/compose IN/by NNP/Ken Arnold CC/and VB/have NN/source IN/from NNP/DBPL
+paper,be compose by,Ken Arnold
+paper,have,source
+source,from,DBPL
+
+Time: 0.281
+----------------------------------------------------------------------------
+42/ PASS
+WDT/Which NN/publisher VB/release NN/book IN/in CD/2010
+book,release,publisher
+book,in,2010
+
+Time: 0.032
+----------------------------------------------------------------------------
+43/ 
+WDT/Which NN/publisher VBN/released NN/book NNP/Data Structures and Algorithms
+----------------------------------------------------------------------------
+44/ FAIL
+WDT/Which NN/publisher VBN/released NN/book IN/from CD/2009 TO/to CD/2010
+book,from,2009
+book,to,2010
+
+Time: 0.031
+----------------------------------------------------------------------------
+45/ PASS
+WRB/How JJ/many NN/paper VB/be VB/write IN/by NNP/Rafiul Ahad
+paper,be write by,Rafiul Ahad
+
+Time: 0.015
+----------------------------------------------------------------------------
+46/ PASS
+WRB/How JJ/many NN/paper VB/be VB/write IN/by NNP/Rafiul Ahad IN/in CD/2010
+paper,be write by,Rafiul Ahad
+paper,in,2010
+
+Time: 0.016
+----------------------------------------------------------------------------
+47/ PASS
+WRB/How JJ/many NN/publisher VB/do NNP/Philip K. Chan VB/cooperate IN/with
+Philip K. Chan,cooperate,publisher
+
+Time: 0.016
+----------------------------------------------------------------------------
+48/ PASS
+WRB/How JJ/many NN/publisher VB/do NNP/Philip K. Chan NN/work IN/with
+Philip K. Chan,do,publisher
+
+Time: 0.093
+----------------------------------------------------------------------------
+49/ PASS
+WRB/How JJ/many NN/paper VB/be VB/write IN/by NNP/Raul Rato CC/and NNP/Rui Gomes IN/in CD/2010
+paper,be write by,Raul Rato
+paper,be write by,Rui Gomes
+paper,in,2010
+
+Time: 0.032
+----------------------------------------------------------------------------
+50/ PASS
+WRB/How JJ/many NN/book VB/have NN/source IN/from NNP/TREC
+book,have,source
+source,from,TREC
+
+----------------------------------------------------------------------------
+51/ PASS
+WRB/How JJ/many NN/paper VBN/derived NN/source IN/from NNP/TREC
+source,from,TREC
+
+Time: 1.0
+----------------------------------------------------------------------------
+52/ PASS
+WRB/How JJ/many NN/author VB/write NN/book IN/in CD/2009
+author,write,book
+book,in,2009
+
+Time: 0.016
+----------------------------------------------------------------------------
+53/ FAIL
+WRB/How JJ/many NN/publisher VBN/released NN/book IN/in CD/2010
+book,in,2010
+
+Time: 0.031
+----------------------------------------------------------------------------
+54/ PASS
+WRB/How JJ/many NN/publication VB/refer TO/to NNP/Foundations of Databases
+publication,refer,Foundations of Databases
+
+Time: 0.0
+----------------------------------------------------------------------------
+55/ PASS
+WRB/How JJ/many NN/book VB/cite TO/to NNP/Foundations of Databases
+book,cite,Foundations of Databases
+
+Time: 0.015
+----------------------------------------------------------------------------
+56/ PASS
+WP/What VB/be NN/title IN/of NN/book VBN/written IN/by NNP/Marcus Thint
+book,be write by,Marcus Thint
+What,be,title
+book,of,title
+
+Time: 0.86
+----------------------------------------------------------------------------
+57/
+WP/What VB/be NN/heading IN/of NN/book VBN/written IN/by NNP/Marcus Thint
+book,be write by,Marcus Thint
+What,be,heading
+book,of,heading
+
+Time: 0.5
+----------------------------------------------------------------------------
+58/
+WP/What VB/be NN/name IN/of NN/book VBN/written IN/by NNP/William Kent
+book,be write by,William Kent
+What,be,name
+book,of,name
+
+Time: 0.609
+----------------------------------------------------------------------------
+59/
+WP/What NN/paper VB/do NNP/Jennifer Widom VB/write
+Jennifer Widom,write,paper
+
+Time: 0.016
+----------------------------------------------------------------------------
+60/
+WP/What NN/book VB/do NNP/Jennifer Widom VB/write
+Jennifer Widom,write,book
+
+Time: 0.0
+----------------------------------------------------------------------------
+61/
+WP/What NN/book VB/do NNP/Philip K. Chan VB/write IN/in CD/1999
+Philip K. Chan,write,book
+book,in,1999
+
+Time: 0.015
+----------------------------------------------------------------------------
+62/
+WP/What NN/book VB/do NNP/Philip K. Chan VB/write IN/from CD/1999 TO/to CD/2000
+Philip K. Chan,write,book
+book,from,1999
+book,to,2000
+
+Time: 0.016
+----------------------------------------------------------------------------
+63/
+WP/What NN/book VB/do NNP/James Brown VB/write IN/in CD/1999 IN/from NNP/ACM
+James Brown,write,book
+book,in,1999
+book,from,ACM
+
+Time: 0.016
+----------------------------------------------------------------------------
+64/
+WP/What VB/be NN/title IN/of NN/book VBN/published IN/by NNP/O’reilly IN/in CD/1999
+book,be publish by,O’reilly
+What,be,title
+book,of,title
+title,in,1999
+
+Time: 0.437
+----------------------------------------------------------------------------
+65/
+WP/What NN/composer VB/write NNP/Java 2D Graphics
+composer,write,Java 2D Graphics
+
+Time: 0.0
+----------------------------------------------------------------------------
+66/
+WP/What NN/book VB/have NN/isbn NNP/1-56592-484-3
+book,have,1-56592-484-3
+book,have,isbn
+
+Time: 0.0
+----------------------------------------------------------------------------
+67/
+WP/What NN/book VB/have NN/doi NNP/10.1145/360271.360274
+book,have,10.1145/360271.360274
+book,have,doi
+
+Time: 0.11
+----------------------------------------------------------------------------
+68/
+WP/What NN/composer VB/write NN/book IN/from CD/1999 IN/in NNP/ACM
+composer,write,book
+book,from,1999
+book,in,ACM
+
+Time: 0.031
+----------------------------------------------------------------------------
+69/
+WP/What NN/book VB/be VB/write IN/by NNP/Philip K. Chan IN/from NNP/ACM
+book,be write by,Philip K. Chan
+book,from,ACM
+
+Time: 0.015
+----------------------------------------------------------------------------
+70/
+WP/What NN/book VB/be VB/publish IN/by NNP/ACM CC/or NNP/Springer IN/in CD/2010
+book,be publish by,ACM
+book,be publish by,Springer
+book,in,2010
+
+Time: 0.032
+----------------------------------------------------------------------------
+71/
+WP/What NN/publication VB/result IN/from NNP/TREC IN/in CD/1999
+publication,result,TREC
+1999,in,TREC
+
+Time: 0.015
+----------------------------------------------------------------------------
+72/
+WP/What NN/book VB/refer TO/to NNP/Foundations of Databases
+book,refer,Foundations of Databases
+
+Time: 0.016
+----------------------------------------------------------------------------
+73/
+WP/What NN/publication VB/result IN/from NNP/TREC
+publication,result,TREC
+
+Time: 0.0
+----------------------------------------------------------------------------
+74/
+WP/What NN/year VB/be NNP/Foundations of Databases VBN/written IN/in
+Foundations of Databases,be write in,year
+
+Time: 0.125
+----------------------------------------------------------------------------
+75/
+WP/What NN/year VB/be NNP/Java 2D Graphics VBN/written IN/in
+Java 2D Graphics,be write in,year
+
+Time: 0.0
+----------------------------------------------------------------------------
+76/
+WP/What NN/reference IN/of NN/book NNP/Foundations of Databases
+reference,of,Foundations of Databases
+reference,of,book
+
+Time: 5.891
+----------------------------------------------------------------------------
+77/
+WP/What NN/citation IN/of NN/book NNP/Foundations of Databases
+Foundations of Databases,of,citation
+book,of,citation
+
+Time: 0.546
+----------------------------------------------------------------------------
+78/
+VBZ/Does NNP/Rafiul Ahad VB/write NN/book IN/in CD/2010
+Rafiul Ahad,write,book
+book,in,2010
+
+Time: 0.016
+----------------------------------------------------------------------------
+79/
+VBZ/Does NNP/Rafiul Ahad VB/write NN/book IN/from CD/2005 TO/to CD/2010
+Rafiul Ahad,write,book
+book,from,2005
+book,to,2010
+
+Time: 0.016
+----------------------------------------------------------------------------
+80/
+VBD/Did PRP/you VB/find PRP/me DT/some NN/book VB/publish IN/by NNP/O'Reilly
+book,publish,O'Reilly
+
+Time: 0.015
+----------------------------------------------------------------------------
+81/
+VBP/Do PRP/you VB/know DT/any NN/book VBN/written IN/in CD/2010 CC/and VB/publish IN/by NNP/ACM
+book,be write in,2010
+book,publish,ACM
+
+Time: 0.016
+----------------------------------------------------------------------------
+82/
+VBD/Did NNP/IEEE VB/publish NN/book IN/in CD/2010
+book,publish,IEEE
+book,in,2010
+
+Time: 0.031
+----------------------------------------------------------------------------
+83/
+VBD/Did PRP/you VB/have DT/any NN/book VB/be VB/publish IN/by NNP/ACM
+book,be publish by,ACM
+
+Time: 0.016
+----------------------------------------------------------------------------
+84/
+VBP/Are EX/there DT/any NN/book VBN/published IN/by NNP/IEEE IN/in CD/2000
+book,be publish by,IEEE
+book,in,2000
+
+Time: 0.015
+----------------------------------------------------------------------------
+85/
+VBP/Are EX/there DT/any NN/book VBN/written IN/by NNP/Mike Holcombe IN/in CD/2000
+book,be write by,Mike Holcombe
+book,in,2000
+
+Time: 0.032
+----------------------------------------------------------------------------
+86/
+VB/Name DT/some NN/book NNP/Richard L. Muller VB/write IN/for NNP/Springer
+Richard L. Muller,write,book
+book,for,Springer
+
+Time: 0.0
+----------------------------------------------------------------------------
+87/
+VB/Name DT/all NN/publication VB/be VB/publish IN/in CD/2010
+publication,be publish in,2010
+
+Time: 0.015
+----------------------------------------------------------------------------
+88/
+VB/Name NN/paper WDT/which VB/be VB/publish IN/from CD/1999 TO/to CD/2001 IN/in NNP/ACM
+paper,be publish from,1999
+paper,to,2001
+
+Time: 0.282
+----------------------------------------------------------------------------
+89/
+VB/Name NN/publication WDT/which VB/result IN/from NNP/DBPL IN/in CD/2010
+which,result,DBPL
+2010,in,DBPL
+
+Time: 0.0
+----------------------------------------------------------------------------
+90/
+VB/List DT/some NN/book WDT/which VB/be VB/write IN/by NNP/Jennifer Widom IN/from CD/1999
+book,be write by,Jennifer Widom
+book,from,1999
+
+Time: 0.031
+----------------------------------------------------------------------------
+91/
+VB/List DT/all NN/book VB/be VB/publish IN/by NNP/Springer IN/in CD/2010
+book,be publish by,Springer
+book,in,2010
+
+Time: 0.015
+----------------------------------------------------------------------------
+92/
+VB/List DT/some NN/book VB/be VB/publish IN/by NNP/ACM
+book,be publish by,ACM
+
+Time: 0.016
+----------------------------------------------------------------------------
+93/
+VB/List NN/author NNP/Who VB/write NN/book IN/for NNP/Springer IN/in CD/2010
+Who,write,author
+book,for,Springer
+book,in,2010
+
+Time: 0.031
+----------------------------------------------------------------------------
+94/
+VB/Find NN/book WDT/which VB/be VB/compose IN/by NNP/Rafiul Ahad CC/and NNP/Amelia Carlson
+book,be compose by,Rafiul Ahad
+book,be compose by,Amelia Carlson
+
+Time: 0.016
+----------------------------------------------------------------------------
+95/
+VB/Find NN/book VB/be VB/compose IN/by NNP/Rafiul Ahad CC/and NNP/Amelia Carlson
+book,be compose by,Rafiul Ahad
+book,be compose by,Amelia Carlson
+
+Time: 0.016
+----------------------------------------------------------------------------
+96/
+VB/Find NN/author WP/who VB/write NN/book IN/for NNP/ACM IN/from CD/2008 TO/to CD/2009
+who,write,book
+book,for,ACM
+book,from,2008
+book,to,2009
+
+Time: 0.031
+----------------------------------------------------------------------------
+97/
+VB/Find NN/publication VB/result IN/from NNP/ACM Annual Conference
+publication,result,ACM Annual Conference
+
+Time: 0.0
+----------------------------------------------------------------------------
+98/
+VB/Show PRP/me DT/some NN/book VB/be VB/write IN/by NNP/Lorand Dali
+book,be write by,Lorand Dali
+
+Time: 0.015
+----------------------------------------------------------------------------
+99/
+VB/Show PRP/me DT/any NN/book WDT/which VB/publish IN/in NNP/ACM CC/and VBN/written IN/by NNP/Lorand Dali.
+ACM,publish,which
+book,be write by,Lorand Dali.
+
+Time: 0.032
+----------------------------------------------------------------------------
+100/
+NNP/Alfred NNP/V. Aho VB/be NN/author IN/of NNP/Data Structures and Algorithms ,/, RB/isn't PRP/it
+author,of,Data Structures and Algorithms
+V. Aho,of,Data Structures and Algorithms
+
+Time: 0.172
+ 34 43 50
+Rate :97.0
+BUILD SUCCESSFUL (total time: 32 seconds)
