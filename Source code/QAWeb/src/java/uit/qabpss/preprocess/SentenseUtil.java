@@ -404,9 +404,64 @@ public class SentenseUtil {
                 result = removeToken(result, token);
             }
         }
+        result  =   joinNNPsToNNP(result) ;
         return result;
     }
+    private static Token[] joinNNPsToNNP(Token[] tokens)
+    {
+        if(tokens == null)
+            return null;
+        List<Token> results =   new ArrayList<Token>();
+        int begin   =   -1;
+        int end     =   -1;
+        for(int i   =   0;i< tokens.length;i++)
+        {
+            Token token =   tokens[i];
+            if(token.getPos_value().equalsIgnoreCase("NNP") || token.getPos_value().equalsIgnoreCase(",") )
+            {
+                if(begin    ==  -1)
+                {
+                    begin   =   i;
+                }
+                end =   i;
+            }
+            else
+            {
+                if(begin< end)
+                {
+                    String value    =   "";
+                    for(int j = begin;j<=end;j++)
+                    {
+                        value+= tokens[j].getValue()+" ";
+                    }
+                    value   =   value.trim();
+                    Token newtoken =   new Token(value,"NNP");
+                    results.add(newtoken);
+                }
+                else
+                {
+                    if(begin>-1 && begin == end)
+                    {
+                        results.add(tokens[begin]);
+                    }
+                    results.add(token);
+                }
+                begin   =   -1;
+                end     =   -1;
+            }
+            if(begin    == tokens.length-1)
+            {
+                results.add(token);
+            }
+        }
 
+        if(results.size()>0)
+        {
+            Token[] ts  =   new Token[results.size()];
+            return results.toArray(ts);
+        }
+        return tokens;
+    }
     /*
      * Check sentence have relation and or without equal relation
      * Ex: What books were written by .... and published by ....

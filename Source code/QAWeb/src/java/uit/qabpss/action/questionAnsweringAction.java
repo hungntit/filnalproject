@@ -70,7 +70,25 @@ public class questionAnsweringAction extends org.apache.struts.action.Action {
             resultAnswer = processAnswer.answerQuestion(f.getSentence());
          results    =   resultAnswer.getRetrieveData();
          results    =   toHtmlsList(results);
-         request.setAttribute("results", results);
+                  if(resultAnswer.getQuestionType().isWPQuestion())
+             request.setAttribute("isWPQuestion", true);
+         else
+         {
+             request.setAttribute("isWPQuestion", false);
+         }
+         if(resultAnswer.getQuestionType().isYesNoQuestion())
+             request.setAttribute("isYNQuestion", true);
+         else
+         {
+             request.setAttribute("isYNQuestion", false);
+         }
+         if(resultAnswer.getQuestionType().isHowManyQuestion())
+             request.setAttribute("isHowManyQuestion", true);
+         else
+         {
+             request.setAttribute("isHowManyQuestion", false);
+         }
+         
         resultAnswer.setRetrieveData(null);
         }
         catch(QuestionNotSolveException qnse)
@@ -78,23 +96,30 @@ public class questionAnsweringAction extends org.apache.struts.action.Action {
             request.setAttribute("fail", true);
             return mapping.findForward(FAIL);
         }
-        if(results.isEmpty())
-        {
-            List<ObjectsAndToken> replacedObjects = getObjectsAndReplacedValueList(resultAnswer.getGroupTripleTokens());
-            if(replacedObjects.isEmpty())
+        if(results !=null){
+            if(results.isEmpty())
             {
-                request.setAttribute("notfound", true);
-                return mapping.findForward(NOTFOUND);
+                List<ObjectsAndToken> replacedObjects = getObjectsAndReplacedValueList(resultAnswer.getGroupTripleTokens());
+                if(replacedObjects.isEmpty())
+                {
+                    request.setAttribute("notfound", true);
+                    return mapping.findForward(NOTFOUND);
+                }
+                f.setResultAnswer(resultAnswer);
+                request.setAttribute("replacedObjects", replacedObjects);
+                results =null;
+                request.setAttribute("results", results);
+                return mapping.findForward(SUCCESS);
             }
-            f.setResultAnswer(resultAnswer);
-            request.setAttribute("replacedObjects", replacedObjects);
-            return mapping.findForward(SUCCESS);
+            else
+            {
+                request.setAttribute("results", results);
+                return mapping.findForward(SUCCESS);
+            }
         }
         else
-        {
-            return mapping.findForward(SUCCESS);
-        }
-        
+                return mapping.findForward(SUCCESS);
+
     }
 
     private static List searchFromToken(Token token,Class classtype)

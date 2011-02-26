@@ -50,23 +50,43 @@
     <c:if test="${results != null}">
     <tr>
         <td>
-            <div class="box_search" style="text-align: left;background-color: whitesmoke" >
-                
-                    <c:forEach var="q" items="${results}" varStatus="st">
+            <c:if test="${isYNQuestion == true}">
+                <bean:message key="text.itstrue" />
+            </c:if>
+            <c:if test="${isYNQuestion == false}">
+                <c:if test="${isHowManyQuestion == true}">
+                    
+                </c:if>
+                <div class="box_search" style="text-align: left;background-color: whitesmoke" >
 
-                        ${st.count}. ${q}
-                        <hr>
-                    </c:forEach>
-                
-            </div>
+                        <c:forEach var="q" items="${results}" varStatus="st">
+
+                            ${st.count}. ${q}
+                            <hr>
+                        </c:forEach>
+
+                </div>
+            </c:if>
+
         </td>
     </tr>
     </c:if>
     <c:if test="${notfound == true}">
-        <tr>
-            <td align="center"><bean:message key="text.noresult"/></td>
+        <c:if test="${isYNQuestion == true}">
+                <bean:message key="text.itsfalse" />
+        </c:if>
+        <c:if test="${isYesNoQuestion == false}">
+            <c:if test="${isHowManyQuestion == true}">
+                    <bean:message key="text.total" />: 0 <br/>
+            </c:if>
+            <c:if test="${isHowManyQuestion == false}">
+                <tr>
+                    <td align="center"><bean:message key="text.noresult"/></td>
+                </tr>
+            </c:if>
 
-        </tr>
+        </c:if>
+        
     </c:if>
     <c:if test="${fail == true}">
         <tr>
@@ -74,6 +94,7 @@
 
         </tr>
     </c:if>
+
     <c:if test="${replacedObjects != null}">
     <tr>
         <td>

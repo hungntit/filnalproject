@@ -85,6 +85,7 @@ public class ProcessAnswer {
         retrieveData = RetrieveData.retrieveData(query,groupTripleTokens, entityTypeOfQuestion, 0, 100);
         resultAnswer   =   new ResultAnswer(question, query, groupTripleTokens, entityTypeOfQuestion);
         resultAnswer.setRetrieveData(retrieveData);
+        resultAnswer.setQuestionType(QuestionType.recognizeTypeOfQuestion(tokens));
 
         }
         catch(Exception ex)

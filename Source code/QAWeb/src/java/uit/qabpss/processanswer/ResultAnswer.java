@@ -21,6 +21,26 @@ public class ResultAnswer implements  Serializable{
      protected String countQuery;
     protected List<List<TripleToken>> groupTripleTokens;
     protected EntityType entityTypeOfQuestion;
+    protected QuestionType questionType;
+
+    /**
+     * Get the value of questionType
+     *
+     * @return the value of questionType
+     */
+    public QuestionType getQuestionType() {
+        return questionType;
+    }
+
+    /**
+     * Set the value of questionType
+     *
+     * @param questionType new value of questionType
+     */
+    public void setQuestionType(QuestionType questionType) {
+        this.questionType = questionType;
+    }
+
     protected List retrieveData   ;
 
     public List getRetrieveData() {
