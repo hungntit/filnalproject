@@ -94,10 +94,10 @@
             <relation>
 
 
-                <relation-name>be cite by</relation-name>
-                
+                <reversed-relation>be cite by</reversed-relation>
+                <reversed-relation>be refer by</reversed-relation>
                
-                <mapping-table>ref_pub</mapping-table>
+                <mapping-table>pub_ref</mapping-table>
                 <related-table>citation</related-table>
             </relation>
         </field>

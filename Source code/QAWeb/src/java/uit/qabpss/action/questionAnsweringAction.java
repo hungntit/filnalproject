@@ -163,7 +163,8 @@ public class questionAnsweringAction extends org.apache.struts.action.Action {
                                 if(mainEntityType.getTableInfo().getAliasName().equalsIgnoreCase("Publication"))
                                     clss    =   Publication.class;
                                 else
-                                    if(mainEntityType.getTableInfo().getAliasName().equalsIgnoreCase("Reference"))
+                                    if(mainEntityType.getTableInfo().getAliasName().equalsIgnoreCase("Reference")
+                                        ||mainEntityType.getTableInfo().getAliasName().equalsIgnoreCase("Citation"))
                                         clss    =   Publication.class;
                             }
 
@@ -197,7 +198,8 @@ public class questionAnsweringAction extends org.apache.struts.action.Action {
                                 if(mainEntityType.getTableInfo().getAliasName().equalsIgnoreCase("Publication"))
                                     clss    =   Publication.class;
                                 else
-                                    if(mainEntityType.getTableInfo().getAliasName().equalsIgnoreCase("Reference"))
+                                    if(mainEntityType.getTableInfo().getAliasName().equalsIgnoreCase("Reference")
+                                     ||mainEntityType.getTableInfo().getAliasName().equalsIgnoreCase("Citation"))
                                         clss    =   Publication.class;
                             }
 

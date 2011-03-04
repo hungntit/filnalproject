@@ -126,7 +126,7 @@ public class RetrieveData {
         List results    =   null;
         ResultAnswer resultAnswer = null;
         try{
-            resultAnswer = processAnswer.answerQuestion("What composer wrote \" Java 2D\"");
+            resultAnswer = processAnswer.answerQuestion("Which documents is cited by \"Foundations of Databases\"?");
             results =   resultAnswer.getRetrieveData();
         }
         catch(QuestionNotSolveException qnse)
@@ -173,15 +173,13 @@ public class RetrieveData {
             {
                 return Author.class;
             }
-            if(entityType.getTableInfo().getAliasName().equals("Publication"))
+            if(entityType.getTableInfo().getAliasName().equals("Publication")
+                    ||entityType.getTableInfo().getAliasName().equals("Reference")
+                    ||entityType.getTableInfo().getAliasName().equals("Citation"))
             {
                 return Publication.class;
             }
-            if(entityType.getTableInfo().getAliasName().equals("Reference"))
-            {
-                return Publication.class;
-            }
-
+            
 
         }
         else
