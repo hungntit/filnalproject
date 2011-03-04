@@ -81,8 +81,8 @@
         <field type="String" field-alias="reference" visible="false" relation="mapping table">
             <relation>
                 
-                
-               
+                <relation-name>cite</relation-name>
+                <relation-name>cite to</relation-name>
                 <relation-name>refer to</relation-name>
                 <relation-name>refer</relation-name>
                 <mapping-table>pub_ref</mapping-table>
@@ -94,8 +94,8 @@
             <relation>
 
 
-                <relation-name>cite to</relation-name>
-                <relation-name>cite</relation-name>
+                <relation-name>be cite by</relation-name>
+                
                
                 <mapping-table>ref_pub</mapping-table>
                 <related-table>citation</related-table>
