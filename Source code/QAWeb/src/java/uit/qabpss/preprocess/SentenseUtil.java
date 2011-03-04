@@ -392,6 +392,7 @@ public class SentenseUtil {
         result = processForPattern(result, "VBD-1 VBG-2-->VB-2");                     //	VBD(1) + VBG(2)    VB(2).
         result = processForPattern(result, "VBD-1 VBN-2-->VB-1 VB-2");                //	VBD(1) + VBN(2)   VB(1) + VB(2)
         result = processForPattern(result, "VBD-1-->VB-1");                           // 	VBD(1)    VB(1).
+        
         result = processForPattern(result, "(VBZ|VBP)-1-->VB-1");                     // 	VBZ/VBP(1)    VB(1).
         // result        = optimizeVerb(result);
          result=   optimizeNoun(result);
@@ -405,6 +406,8 @@ public class SentenseUtil {
             }
         }
         result  =   joinNNPsToNNP(result) ;
+        if(!Token.contains(result, new Token("be", "VB")))
+            result = processForPattern(result, "VBN-1-->VB-1");                           // 	VBN(1)    VB(1).
         return result;
     }
     private static Token[] joinNNPsToNNP(Token[] tokens)

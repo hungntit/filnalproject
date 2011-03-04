@@ -148,7 +148,8 @@ public class ExtractTriple {
                if( posTagArr[i].getValue().equalsIgnoreCase("NA") == false)
                {
                    String postag    =   checkSamePosTag(temptk, posTagArr[i].getPos_value());
-                   if(! postag.equals(""))
+                   String tempStr   =   posTagArr[i].getValue();
+                   if(! postag.equals("") && ( (temptk.getValue().equalsIgnoreCase(tempStr)&& !tempStr.equals("")) || tempStr.equals("") ) )
                    {
                        if(i == posTagArr.length -1)
                            found    =   true;

@@ -282,9 +282,9 @@ public class Recognizer {
                 }
 
         }
-        if(tableresult.size() > 0)
+        if(tableresult.size() > 0 && tableresult.size()< existTripleRelations.size())
         {
-            if(tableresult.size() ==1)
+            if(tableresult.size() ==1 )
             {
                 token.setEntityType(tableresult.get(0).getFirstEntity());
             }
@@ -292,6 +292,7 @@ public class Recognizer {
         }
         else
         {
+            maxSimilarityNumber =   0;
             for(TripleRelation tr:existTripleRelations)
             {
 
@@ -305,7 +306,7 @@ public class Recognizer {
                   //  Logger.getLogger(Recognizer.class.getName()).log(Level.SEVERE, null, ex);
                 }
                     if(columnName.equalsIgnoreCase(token.getValue()))
-                        similarityWithColumn = 1.0F;
+                        similarityWithColumn = 1.01F;
                     if(similarityWithColumn > SIMILARITY_LIMIT && similarityWithColumn >= maxSimilarityNumber)
                     {
                         if(similarityWithColumn > maxSimilarityNumber)
@@ -320,7 +321,9 @@ public class Recognizer {
                         }
 
                     }
-                if(columnresult.size() > 0)
+               
+            }
+             if(columnresult.size() > 0)
                 {
                         if(columnresult.size() ==1)
                         {
@@ -329,7 +332,6 @@ public class Recognizer {
 
                         return columnresult;
                 }
-            }
         }
         return existTripleRelations;
 

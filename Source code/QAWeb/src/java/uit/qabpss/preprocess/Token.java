@@ -155,6 +155,18 @@ public final class Token {
         }
 
     }
+    public static boolean contains(Token[] tokens,Token token)
+    {
+        for(Token t: tokens)
+        {
+            if(t.getValue().equals(token.value) && t.getPos_value().equals(token.pos_value))
+            {
+                return true;
+            }
+
+        }
+        return false;
+    }
     public static Token[] removeTokens(Token[] tokens, int start, int end)
     {
         Token[] result  ;
