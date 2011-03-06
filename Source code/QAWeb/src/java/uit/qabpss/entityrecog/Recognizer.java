@@ -113,7 +113,7 @@ public class Recognizer {
             return null;
         }
 
-    private  EntityType checkValueFromDB(String value,Type type,List<TripleRelation> tripleRelations){
+    private  EntityType checkValueFromDB(String value,Type type,List<TripleRelation> tripleRelations,int position){
 
             List<EntityType> invisibleEntityTypes   =   new ArrayList<EntityType>();
             if(tripleRelations.size() == 2)
@@ -121,7 +121,8 @@ public class Recognizer {
                 if(tripleRelations.get(0).isSameTable(tripleRelations.get(1)))
                 {
                    tripleRelations.remove(1);
-                   if(tripleRelations.get(0).getRelation().isReversedRelation())
+                   if(tripleRelations.get(0).getRelation().isReversedRelation()&& position ==2
+                           || !tripleRelations.get(0).getRelation().isReversedRelation() && position ==1)
                    {
                        return tripleRelations.get(0).getFirstEntity();
                    }
@@ -174,7 +175,7 @@ public class Recognizer {
                 return invisibleEntityTypes.get(0);
             return null;
         }
-    public  EntityType getEntityTypeFromValue(String value,List<TripleRelation> tripleRelations) {
+    public  EntityType getEntityTypeFromValue(String value,List<TripleRelation> tripleRelations,int position) {
             if (value.isEmpty()) {
                 return null;
             }
@@ -183,18 +184,18 @@ public class Recognizer {
             // check value is number : year
             if(Type.isDouble(value)|| Type.isNumber(value))
             {
-                t = checkValueFromDB(value, Type.DOUBLE,tripleRelations);
+                t = checkValueFromDB(value, Type.DOUBLE,tripleRelations,position);
                 if(t!= null)
                     return t;
             }
             // check value is CODE : isbn, doi
             if ((value + " ").matches("[0-9].*")) {
-                t = checkValueFromDB(value, Type.CODE,tripleRelations);
+                t = checkValueFromDB(value, Type.CODE,tripleRelations,position);
                 if(t!= null)
                     return t;
             }
             //check to another fields
-            t = checkValueFromDB(value, Type.STRING,tripleRelations);
+            t = checkValueFromDB(value, Type.STRING,tripleRelations,position);
             if (t != null) {
                 return t;
             }
@@ -612,7 +613,7 @@ public class Recognizer {
                 if(tripleToken.getObj2().getPos_value().equalsIgnoreCase("NNP")|| tripleToken.getObj2().getPos_value().equalsIgnoreCase("CD"))
                 {
                     EntityType tempEntityType   =   tripleToken.getObj2().getEntityType();
-                    EntityType entityType = getEntityTypeFromValue(tripleToken.getObj2().getValue(),tripleRelationList);
+                    EntityType entityType = getEntityTypeFromValue(tripleToken.getObj2().getValue(),tripleRelationList,2);
                     tripleToken.getObj2().setEntityType(entityType);
                     if(tripleToken.getObj2().getEntityType()!= null&&tripleToken.getObj2().getEntityType().isNull() == false)
                     {
@@ -670,7 +671,7 @@ public class Recognizer {
                 if(tripleToken.getObj1().getPos_value().equalsIgnoreCase("NNP")|| tripleToken.getObj1().getPos_value().equalsIgnoreCase("CD"))
                 {
                     EntityType tempEntityType   =   tripleToken.getObj1().getEntityType();
-                    EntityType entityType = getEntityTypeFromValue(tripleToken.getObj1().getValue(),tripleRelationList);
+                    EntityType entityType = getEntityTypeFromValue(tripleToken.getObj1().getValue(),tripleRelationList,1);
                     tripleToken.getObj1().setEntityType(entityType);
                     if(tripleToken.getObj1().getEntityType().isNull() == false)
                     {

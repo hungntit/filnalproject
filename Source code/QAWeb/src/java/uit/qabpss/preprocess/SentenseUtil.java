@@ -328,6 +328,20 @@ public class SentenseUtil {
 
         }
         if (result != null) {
+            if(inStrs.length == outStrs.length && inStrs.length ==1
+                    && (result[0].getPos_value().equals("VBP")
+                                    || result[0].getPos_value().equals("VBD")
+                                    || result[0].getPos_value().equals("VBP"))
+                                    || result[0].getPos_value().equals("VBZ"))
+            {
+                List<String> findStems = Wordnet.wnstemmer.findStems(result[0].getValue(), POS.VERB);
+                if(!findStems.isEmpty())
+                {
+                    String verb = findStems.get(0);
+                    result[0].setValue(verb);
+                    result[0].setPos_value(outStrs[0].split("-")[0]);
+                }
+            }
             return result;
         }
         return tokens;
@@ -420,7 +434,7 @@ public class SentenseUtil {
         for(int i   =   0;i< tokens.length;i++)
         {
             Token token =   tokens[i];
-            if(token.getPos_value().equalsIgnoreCase("NNP") || token.getPos_value().equalsIgnoreCase(",") )
+            if(token.getPos_value().equalsIgnoreCase("NNP") || token.getPos_value().equals(",") &&  token.getValue().getBytes() [0]>= 48)//is a character
             {
                 if(begin    ==  -1)
                 {
@@ -440,6 +454,7 @@ public class SentenseUtil {
                     value   =   value.trim();
                     Token newtoken =   new Token(value,"NNP");
                     results.add(newtoken);
+                    results.add(token);
                 }
                 else
                 {

@@ -38,6 +38,35 @@ public final class Token {
             return true;
         return false;
     }
+    public boolean isWDT()
+    {
+        if(pos_value.equals("WDT"))
+            return true;
+        return false;
+    }
+    public boolean isVB()
+    {
+        if(pos_value.equals("VB"))
+            return true;
+        return false;
+    }
+     public boolean isMD()
+    {
+        if(pos_value.equals("MD"))
+            return true;
+        return false;
+    }
+    public boolean isAuxiliaryVerb()
+    {
+        if(pos_value.equals("VB"))
+        {
+            if(value.equalsIgnoreCase("be")|| value.equalsIgnoreCase("have")||value.equalsIgnoreCase("do"))
+                return true;
+        }
+        return false;
+    }
+
+
     public EntityType getEntityType() {
         return entityType;
     }

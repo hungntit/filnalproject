@@ -59,8 +59,9 @@ public class ProcessAnswer {
             }
         }
         List retrieveData = RetrieveData.retrieveData(query, groupTripleTokens, entityTypeOfQuestion, 0, 100);
-        
-        resultAnswer.setQuestion(question.replace(originValue, replaceValue));
+        question          = question.replace(originValue, "\""+replaceValue+"\"");
+        question          = question.replace("\"\"", "\"");
+        resultAnswer.setQuestion(question);
         resultAnswer.setRetrieveData(retrieveData);
         return resultAnswer;
     }
@@ -82,7 +83,7 @@ public class ProcessAnswer {
             List<List<TripleToken>> groupTripleTokens = TripleToken.groupTripleTokens(list);
             String query = GenSQLQuery.genQuery(groupTripleTokens, entityTypeOfQuestion);
 
-        retrieveData = RetrieveData.retrieveData(query,groupTripleTokens, entityTypeOfQuestion, 0, 100);
+        retrieveData = RetrieveData.retrieveData(query,groupTripleTokens, entityTypeOfQuestion, 0, 999999);
         resultAnswer   =   new ResultAnswer(question, query, groupTripleTokens, entityTypeOfQuestion);
         resultAnswer.setRetrieveData(retrieveData);
         resultAnswer.setQuestionType(QuestionType.recognizeTypeOfQuestion(tokens));

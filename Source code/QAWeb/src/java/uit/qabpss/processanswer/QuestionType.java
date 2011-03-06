@@ -27,7 +27,8 @@ public class QuestionType {
 
     public static QuestionType recognizeTypeOfQuestion(Token[] tokens)
     {
-       if(tokens[0].getPos_value().equals("WP") || tokens[0].getPos_value().equals("WDT"))
+       if(tokens[0].isWP() || tokens[0].isWDT()
+               || !tokens[0].isAuxiliaryVerb() && tokens[0].isVB())
            return  QuestionType.WP_Q;
        if(tokens[0].getValue().equalsIgnoreCase("how") && tokens[1].getValue().equalsIgnoreCase("many"))
            return  QuestionType.HOW_MANY_Q;

@@ -45,6 +45,20 @@ public class advanceSearchAction extends org.apache.struts.action.Action {
         AdvanceSearchForm advanceSForm  =   (AdvanceSearchForm)form;
         TableInfo   table               =   advanceSForm.getTableInfo();
         List<Param> paramslist          =   advanceSForm.getParams();
+        int size    =   paramslist.size();
+        for(int i = 0;i<size;i++)
+        {
+            Param  param =   paramslist.get(i);
+            if(param.getColumn().getType().getIsNumber()|| param.getColumn().getType().getIsDouble())
+            {
+                if(param.getValue().equals(""))
+                {
+                    paramslist.remove(param);
+                    i--;
+                    size--;
+                }
+            }
+        }
         Param[] params                   =   (Param[])paramslist.toArray(new Param[paramslist.size()]);
         
         int startRow =0;

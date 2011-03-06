@@ -10,6 +10,7 @@
 <%@taglib uri="http://struts.apache.org/tags-html-el" prefix="html" %>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@taglib uri="http://struts.apache.org/tags-bean-el" prefix="bean" %>
+<%@taglib uri="http://displaytag.sf.net" prefix="display"%>
 <script type="text/javascript" src="public/javascript/Qa_script.js"></script>
 <table style="width: 100%">
     <tr>
@@ -50,43 +51,51 @@
     <c:if test="${results != null}">
     <tr>
         <td>
-            <c:if test="${isYNQuestion == true}">
-                <bean:message key="text.itstrue" />
-            </c:if>
-            <c:if test="${isYNQuestion == false}">
-                <c:if test="${isHowManyQuestion == true}">
-                    
+            <div class="box_search" style="text-align: left;background-color: whitesmoke" >
+                <c:if test="${isYNQuestion == true}">
+                    <bean:message key="text.itstrue" /><br/>
                 </c:if>
-                <div class="box_search" style="text-align: left;background-color: whitesmoke" >
+                <c:if test="${isYNQuestion == false}">
+                    <c:if test="${isHowManyQuestion == true}">
 
-                        <c:forEach var="q" items="${results}" varStatus="st">
+                    </c:if>
 
-                            ${st.count}. ${q}
-                            <hr>
-                        </c:forEach>
+                </c:if>
+                <display:table id="data" name="${results}" requestURI="" pagesize="10" style="width:100%;">
+                    <display:column>
+                        ${data_rowNum}. ${data}
+                    </display:column>
+                </display:table>
 
-                </div>
-            </c:if>
+                            
+            </div>
 
         </td>
     </tr>
     </c:if>
     <c:if test="${notfound == true}">
-        <c:if test="${isYNQuestion == true}">
-                <bean:message key="text.itsfalse" />
-        </c:if>
-        <c:if test="${isYesNoQuestion == false}">
-            <c:if test="${isHowManyQuestion == true}">
-                    <bean:message key="text.total" />: 0 <br/>
-            </c:if>
-            <c:if test="${isHowManyQuestion == false}">
-                <tr>
-                    <td align="center"><bean:message key="text.noresult"/></td>
-                </tr>
-            </c:if>
+         <tr>
+              <td align="center">
+                    <div class="box_search" style="text-align: left;background-color: whitesmoke" >
+                    <c:if test="${isYNQuestion == true}">
+                            <bean:message key="text.itsfalse" /><br>
+                    </c:if>
+                    <c:if test="${isYNQuestion == false}">
+                        <c:if test="${isHowManyQuestion == true}">
 
-        </c:if>
-        
+                                    <bean:message key="text.total" />: 0 <br/>
+
+                        </c:if>
+                        <c:if test="${isHowManyQuestion == false}">
+
+                               <bean:message key="text.noresult"/>
+
+                        </c:if>
+
+                    </c:if>
+                    </div>
+           </td>
+    </tr>
     </c:if>
     <c:if test="${fail == true}">
         <tr>

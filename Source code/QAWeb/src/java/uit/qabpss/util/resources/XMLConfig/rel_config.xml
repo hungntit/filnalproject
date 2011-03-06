@@ -29,6 +29,8 @@
                 <relation-name>be publish by</relation-name>
                 <relation-name>be release by</relation-name>
                 <relation-name>for</relation-name>
+                <relation-name>from</relation-name>
+                <relation-name>in</relation-name>
                 <reversed-relation>publish</reversed-relation>
                 <reversed-relation>have publish</reversed-relation>
                 <reversed-relation>release</reversed-relation>
@@ -44,7 +46,7 @@
                 <relation-name>have source in</relation-name>
                 <relation-name>from</relation-name>
                 <relation-name>in</relation-name>
-                <relation-name>result</relation-name>
+                <relation-name>result from</relation-name>
             </relation>
             <field-name>source</field-name>
         </field>
@@ -182,7 +184,7 @@
                 <relation-name>have source in</relation-name>
                 <relation-name>from</relation-name>
                 <relation-name>in</relation-name>
-                <relation-name>result</relation-name>
+                <relation-name>result from</relation-name>
             </relation>
             <field-name>source</field-name>
         </field>

@@ -93,6 +93,7 @@ public class questionAnsweringAction extends org.apache.struts.action.Action {
         }
         catch(QuestionNotSolveException qnse)
         {
+            qnse.printStackTrace();
             request.setAttribute("fail", true);
             return mapping.findForward(FAIL);
         }

@@ -6,6 +6,8 @@
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@taglib uri="http://struts.apache.org/tags-bean-el" prefix="bean" %>
 <%@taglib uri="http://struts.apache.org/tags-logic" prefix="l" %>
+<%@taglib  uri="http://ditchnet.org/jsp-tabs-taglib" prefix="tab" %>
+<tab:tabConfig />
 
 <td class="bg4">
     <div>
@@ -84,33 +86,57 @@
                         <a target="_blank" href="http://citeseerx.ist.psu.edu/search?q=${publication.title.replace(" ","+")}"><img src="public/images/citexeer.jpg" width="30" height="30"/></a>
                     </td>
                 </tr>
-            </table> 
+            </table>
+            </div>
             <% int i =1; %>
-            <h3><bean:message key="text.references"/></h3><br>
-            <c:out value="${warning}"/><br>
-            <table>
-            <c:forEach var="ref" items="${publication.refPubs}">
-                <tr>
-                    <td>[<%=i%>]</td>
-                    <td><a href="showPubDetail.do?id=${ref.id}"><c:out value="${ref.title}"/></a></td>
-                    <td><c:out value="${ref.year}"/></td>
-                    <%i++;%>
-                </tr>
-            </c:forEach>
-            </table>
-            <br>
-            <c:if test="${sameSourcePubs != null}">
-            <h3>Publications have the same source</h3><br>            
-            <table>
-                <c:forEach var="ref" items="${sameSourcePubs}" varStatus="status">
-                <tr>
-                    <td>${status.count}</td>
-                    <td><a href="showPubDetail.do?id=${ref.id}"><c:out value="${ref.title}"/></a></td>
-                    <td><c:out value="${ref.year}"/></td>
-                </tr>
-            </c:forEach>
-            </table>
-            </c:if>
-        </div>
+
+
+                <tab:tabContainer id="pub-details-container" >
+
+                <tab:tabPane id="foo" tabTitle="Authors">
+                    <c:forEach var="au" items="${publication.authors}">
+                        <a href="showPubsByAuthor.do?authorName=${au.author}">
+                            <c:out value="${au.author}"/>
+                        </a> ,
+                    </c:forEach>
+                </tab:tabPane>
+
+                <tab:tabPane id="bar" tabTitle="Source">
+                    <c:out value="${publication.source}" default="NA"/>
+                    <c:if test="${sameSourcePubs != null}">
+                        <h3>Publications have the same source</h3><br>
+                        <table>
+                            <c:forEach var="ref" items="${sameSourcePubs}" varStatus="status">
+                            <tr>
+                                <td>${status.count}</td>
+                                <td><a href="showPubDetail.do?id=${ref.id}"><c:out value="${ref.title}"/></a></td>
+                                <td><c:out value="${ref.year}"/></td>
+                            </tr>
+                        </c:forEach>
+                        </table>
+                        </c:if>
+                </tab:tabPane>
+
+                <tab:tabPane id="bar" tabTitle="Reference">
+                    <h3><bean:message key="text.references"/></h3><br>
+                    <c:out value="${warning}"/><br>
+                    <table>
+                    <c:forEach var="ref" items="${publication.refPubs}" varStatus="status">
+                        <tr>
+                            <td>${status.count}</td>
+                            <td><a href="showPubDetail.do?id=${ref.id}"><c:out value="${ref.title}"/></a></td>
+                            <td><c:out value="${ref.year}"/></td>
+
+                        </tr>
+                    </c:forEach>
+                    </table>
+                    <br>
+                </tab:tabPane>
+                <tab:tabPane id="bar" tabTitle="Cited by">
+
+                </tab:tabPane>
+            </tab:tabContainer>
+
+        
     </div>
 </td>
