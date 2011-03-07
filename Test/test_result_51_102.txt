@@ -1,4 +1,4 @@
-﻿1/
+﻿1/Không nhận diện được do thiếu luật
 WRB/How JJ/many NN/paper VB/derive NN/source IN/from NNP/TREC
 paper,derive,source
 source,from,TREC
@@ -726,3 +726,9 @@ FROM
 `dblp_pub_new` `Publication`,`dblp_author_ref_new` `Author`
 WHERE 
 (`Publication`.`title` = ? ) AND `Publication`.`id` = `Author`.`pub_id` AND `Publication`.`id` = `Author`.`pub_id` AND(`Publication`.`title` = ? ) AND `Publication`.`id` = `Author`.`pub_id`  AND (`Author`.`author` = ? ) AND `Publication`.`id` = `Author`.`pub_id`  AND (`Author`.`author` = ? )
+
+
+Kết quả:
+Nhận diện ko đươc:1(thiếu luật)
+Thiếu bộ ba: 52(thiếu luật, bỏ luật vô cũng ko xử lý được do hàm chưa hỗ ttrợ)
+Sai chính tả: 14
