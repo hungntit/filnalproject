@@ -1,0 +1,728 @@
+﻿1/
+WRB/How JJ/many NN/paper VB/derive NN/source IN/from NNP/TREC
+paper,derive,source
+source,from,TREC
+NN/source:Reference,NNP/TREC:Reference.source
+
+----------------------------------------------------------------------------
+2/
+WRB/How JJ/many NN/author VB/write NN/book IN/in CD/2009
+author,write,book
+NN/author:Author,NN/book:Author.publication
+book,in,2009
+NN/book:Publication,CD/2009:Publication.year
+
+SELECT DISTINCT `Author`.*  
+FROM 
+`dblp_author_ref_new` `Author`,`dblp_pub_new` `Publication`
+WHERE 
+  `Publication`.`id` = `Author`.`pub_id` AND (`Publication`.`year` = ? )
+Time: 0.038
+----------------------------------------------------------------------------
+3/
+WRB/How JJ/many NN/publisher VB/release NN/book IN/in CD/2010
+book,release,publisher
+NN/book:Publication,NN/publisher:Publication.publisher
+book,in,2010
+NN/book:Publication,CD/2010:Publication.year
+
+SELECT DISTINCT Publication.publisher 
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`year` = ? )
+Time: 0.051
+----------------------------------------------------------------------------
+4/
+WRB/How JJ/many NN/publication VB/refer TO/to NNP/Foundations of Databases
+publication,refer,Foundations of Databases
+NN/publication:Publication,NNP/Foundations of Databases:Publication.reference
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`,`dblp_pub_new` `Reference`,`dblp_ref_new`
+WHERE 
+ `Publication`.`id` = `dblp_ref_new`.`id` AND `Reference`.`dblp_key` = `dblp_ref_new`.`dblp_key` AND (`Reference`.`title` = ? )
+Time: 0.023
+----------------------------------------------------------------------------
+5/
+WRB/How JJ/many NN/book VB/cite TO/to NNP/Foundations of Databases
+book,cite,Foundations of Databases
+NN/book:Publication,NNP/Foundations of Databases:Publication.reference
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`,`dblp_pub_new` `Reference`,`dblp_ref_new`
+WHERE 
+ `Publication`.`id` = `dblp_ref_new`.`id` AND `Reference`.`dblp_key` = `dblp_ref_new`.`dblp_key` AND (`Reference`.`title` = ? )
+Time: 0.018
+----------------------------------------------------------------------------
+6/
+WP/What VB/be NN/title IN/of NN/book VBN/written IN/by NNP/Marcus Thint
+book,be write by,Marcus Thint
+NN/book:Publication,NNP/Marcus Thint:Publication.author
+What,be,title
+WP/What:Publication.title,NN/title:Publication.title
+book,of,title
+NN/book:Publication,NN/title:Publication.title
+
+SELECT DISTINCT Publication.title 
+FROM 
+`dblp_pub_new` `Publication`,`dblp_author_ref_new` `Author`
+WHERE 
+ `Publication`.`id` = `Author`.`pub_id`  AND (`Author`.`author` = ? )
+Time: 0.841
+----------------------------------------------------------------------------
+7/
+WP/What VB/be NN/heading IN/of NN/book VBN/written IN/by NNP/Marcus Thint
+book,be write by,Marcus Thint
+NN/book:Publication,NNP/Marcus Thint:Publication.author
+What,be,heading
+WP/What:Publication.title,NN/heading:Publication.title
+book,of,heading
+NN/book:Publication,NN/heading:Publication.title
+
+SELECT DISTINCT Publication.title 
+FROM 
+`dblp_pub_new` `Publication`,`dblp_author_ref_new` `Author`
+WHERE 
+ `Publication`.`id` = `Author`.`pub_id`  AND (`Author`.`author` = ? )
+Time: 0.747
+----------------------------------------------------------------------------
+8/
+WP/What VB/be NN/name IN/of NN/book VBN/written IN/by NNP/William Kent
+book,be write by,William Kent
+NN/book:Publication,NNP/William Kent:Publication.author
+What,be,name
+WP/What:Publication.title,NN/name:Publication.title
+book,of,name
+NN/book:Publication,NN/name:Publication.title
+
+SELECT DISTINCT Publication.title 
+FROM 
+`dblp_pub_new` `Publication`,`dblp_author_ref_new` `Author`
+WHERE 
+ `Publication`.`id` = `Author`.`pub_id`  AND (`Author`.`author` = ? )
+Time: 0.718
+----------------------------------------------------------------------------
+9/
+WP/What NN/paper VB/do NNP/Jennifer Widom VB/write
+Jennifer Widom,write,paper
+NNP/Jennifer Widom:Author,NN/paper:Author.publication
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_author_ref_new` `Author`,`dblp_pub_new` `Publication`
+WHERE 
+(`Author`.`author` = ? ) AND  `Publication`.`id` = `Author`.`pub_id`
+Time: 0.0090
+----------------------------------------------------------------------------
+10/
+WP/What NN/book VB/do NNP/Jennifer Widom VB/write
+Jennifer Widom,write,book
+NNP/Jennifer Widom:Author,NN/book:Author.publication
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_author_ref_new` `Author`,`dblp_pub_new` `Publication`
+WHERE 
+(`Author`.`author` = ? ) AND  `Publication`.`id` = `Author`.`pub_id`
+Time: 0.0060
+----------------------------------------------------------------------------
+11/
+WP/What NN/book VB/do NNP/Philip K. Chan VB/write IN/in CD/1999
+Philip K. Chan,write,book
+NNP/Philip K. Chan:Author,NN/book:Author.publication
+book,in,1999
+NN/book:Publication,CD/1999:Publication.year
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_author_ref_new` `Author`,`dblp_pub_new` `Publication`
+WHERE 
+(`Author`.`author` = ? ) AND  `Publication`.`id` = `Author`.`pub_id` AND (`Publication`.`year` = ? )
+Time: 0.023
+----------------------------------------------------------------------------
+12/
+WP/What NN/book VB/do NNP/Philip K. Chan VB/write IN/from CD/1999 TO/to CD/2000
+Philip K. Chan,write,book
+NNP/Philip K. Chan:Author,NN/book:Author.publication
+book,from,1999
+NN/book:Publication,CD/1999:Publication.year
+book,to,2000
+NN/book:Publication,CD/2000:Publication.year
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_author_ref_new` `Author`,`dblp_pub_new` `Publication`
+WHERE 
+(`Author`.`author` = ? ) AND  `Publication`.`id` = `Author`.`pub_id` AND (`Publication`.`year` >= ? ) AND (`Publication`.`year` <= ? )
+Time: 0.024
+----------------------------------------------------------------------------
+13/
+WP/What NN/book VB/do NNP/James Brown VB/write IN/in CD/1999 IN/from NNP/ACM
+James Brown,write,book
+NNP/James Brown:Author,NN/book:Author.publication
+book,in,1999
+NN/book:Publication,CD/1999:Publication.year
+book,from,ACM
+NN/book:Publication,NNP/ACM:Publication.publisher
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_author_ref_new` `Author`,`dblp_pub_new` `Publication`
+WHERE 
+(`Author`.`author` = ? ) AND  `Publication`.`id` = `Author`.`pub_id` AND (`Publication`.`year` = ? ) AND (`Publication`.`publisher` = ? )
+Time: 0.029
+----------------------------------------------------------------------------
+14/O'reilly hiểu nhưng O’reilly không hiểu
+WP/What VB/be NN/title IN/of NN/book VBN/published IN/by NNP/O’reilly IN/in CD/1999
+book,be publish by,O’reilly
+NN/book:Publication,NNP/O’reilly:Publication.publisher
+What,be,title
+WP/What:Publication,NN/title:Publication
+book,of,title
+NN/book:Publication,NN/title:Publication
+title,in,1999
+NN/title:Publication,CD/1999:Publication.year
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`publisher` = ? ) AND (`Publication`.`year` = ? )
+Time: 0.661
+----------------------------------------------------------------------------
+15/
+WP/What NN/composer VB/write NNP/Java 2D Graphics
+composer,write,Java 2D Graphics
+NN/composer:Author,NNP/Java 2D Graphics:Author.publication
+
+SELECT DISTINCT `Author`.*  
+FROM 
+`dblp_author_ref_new` `Author`,`dblp_pub_new` `Publication`
+WHERE 
+  `Publication`.`id` = `Author`.`pub_id` AND (`Publication`.`title` = ? )
+Time: 0.01
+----------------------------------------------------------------------------
+16/
+WP/What NN/book VB/have NN/isbn NNP/1-56592-484-3
+book,have isbn,1-56592-484-3
+NN/book:Publication,NNP/1-56592-484-3:Publication.isbn
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`isbn` = ? )
+Time: 0.02
+----------------------------------------------------------------------------
+17/
+WP/What NN/book VB/have NN/doi NNP/10.1145/360271.360274
+book,have doi,10.1145/360271.360274
+NN/book:Publication,NNP/10.1145/360271.360274:Publication.doi
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`doi` = ? )
+Time: 0.03
+----------------------------------------------------------------------------
+18/
+WP/What NN/composer VB/write NN/book IN/from CD/1999 IN/in NNP/ACM
+composer,write,book
+NN/composer:Author,NN/book:Author.publication
+book,from,1999
+NN/book:Publication,CD/1999:Publication.year
+book,in,ACM
+NN/book:Publication,NNP/ACM:Publication.publisher
+
+SELECT DISTINCT `Author`.*  
+FROM 
+`dblp_author_ref_new` `Author`,`dblp_pub_new` `Publication`
+WHERE 
+  `Publication`.`id` = `Author`.`pub_id` AND (`Publication`.`year` >= ? ) AND (`Publication`.`publisher` = ? )
+Time: 0.02
+----------------------------------------------------------------------------
+19/
+WP/What NN/book VB/be VB/write IN/by NNP/Philip K. Chan IN/from NNP/ACM
+book,be write by,Philip K. Chan
+NN/book:Publication,NNP/Philip K. Chan:Publication.author
+book,from,ACM
+NN/book:Publication,NNP/ACM:Publication.publisher
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`,`dblp_author_ref_new` `Author`
+WHERE 
+ `Publication`.`id` = `Author`.`pub_id`  AND (`Author`.`author` = ? ) AND (`Publication`.`publisher` = ? )
+Time: 0.03
+----------------------------------------------------------------------------
+20/
+WP/What NN/book VB/be VB/publish IN/by NNP/ACM CC/or NNP/Springer IN/in CD/2010
+book,be publish by,ACM
+NN/book:Publication,NNP/ACM:Publication.publisher
+book,be publish by,Springer
+NN/book:Publication,NNP/Springer:Publication.publisher
+book,in,2010
+NN/book:Publication,CD/2010:Publication.year
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+(SELECT `Publication`.*  
+FROM `dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`publisher` = ? ) OR (`Publication`.`publisher` = ? )) Publication
+WHERE 
+ (`Publication`.`year` = ? )
+Time: 0.03
+----------------------------------------------------------------------------
+21/
+WP/What NN/publication VB/result IN/from NNP/TREC IN/in CD/1999
+publication,result from,TREC
+NN/publication:Publication,NNP/TREC:Publication.source
+publication,in,1999
+NN/publication:Publication,CD/1999:Publication.year
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`source` = ? ) AND (`Publication`.`year` = ? )
+Time: 0.03
+----------------------------------------------------------------------------
+22/
+WP/What NN/book VB/refer TO/to NNP/Foundations of Databases
+book,refer,Foundations of Databases
+NN/book:Publication,NNP/Foundations of Databases:Publication.reference
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`,`dblp_pub_new` `Reference`,`dblp_ref_new`
+WHERE 
+ `Publication`.`id` = `dblp_ref_new`.`id` AND `Reference`.`dblp_key` = `dblp_ref_new`.`dblp_key` AND (`Reference`.`title` = ? )
+Time: 0.0
+----------------------------------------------------------------------------
+23/
+WP/What NN/publication VB/result IN/from NNP/TREC
+publication,result from,TREC
+NN/publication:Publication,NNP/TREC:Publication.source
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`source` = ? )
+Time: 0.02
+----------------------------------------------------------------------------
+24/
+WP/What NN/year VB/be NNP/Foundations of Databases VBN/written IN/in
+Foundations of Databases,be write in,year
+NNP/Foundations of Databases:Publication,NN/year:Publication.year
+
+SELECT DISTINCT Publication.year 
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+(`Publication`.`title` = ? )
+Time: 0.02
+----------------------------------------------------------------------------
+25/
+WP/What NN/year VB/be NNP/Java 2D Graphics VBN/written IN/in
+Java 2D Graphics,be write in,year
+NNP/Java 2D Graphics:Publication,NN/year:Publication.year
+
+SELECT DISTINCT Publication.year 
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+(`Publication`.`title` = ? )
+Time: 0.02
+----------------------------------------------------------------------------
+26/
+WP/What NN/reference IN/of NN/book NNP/Foundations of Databases
+Foundations of Databases,of,reference
+NNP/Foundations of Databases:Publication,NN/reference:Publication.reference
+book,of,reference
+NN/book:Publication,NN/reference:Publication.reference
+
+SELECT DISTINCT `Reference`.*  
+FROM 
+`dblp_pub_new` `Publication`,`dblp_pub_new` `Reference`,`dblp_ref_new`
+WHERE 
+(`Publication`.`title` = ? ) AND `Publication`.`id` = `dblp_ref_new`.`id` AND `Reference`.`dblp_key` = `dblp_ref_new`.`dblp_key` AND `Publication`.`id` = `dblp_ref_new`.`id` AND `Reference`.`dblp_key` = `dblp_ref_new`.`dblp_key`
+Time: 0.705
+----------------------------------------------------------------------------
+27/
+WP/What NN/citation IN/of NN/book NNP/Foundations of Databases
+Foundations of Databases,of,citation
+NNP/Foundations of Databases:Publication,NN/citation:Publication.citation
+book,of,citation
+NN/book:Publication,NN/citation:Publication.citation
+
+SELECT DISTINCT `Citation`.*  
+FROM 
+`dblp_pub_new` `Publication`,`dblp_pub_new` `Citation`,`dblp_ref_new`
+WHERE 
+(`Publication`.`title` = ? ) AND `Publication`.`id` = `dblp_ref_new`.`id` AND `Citation`.`dblp_key` = `dblp_ref_new`.`dblp_key` AND `Publication`.`id` = `dblp_ref_new`.`id` AND `Citation`.`dblp_key` = `dblp_ref_new`.`dblp_key`
+Time: 0.671
+----------------------------------------------------------------------------
+28/
+VB/do NNP/Rafiul Ahad VB/write NN/book IN/in CD/2010
+Rafiul Ahad,write,book
+NNP/Rafiul Ahad:Author,NN/book:Author.publication
+book,in,2010
+NN/book:Publication,CD/2010:Publication.year
+
+SELECT DISTINCT `Author`.*  
+FROM 
+`dblp_author_ref_new` `Author`,`dblp_pub_new` `Publication`
+WHERE 
+(`Author`.`author` = ? ) AND  `Publication`.`id` = `Author`.`pub_id` AND (`Publication`.`year` = ? )
+Time: 0.02
+----------------------------------------------------------------------------
+29/
+VB/do NNP/Rafiul Ahad VB/write NN/book IN/from CD/2005 TO/to CD/2010
+Rafiul Ahad,write,book
+NNP/Rafiul Ahad:Author,NN/book:Author.publication
+book,from,2005
+NN/book:Publication,CD/2005:Publication.year
+book,to,2010
+NN/book:Publication,CD/2010:Publication.year
+
+SELECT DISTINCT `Author`.*  
+FROM 
+`dblp_author_ref_new` `Author`,`dblp_pub_new` `Publication`
+WHERE 
+(`Author`.`author` = ? ) AND  `Publication`.`id` = `Author`.`pub_id` AND (`Publication`.`year` >= ? ) AND (`Publication`.`year` <= ? )
+Time: 0.02
+----------------------------------------------------------------------------
+30/
+VB/do PRP/you VB/find PRP/me DT/some NN/book VB/publish IN/by NNP/O'Reilly
+book,publish,O'Reilly
+NN/book:Publication,NNP/O'Reilly:Publication.publisher
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`publisher` = ? )
+Time: 0.02
+----------------------------------------------------------------------------
+31/
+VB/do PRP/you VB/know DT/any NN/book VB/write IN/in CD/2010 CC/and VB/publish IN/by NNP/ACM
+book,publish,ACM
+NN/book:Publication,NNP/ACM:Publication.publisher
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`publisher` = ? )
+Time: 0.02
+----------------------------------------------------------------------------
+32/
+VB/do NNP/IEEE VB/publish NN/book IN/in CD/2010
+book,publish,IEEE
+NN/book:Publication,NNP/IEEE:Publication.publisher
+book,in,2010
+NN/book:Publication,CD/2010:Publication.year
+
+SELECT DISTINCT Publication.publisher 
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`publisher` = ? ) AND (`Publication`.`year` = ? )
+Time: 0.04
+----------------------------------------------------------------------------
+33/
+VB/do PRP/you VB/have DT/any NN/book VB/be VB/publish IN/by NNP/ACM
+book,be publish by,ACM
+NN/book:Publication,NNP/ACM:Publication.publisher
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`publisher` = ? )
+Time: 0.02
+----------------------------------------------------------------------------
+34/
+VB/be EX/there DT/any NN/book VBN/published IN/by NNP/IEEE IN/in CD/2000
+book,be publish by,IEEE
+NN/book:Publication,NNP/IEEE:Publication.publisher
+book,in,2000
+NN/book:Publication,CD/2000:Publication.year
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`publisher` = ? ) AND (`Publication`.`year` = ? )
+Time: 0.032
+----------------------------------------------------------------------------
+35/
+VB/be EX/there DT/any NN/book VBN/written IN/by NNP/Mike Holcombe IN/in CD/2000
+book,be write by,Mike Holcombe
+NN/book:Publication,NNP/Mike Holcombe:Publication.author
+book,in,2000
+NN/book:Publication,CD/2000:Publication.year
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`,`dblp_author_ref_new` `Author`
+WHERE 
+ `Publication`.`id` = `Author`.`pub_id`  AND (`Author`.`author` = ? ) AND (`Publication`.`year` = ? )
+Time: 0.03
+----------------------------------------------------------------------------
+36/
+VB/Name DT/some NN/book NNP/Richard L. Muller VB/write IN/for NNP/Springer
+Richard L. Muller,write,book
+NNP/Richard L. Muller:Author,NN/book:Author.publication
+book,for,Springer
+NN/book:Publication,NNP/Springer:Publication.publisher
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_author_ref_new` `Author`,`dblp_pub_new` `Publication`
+WHERE 
+(`Author`.`author` = ? ) AND  `Publication`.`id` = `Author`.`pub_id` AND (`Publication`.`publisher` = ? )
+Time: 0.02
+----------------------------------------------------------------------------
+37/
+VB/Name DT/all NN/publication VB/be VB/publish IN/in CD/2010
+publication,be publish in,2010
+NN/publication:Publication,CD/2010:Publication.year
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`year` = ? )
+Time: 0.01
+----------------------------------------------------------------------------
+38/
+VB/Name NN/paper WDT/which VB/be VB/publish IN/from CD/1999 TO/to CD/2001 IN/in NNP/ACM
+paper,be publish from,1999
+NN/paper:Publication,CD/1999:Publication.year
+paper,to,2001
+NN/paper:Publication,CD/2001:Publication.year
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`year` >= ? ) AND (`Publication`.`year` <= ? )
+Time: 0.426
+----------------------------------------------------------------------------
+39/
+VB/Name NN/publication WDT/which VB/result IN/from NNP/DBPL IN/in CD/2010
+which,result from,DBPL
+WDT/which:Publication,NNP/DBPL:Publication.source
+
+SELECT DISTINCT Publication.source 
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`source` = ? )
+Time: 0.01
+----------------------------------------------------------------------------
+40/
+VB/List DT/some NN/book WDT/which VB/be VB/write IN/by NNP/Jennifer Widom IN/from CD/1999
+book,be write by,Jennifer Widom
+NN/book:Publication,NNP/Jennifer Widom:Publication.author
+book,from,1999
+NN/book:Publication,CD/1999:Publication.year
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`,`dblp_author_ref_new` `Author`
+WHERE 
+ `Publication`.`id` = `Author`.`pub_id`  AND (`Author`.`author` = ? ) AND (`Publication`.`year` >= ? )
+Time: 0.03
+----------------------------------------------------------------------------
+41/
+VB/List DT/all NN/book VB/be VB/publish IN/by NNP/Springer IN/in CD/2010
+book,be publish by,Springer
+NN/book:Publication,NNP/Springer:Publication.publisher
+book,in,2010
+NN/book:Publication,CD/2010:Publication.year
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`publisher` = ? ) AND (`Publication`.`year` = ? )
+Time: 0.045
+----------------------------------------------------------------------------
+42/
+VB/List DT/some NN/book VB/be VB/publish IN/by NNP/ACM
+book,be publish by,ACM
+NN/book:Publication,NNP/ACM:Publication.publisher
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`publisher` = ? )
+Time: 0.017
+----------------------------------------------------------------------------
+43/
+VB/List NN/author NNP/Who VB/write NN/book IN/for NNP/Springer IN/in CD/2010
+Who,write,author
+NNP/Who:Author,NN/author:Author.publication
+book,for,Springer
+NN/book:Publication,NNP/Springer:Publication.publisher
+book,in,2010
+NN/book:Publication,CD/2010:Publication.year
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_author_ref_new` `Author`,`dblp_pub_new` `Publication`
+WHERE 
+(`Author`.`author` = ? ) AND  `Publication`.`id` = `Author`.`pub_id` AND (`Publication`.`publisher` = ? ) AND (`Publication`.`year` = ? )
+Time: 0.04
+----------------------------------------------------------------------------
+44/
+VB/Find NN/book WDT/which VB/be VB/compose IN/by NNP/Rafiul Ahad CC/and NNP/Amelia Carlson
+book,be compose by,Rafiul Ahad
+NN/book:Publication,NNP/Rafiul Ahad:Publication.author
+book,be compose by,Amelia Carlson
+NN/book:Publication,NNP/Amelia Carlson:Publication.author
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+(SELECT `Publication`.*  
+FROM `dblp_pub_new` `Publication`,`dblp_author_ref_new` `Author`
+WHERE 
+ `Publication`.`id` = `Author`.`pub_id`  AND (`Author`.`author` = ? )) Publication
+INNER JOIN
+(SELECT `Publication`.*  
+FROM `dblp_pub_new` `Publication`,`dblp_author_ref_new` `Author`
+WHERE 
+ `Publication`.`id` = `Author`.`pub_id`  AND (`Author`.`author` = ? )) Publication1 ON Publication.id = Publication1.id
+
+Time: 0.02
+----------------------------------------------------------------------------
+45/
+VB/Find NN/book VB/be VB/compose IN/by NNP/Rafiul Ahad CC/and NNP/Amelia Carlson
+book,be compose by,Rafiul Ahad
+NN/book:Publication,NNP/Rafiul Ahad:Publication.author
+book,be compose by,Amelia Carlson
+NN/book:Publication,NNP/Amelia Carlson:Publication.author
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+(SELECT `Publication`.*  
+FROM `dblp_pub_new` `Publication`,`dblp_author_ref_new` `Author`
+WHERE 
+ `Publication`.`id` = `Author`.`pub_id`  AND (`Author`.`author` = ? )) Publication
+INNER JOIN
+(SELECT `Publication`.*  
+FROM `dblp_pub_new` `Publication`,`dblp_author_ref_new` `Author`
+WHERE 
+ `Publication`.`id` = `Author`.`pub_id`  AND (`Author`.`author` = ? )) Publication1 ON Publication.id = Publication1.id
+
+Time: 0.02
+----------------------------------------------------------------------------
+46/
+VB/Find NN/author WP/who VB/write NN/book IN/for NNP/ACM IN/from CD/2008 TO/to CD/2009
+who,write,book
+WP/who:Author,NN/book:Author.publication
+book,for,ACM
+NN/book:Publication,NNP/ACM:Publication.publisher
+book,from,2008
+NN/book:Publication,CD/2008:Publication.year
+book,to,2009
+NN/book:Publication,CD/2009:Publication.year
+
+SELECT DISTINCT `Author`.*  
+FROM 
+`dblp_author_ref_new` `Author`,`dblp_pub_new` `Publication`
+WHERE 
+  `Publication`.`id` = `Author`.`pub_id` AND (`Publication`.`publisher` = ? ) AND (`Publication`.`year` >= ? ) AND (`Publication`.`year` <= ? )
+Time: 0.02
+----------------------------------------------------------------------------
+47/
+VB/Find NN/publication VB/result IN/from NNP/ACM Annual Conference
+publication,result from,ACM Annual Conference
+NN/publication:Publication,NNP/ACM Annual Conference:Publication.source
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`
+WHERE 
+ (`Publication`.`source` = ? )
+Time: 0.02
+----------------------------------------------------------------------------
+48/
+VB/Show PRP/me DT/some NN/book VB/be VB/write IN/by NNP/Lorand Dali
+book,be write by,Lorand Dali
+NN/book:Publication,NNP/Lorand Dali:Publication.author
+
+SELECT DISTINCT `Publication`.*  
+FROM 
+`dblp_pub_new` `Publication`,`dblp_author_ref_new` `Author`
+WHERE 
+ `Publication`.`id` = `Author`.`pub_id`  AND (`Author`.`author` = ? )
+Time: 0.03
+----------------------------------------------------------------------------
+49/
+VB/Show PRP/me DT/any NN/book WDT/which VB/publish IN/in NNP/ACM CC/and VB/write IN/by NNP/Lorand Dali.
+ACM,publish,which
+NNP/ACM:Publication,WDT/which:Publication.publisher
+book,write,Lorand Dali.
+NN/book:Author,NNP/Lorand Dali.:Author.publication
+
+SELECT DISTINCT `Author`.*  
+FROM 
+`dblp_pub_new` `Publication`,`dblp_author_ref_new` `Author`
+WHERE 
+(`Publication`.`title` = ? ) AND  `Publication`.`id` = `Author`.`pub_id` AND (`Publication`.`title` = ? )
+Time: 0.01
+----------------------------------------------------------------------------
+50/
+NNP/Alfred V. Aho VB/be NN/author IN/of NNP/Data Structures and Algorithms ,/, RB/isn't PRP/it
+author,of,Data Structures and Algorithms
+NN/author:Author,NNP/Data Structures and Algorithms:Author.publication
+Alfred V. Aho,of,Data Structures and Algorithms
+NNP/Alfred V. Aho:Author,NNP/Data Structures and Algorithms:Author.publication
+
+SELECT DISTINCT `Author`.*  
+FROM 
+`dblp_author_ref_new` `Author`,`dblp_pub_new` `Publication`
+WHERE 
+  `Publication`.`id` = `Author`.`pub_id` AND (`Publication`.`title` = ? ) AND(`Author`.`author` = ? ) AND  `Publication`.`id` = `Author`.`pub_id` AND (`Publication`.`title` = ? )
+Time: 0.12
+----------------------------------------------------------------------------
+51/
+NNP/Alfred V. Aho VB/write NN/book IN/in CD/2010 ,/, RB/doesn't PRP/it
+Alfred V. Aho,write,book
+NNP/Alfred V. Aho:Author,NN/book:Author.publication
+book,in,2010
+NN/book:Publication,CD/2010:Publication.year
+
+SELECT DISTINCT `Author`.*  
+FROM 
+`dblp_author_ref_new` `Author`,`dblp_pub_new` `Publication`
+WHERE 
+(`Author`.`author` = ? ) AND  `Publication`.`id` = `Author`.`pub_id` AND (`Publication`.`year` = ? )
+Time: 0.02
+----------------------------------------------------------------------------
+52/Bị thiếu bộ 3
+NNP/Tom C. Reyes CC/and NNP/Yuri Breitbart VB/be NN/author IN/of NN/book NNP/Overview of the ADDS System ,/, RB/aren't PRP/they
+Overview of the ADDS System,of,author
+NNP/Overview of the ADDS System:Publication,NN/author:Publication.author
+book,of,author
+NN/book:Publication,NN/author:Publication.author
+Overview of the ADDS System,of,Yuri Breitbart
+NNP/Overview of the ADDS System:Publication,NNP/Yuri Breitbart:Publication.author
+book,of,Yuri Breitbart
+NN/book:Publication,NNP/Yuri Breitbart:Publication.author
+
+SELECT DISTINCT `Author`.*  
+FROM 
+`dblp_pub_new` `Publication`,`dblp_author_ref_new` `Author`
+WHERE 
+(`Publication`.`title` = ? ) AND `Publication`.`id` = `Author`.`pub_id` AND `Publication`.`id` = `Author`.`pub_id` AND(`Publication`.`title` = ? ) AND `Publication`.`id` = `Author`.`pub_id`  AND (`Author`.`author` = ? ) AND `Publication`.`id` = `Author`.`pub_id`  AND (`Author`.`author` = ? )
