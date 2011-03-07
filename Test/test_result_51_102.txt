@@ -729,6 +729,6 @@ WHERE
 
 
 Kết quả:
-Nhận diện ko đươc:1(thiếu luật)
-Thiếu bộ ba: 52(thiếu luật, bỏ luật vô cũng ko xử lý được do hàm chưa hỗ ttrợ)
-Sai chính tả: 14
+Nhận diện ko đươc:câu 1(thiếu luật)
+Thiếu bộ ba: câu 52(thiếu luật, bỏ luật vô cũng ko xử lý được do hàm chưa hỗ ttrợ)
+Sai chính tả: câu 14
