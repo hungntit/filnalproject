@@ -84,9 +84,10 @@ public class ExtractTriple {
         {
     Token[] tempTokenArr   =   Token.copyTokens((Token[])tempTokenList.toArray());
     int start = 0,end   =   0;
-
+    int ruleIndex   =   0;
         for(String rule:rules)
         {
+            ruleIndex++;
             if(rule.trim().equals("")) continue;
             start   =   0;
             end =   start;
@@ -307,6 +308,11 @@ public class ExtractTriple {
                     tokensList.remove(tokensList.size()-1);
                     tripleTokens.remove(tripleTokens.size()-1);
               }
+               System.out.println("-------------------------------------------------------");
+               System.out.println("RULE "+ruleIndex+" :");
+
+               System.out.println(rule);
+               System.out.println("-------------------------------------------------------");
                String[] outputStrs          =   outputRule.split(",");
                int firstObjPossition        =   Integer.parseInt(outputStrs[0].split("-")[1].trim())-1;
                int secondObjPossition       =   Integer.parseInt(outputStrs[2].split("-")[1].trim())-1;
