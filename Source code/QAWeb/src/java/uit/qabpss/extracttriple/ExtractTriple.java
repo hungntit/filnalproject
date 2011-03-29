@@ -268,8 +268,9 @@ public class ExtractTriple {
                                         {
                                             tokensList.remove(tokensList.size()-1);
                                             tripleTokens.remove(tripleTokens.size()-1);
-                                            if(!isAdded)
+                                            if(!isAdded && tokensList.size()>1)
                                             {
+
                                             tokensList.remove(tokensList.size()-1);
                                             tripleTokens.remove(tripleTokens.size()-1);
 

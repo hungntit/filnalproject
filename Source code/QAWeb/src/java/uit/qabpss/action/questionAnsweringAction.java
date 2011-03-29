@@ -83,7 +83,16 @@ public class questionAnsweringAction extends org.apache.struts.action.Action {
              request.setAttribute("isYNQuestion", false);
          }
          if(resultAnswer.getQuestionType().isHowManyQuestion())
+         {
+                EntityType entityTypeOfQuestion = resultAnswer.getEntityTypeOfQuestion();
+             if(entityTypeOfQuestion.isTable())
+                 request.setAttribute("entitytype","text.dblp."+ entityTypeOfQuestion.getTableInfo().getAliasName().toLowerCase());
+             else
+                 request.setAttribute("entitytype","text.dblp."+ entityTypeOfQuestion.getColumnInfo().getAliasName().toLowerCase());
              request.setAttribute("isHowManyQuestion", true);
+             request.setAttribute("total", results.size());
+            
+         }
          else
          {
              request.setAttribute("isHowManyQuestion", false);

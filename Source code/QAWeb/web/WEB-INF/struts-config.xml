@@ -33,13 +33,9 @@
         <action path="/showPubDetail" type="uit.qabpss.action.showPubDetailAction">
             <forward name="success" path=".pubsDetail"/>
         </action>
-        <action input=".advanceSearchPage" name="AdvanceSearchForm" path="/loadParams" validate="false" scope="session" type="uit.qabpss.action.loadParamAction">
-            <forward name="success" path=".advanceSearchPage"/>
-            <forward name="load" path="/public/jsp/advanceSearchForm.jsp"/>
-        </action>
+       
         <action input=".advanceSearchPage" name="AdvanceSearchForm" path="/advanceSearch" scope="session" type="uit.qabpss.action.advanceSearchAction">
-            <forward name="publication" path=".publications"/>
-            <forward name="author" path=".authors"/>
+            <forward name="publication" path=".advanceSearchPage"/>
             <forward name="noresult" path=".advanceSearchPage"/>
         </action>
         <action path="/quicksearch" type="uit.qabpss.action.quickSearchAction">

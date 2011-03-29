@@ -78,8 +78,9 @@ public class AdvanceSearchForm extends org.apache.struts.action.ActionForm {
      */
     public AdvanceSearchForm() {
         submit = new ImageButtonBean();
-
-        params = new ArrayList<Param>();
+         tableInfo = DBInfoUtil.getDBInfo().getTables().get(1);
+        params  =   Param.getParamsFromTableInfo(tableInfo);
+       
         isAndOperator = true;
         // TODO Auto-generated constructor stub
     }

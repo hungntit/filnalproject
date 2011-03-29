@@ -6,6 +6,7 @@
 package uit.qabpss.extracttriple;
 
 import uit.qabpss.dbconfig.Relation;
+import uit.qabpss.dbconfig.TableInfo;
 import uit.qabpss.preprocess.EntityType;
 
 /**
@@ -107,8 +108,19 @@ public class TripleRelation {
             {
                 if(this.secondEntity!=null && tr.secondEntity!=null)
                 {
+                    if(secondEntity.getColumnInfo().isRelatedField() && tr.secondEntity.getColumnInfo().isRelatedField() )
+                    {
+                        TableInfo relatedTable1 = secondEntity.getColumnInfo().getRelatedTable();
+                        TableInfo relatedTable2 = tr.secondEntity.getColumnInfo().getRelatedTable();
+                        if(relatedTable1.equals(relatedTable2))
+                            return true;
+                        return false;
+                    }
+                    else
+                    {
                     if(!this.secondEntity.getColumnInfo().getName().equals(tr.secondEntity.getColumnInfo().getName()))
                         return false;
+                    }
                 }
             }
         }

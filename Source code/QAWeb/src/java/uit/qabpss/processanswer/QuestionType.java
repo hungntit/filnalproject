@@ -30,7 +30,7 @@ public class QuestionType {
        if(tokens[0].isWP() || tokens[0].isWDT()
                || !tokens[0].isAuxiliaryVerb() && tokens[0].isVB())
            return  QuestionType.WP_Q;
-       if(tokens[0].getValue().equalsIgnoreCase("how") && tokens[1].getValue().equalsIgnoreCase("many"))
+       if(tokens[0].getValue().equalsIgnoreCase("how") && !tokens[1].isVB())
            return  QuestionType.HOW_MANY_Q;
        return Y_N_Q;
     }

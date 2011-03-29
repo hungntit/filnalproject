@@ -34,10 +34,10 @@
         </td>
     </tr>
     <tr>
-        <td class="text5">
-            <a href="#" onclick="toggleBox('Sample_Question_Box');"><bean:message key="text.qasample"/></a>
+        <td class="text5" style="text-align: left;">
+            <a href="#" onclick="toggleBox('Sample_Question_Box');" style="margin-left: 10%;" ><bean:message key="text.qasample"/> </a>
             <br>
-            <div id="Sample_Question_Box"style="text-align: left;display: none">
+            <div id="Sample_Question_Box"style="text-align: left;display: block">
                 <c:forEach var="q" items="${EXAMPLE_QUESTIONS}" varStatus="st">
                     <c:out value="${st.count}"/><a href="#" style="text-transform: none;font-size: 14px" onclick="document.QAForm.sentence.value='${q.label}'">
                         ${q.label}
@@ -55,17 +55,22 @@
                 <c:if test="${isYNQuestion == true}">
                     <bean:message key="text.itstrue" /><br/>
                 </c:if>
-                <c:if test="${isYNQuestion == false}">
-                    <c:if test="${isHowManyQuestion == true}">
+               
+                 <c:if test="${isHowManyQuestion == true}">
 
-                    </c:if>
-
-                </c:if>
-                <display:table id="data" name="${results}" requestURI="" pagesize="10" style="width:100%;">
-                    <display:column>
-                        ${data_rowNum}. ${data}
-                    </display:column>
-                </display:table>
+                     <bean:message key="text.total" />: ${total} <bean:message key="${entitytype}" /><br/>
+                     
+                 </c:if>
+                  <c:if test="${isWPQuestion == true}">
+                        <display:table id="data" name="${results}" requestURI="" pagesize="10" style="width:100%;">
+                            <display:column>
+                                ${data_rowNum}. ${data}
+                            </display:column>
+                        </display:table>
+                        <br/>
+                 </c:if>
+               
+                
 
                             
             </div>

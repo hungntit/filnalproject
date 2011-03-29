@@ -413,9 +413,11 @@ public class SentenseUtil {
         for (int i = 0; i < result.length; i++) {
             Token token = result[i];
             if (token.getPos_value().equals("DT")
-                    && (token.getValue().equals("a")
-                    || token.getValue().equals("an")
-                    || token.getValue().equals("the"))) {
+                    ||token.getPos_value().equals("JJ")
+//                    && (token.getValue().equals("a")
+//                    || token.getValue().equals("an")
+//                    || token.getValue().equals("the"))
+                    ) {
                 result = removeToken(result, token);
             }
         }

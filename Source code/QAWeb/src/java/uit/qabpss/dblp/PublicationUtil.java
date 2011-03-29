@@ -16,6 +16,8 @@ import uit.qabpss.model.Publication;
  */
 public class PublicationUtil {
     public static List<List<Publication>> groupByYear(List<Publication> list) {
+        if(list == null)
+            return null;
         int tempYear = list.get(0).getYear();
         List<List<Publication>> result = new ArrayList<List<Publication>>();
         List<Publication> l = new ArrayList<Publication>();
