@@ -14,7 +14,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib uri="http://struts.apache.org/tags-html"  prefix="html"%>
 <%@taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
@@ -35,7 +34,13 @@
                         <tr style="margin: 5px;">
                             <td>
                                 <bean:define name="param" property="column.aliasName" id="column_aliasName" />
-                                <bean:message  key="text.dblp.${fn:toLowerCase(column_aliasName)}"  />
+                                <%
+                               String aliasName = (String)org.apache.struts.taglib.tiles.util.TagUtils.findAttribute("column_aliasName", pageContext);
+                               aliasName =   aliasName.toLowerCase();
+
+                                %>
+                                <bean:define id="alias" value='<%=aliasName%>'/>
+                                <bean:message  key="text.dblp.${alias}"  />
                             </td>
 
                             <td>
