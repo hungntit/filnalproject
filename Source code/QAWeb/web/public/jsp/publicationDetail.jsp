@@ -9,6 +9,21 @@
 <%@taglib uri="/WEB-INF/tlds/struts-layout.tld" prefix="layout" %>
 <script type="text/javascript" src="public/javascript/javascript.js"></script>
 <style type="text/css">
+#tab-layout
+{
+
+}
+#tab-layout table
+{
+    margin-left: 20%;
+    margin-right: 20%;
+}
+.FORM {
+	color : #6489A0;
+	font-family : verdana;
+	font-size : 16px;
+	text-align: center;
+}
 .ongletMain {
 	
 	BACKGROUND-COLOR: #FFFFFF;/*dce8f4*/
@@ -139,9 +154,9 @@
 
 </div>
 
-    <layout:html>
-    <layout:tabs  width="400">
-        <layout:tab key="text.dblp.author" width="50">
+<div id="tab-layout" style="text-align: center">
+    <layout:tabs  width="400" styleClass="FORM">
+        <layout:tab key="text.dblp.author" width="100">
              <table  style="-moz-border-radius: 10px;-webkit-border-radius: 10px;background-color: whitesmoke;width: 100%; ">
                 <c:forEach var="au" items="${publication.authors}">
                    <tr>
@@ -154,7 +169,7 @@
                 </c:forEach>
              </table>
         </layout:tab>
-         <layout:tab key="text.info" width="50">
+         <layout:tab key="text.info" width="100">
               <table  style="-moz-border-radius: 10px;-webkit-border-radius: 10px;background-color: whitesmoke;width: 100%;">
                     <tr>
                         <td class="left_col"><bean:message key="text.source"/></td>
@@ -185,7 +200,7 @@
                     </tr>
                 </table>
           </layout:tab>
-         <layout:tab key="text.links" width="50">
+         <layout:tab key="text.links" width="100">
               <table  style="-moz-border-radius: 10px;-webkit-border-radius: 10px;background-color: whitesmoke;width: 100%;">
                     <tr>
                         <td class="left_col"><bean:message key="text.ee"/></td>
@@ -220,7 +235,7 @@
                     </tr>
                 </table>
           </layout:tab>
-         <layout:tab key="text.references" width="50">
+         <layout:tab key="text.references" width="100">
               <h3><bean:message key="text.references"/></h3><br>
                 <c:out value="${warning}"/><br>
                 <table  style="-moz-border-radius: 10px;-webkit-border-radius: 10px;background-color: whitesmoke;width: 100%;">
@@ -251,5 +266,5 @@
                 </c:if>
          </layout:tab>
     </layout:tabs>
-  </layout:html>
+</div>
 </td>
