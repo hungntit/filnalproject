@@ -32,6 +32,8 @@ public class QuestionType {
            return  QuestionType.WP_Q;
        if(tokens[0].getValue().equalsIgnoreCase("how") && !tokens[1].isVB())
            return  QuestionType.HOW_MANY_Q;
+       if(tokens[0].isNonNe() && tokens[0].getEntityType().isNull())
+           return  QuestionType.WP_Q;
        return Y_N_Q;
     }
     public boolean isWPQuestion()
