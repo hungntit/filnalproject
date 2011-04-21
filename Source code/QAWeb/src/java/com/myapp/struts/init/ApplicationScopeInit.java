@@ -1,5 +1,6 @@
 package com.myapp.struts.init;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Comparator;
 import java.util.Enumeration;
@@ -29,9 +30,18 @@ public class ApplicationScopeInit implements ServletContextListener {
         try {
             HibernateUtil.getSessionFactory();
             DBInfoUtil.initDb();
-            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            
+            //Get ServletContext and set the properties as a application scope object
+            ServletContext context = event.getServletContext();
+            context.setAttribute("EXAMPLE_QUESTIONS", getPropertiesFiles("uit/qabpss/extracttriple/SampleQuestion.properties"));
+            context.setAttribute("FORMAT_QUESTIONS", getPropertiesFiles("uit/qabpss/extracttriple/FormatQuestion.properties"));
+        } catch (Exception e) {
+        }
+    }
+    public static Set getPropertiesFiles(String fileName) throws IOException{
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
             //Use context classloader to read states.properties
-            InputStream iStream = loader.getResourceAsStream("uit/qabpss/extracttriple/SampleQuestion.properties");
+            InputStream iStream = loader.getResourceAsStream(fileName);
             Properties props = new Properties();
             //Load the stream into the properties object directly
             props.load(iStream);
@@ -60,13 +70,8 @@ public class ApplicationScopeInit implements ServletContextListener {
                 nvp = new LabelValueBean(label, keyName);
                 stateSet.add(nvp);
             }
-            //Get ServletContext and set the properties as a application scope object
-            ServletContext context = event.getServletContext();
-            context.setAttribute("EXAMPLE_QUESTIONS", stateSet);
-        } catch (Exception e) {
-        }
+            return stateSet;
     }
-
     @Override
     public void contextDestroyed(ServletContextEvent event) {
         HibernateUtil.closeSessionFactory();
