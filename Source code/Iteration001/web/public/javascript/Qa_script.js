@@ -6,3 +6,7 @@ function toggleBox(id) {
         document.getElementById(id).style.display = 'none';
     }
 }
+
+function closeBox(id) {
+    document.getElementById(id).style.display = 'none';
+}

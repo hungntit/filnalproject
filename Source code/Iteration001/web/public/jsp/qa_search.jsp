@@ -35,10 +35,19 @@
     </tr>
     <tr>
         <td class="text5" style="text-align: left;">
-            <a href="#" onclick="toggleBox('Sample_Question_Box');" style="margin-left: 10%;" ><bean:message key="text.qasample"/> </a>
+            <%--<a href="#" onclick="toggleBox('Sample_Question_Box');toggleBox('Format_Question_Box');" style="margin-left: 10%;" ><bean:message key="text.qasample"/> </a>--%>
+            <a href="#" onclick="toggleBox('Format_Question_Box');toggleBox('Sample_Question_Box');" style="margin-left: 10%;" ><bean:message key="text.qaformatsample"/> </a>
             <br>
-            <div id="Sample_Question_Box"style="text-align: left;display: block">
+            <%--<div id="Sample_Question_Box"style="text-align: left;display: block">
                 <c:forEach var="q" items="${EXAMPLE_QUESTIONS}" varStatus="st">
+                    <c:out value="${st.count}"/><a href="#" style="text-transform: none;font-size: 14px" onclick="document.QAForm.sentence.value='${q.label}'">
+                        ${q.label}
+                    </a>
+                    <br>
+                </c:forEach>
+            </div>--%>
+            <div id="Format_Question_Box"style="text-align: left;display: block;">
+                <c:forEach var="q" items="${FORMAT_QUESTIONS}" varStatus="st">
                     <c:out value="${st.count}"/><a href="#" style="text-transform: none;font-size: 14px" onclick="document.QAForm.sentence.value='${q.label}'">
                         ${q.label}
                     </a>
@@ -47,60 +56,63 @@
             </div>
         </td>
     </tr>
-    
-    <c:if test="${results != null}">
-    <tr>
-        <td>
-            <div class="box_search" style="text-align: left;background-color: whitesmoke" >
-                <c:if test="${isYNQuestion == true}">
-                    <bean:message key="text.itstrue" /><br/>
-                </c:if>
-               
-                 <c:if test="${isHowManyQuestion == true}">
 
-                     <bean:message key="text.total" />: ${total} <bean:message key="${entitytype}" /><br/>
-                     
-                 </c:if>
-                  <c:if test="${isWPQuestion == true}">
+    <c:if test="${results != null}">
+        <script type="text/javascript">
+            closeBox('Format_Question_Box');
+        </script>
+        <tr>
+            <td>
+                <div class="box_search" style="text-align: left;background-color: whitesmoke" >
+                    <c:if test="${isYNQuestion == true}">
+                        <bean:message key="text.itstrue" /><br/>
+                    </c:if>
+
+                    <c:if test="${isHowManyQuestion == true}">
+
+                        <bean:message key="text.total" />: ${total} <bean:message key="${entitytype}" /><br/>
+
+                    </c:if>
+                    <c:if test="${isWPQuestion == true}">
                         <display:table id="data" name="${results}" requestURI="" pagesize="10" style="width:100%;">
                             <display:column>
                                 ${data_rowNum}. ${data}
                             </display:column>
                         </display:table>
                         <br/>
-                 </c:if>
-               
-                
+                    </c:if>
 
-                            
-            </div>
 
-        </td>
-    </tr>
+
+
+                </div>
+
+            </td>
+        </tr>
     </c:if>
     <c:if test="${notfound == true}">
-         <tr>
-              <td align="center">
-                    <div class="box_search" style="text-align: left;background-color: whitesmoke" >
+        <tr>
+            <td align="center">
+                <div class="box_search" style="text-align: left;background-color: whitesmoke" >
                     <c:if test="${isYNQuestion == true}">
-                            <bean:message key="text.itsfalse" /><br>
+                        <bean:message key="text.itsfalse" /><br>
                     </c:if>
                     <c:if test="${isYNQuestion == false}">
                         <c:if test="${isHowManyQuestion == true}">
 
-                                    <bean:message key="text.total" />: 0 <br/>
+                            <bean:message key="text.total" />: 0 <br/>
 
                         </c:if>
                         <c:if test="${isHowManyQuestion == false}">
 
-                               <bean:message key="text.noresult"/>
+                            <bean:message key="text.noresult"/>
 
                         </c:if>
 
                     </c:if>
-                    </div>
-           </td>
-    </tr>
+                </div>
+            </td>
+        </tr>
     </c:if>
     <c:if test="${fail == true}">
         <tr>
@@ -110,23 +122,23 @@
     </c:if>
 
     <c:if test="${replacedObjects != null}">
-    <tr>
-        <td>
-            <div class="box_search" style="text-align: left;background-color: whitesmoke" >
+        <tr>
+            <td>
+                <div class="box_search" style="text-align: left;background-color: whitesmoke" >
 
                     <c:forEach var="robj" items="${replacedObjects}" >
-                            ${robj.token.value} does not exist.Please replace it by:
-                            <br>
-                            <c:forEach var="rvalue" items="${robj.list}" varStatus="st">
-                                ${st.count}. <a href="doQA.do?replaceStr=${rvalue}&originStr=${robj.token.value}">${rvalue}</a>
+                        ${robj.token.value} does not exist.Please replace it by:
+                        <br>
+                        <c:forEach var="rvalue" items="${robj.list}" varStatus="st">
+                            ${st.count}. <a href="doQA.do?replaceStr=${rvalue}&originStr=${robj.token.value}">${rvalue}</a>
 
-                                <hr>
-                            </c:forEach>
+                            <hr>
+                        </c:forEach>
                         <hr>
                     </c:forEach>
 
-            </div>
-        </td>
-    </tr>
+                </div>
+            </td>
+        </tr>
     </c:if>
 </table>
