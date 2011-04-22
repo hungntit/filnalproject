@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+
+<struts-config>
+    <form-beans>
+        <form-bean name="QAForm" type="uit.qabpss.formbean.QAForm"/>
+        <form-bean name="AdvanceSearchForm" type="uit.qabpss.formbean.AdvanceSearchForm"/>
+        <form-bean name="searchForm" type="uit.qabpss.formbean.SearchForm"/>
+    </form-beans>
+    
+    <global-exceptions>
+    
+    </global-exceptions>
+
+    <global-forwards>
+        <forward name="welcome"  path="/Welcome.do"/>
+    </global-forwards>
+
+    <action-mappings>
+        <!-- Advance Search -->
+       
+        <!-- end Advance Search -->
+        <action input=".searchPage" name="searchForm" path="/search" scope="session" validate="true" type="uit.qabpss.action.searchAction">
+            <forward name="success" path=".searchPage"/>
+        </action>
+        <action path="/showPubsByAuthor" type="uit.qabpss.action.showPubsByAuthorAction">
+            <forward name="success" path=".pubsOfAuthorPage"/>
+        </action>
+        <action path="/showPubDetail" type="uit.qabpss.action.showPubDetailAction">
+            <forward name="success" path=".pubsDetail"/>
+        </action>
+       
+        <action input=".advanceSearchPage" name="AdvanceSearchForm" path="/advanceSearch" scope="session" type="uit.qabpss.action.advanceSearchAction">
+            <forward name="publication" path=".advanceSearchPage"/>
+            <forward name="noresult" path=".advanceSearchPage"/>
+        </action>
+        <action path="/quicksearch" type="uit.qabpss.action.quickSearchAction">
+            <forward name="success" path=".searchPage"/>
+        </action>
+        <action input=".qaSearchPage" name="QAForm" path="/doQA" scope="session" type="uit.qabpss.action.questionAnsweringAction" validate="true">
+             <forward name="success" path=".qaSearchPage"/>
+        </action>
+        <action input="/" name="QAForm" path="/replaceStrInQuestion" scope="session" type="uit.qabpss.action.replaceStrInQuestion"/>
+        
+        <action path="/Welcome" forward=".qadb-1"/>
+        <action path="/searchPage" forward=".searchPage"/>
+        <action path="/qaSearchPage" forward=".qaSearchPage"/>
+        <action path="/Contact" forward=".Contact"/>
+        <action path="/advanceSearchPage" forward=".advanceSearchPage"/>
+        <action path="/Locale" type="uit.qabpss.action.languageSelectAction" parameter="method" validate="false"/>
+        <action path="/publicationList"
+				parameter=".searchPage"
+				type="org.apache.struts.actions.ForwardAction" />
+    </action-mappings>
+    
+    <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+
+    <message-resources parameter="com/myapp/struts/ApplicationResource"/>
+    
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />
+        <set-property property="moduleAware" value="true" />
+    </plug-in>
+    
+    <!-- ========================= Validator plugin ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property
+            property="pathnames"
+            value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+    </plug-in>
+  
+</struts-config>

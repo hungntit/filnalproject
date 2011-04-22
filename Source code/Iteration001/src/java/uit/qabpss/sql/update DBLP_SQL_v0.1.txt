@@ -1,0 +1,29 @@
+-- change structure of database
+
+-- Added by Hung Nguyen 15/09
+-- Create table `dblp_author_new`
+    CREATE TABLE `dblp_author_new`(     `id` INT(8) NOT NULL COMMENT 'Author id',     `author_name` VARCHAR(70) COMMENT 'The author name',     PRIMARY KEY (`id`)  );
+-- Insert values for table `dblp_author_new`
+
+    INSERT INTO dblp_author_new(author_name)
+    SELECT DISTINCT author FROM dblp_author_ref_new
+    ;
+-- Create index for `dblp_author_new`
+    ALTER TABLE `dblp_author_new` ADD INDEX `dblp_author_name_idx` (`author_name`);
+    ALTER TABLE `dblp_author_new` ADD FULLTEXT `dblp_author_name_full_idx` (`author_name`);
+-- Change Author (varchar) -> author_id :int
+    CREATE TABLE `dblp_author_ref_new1`(     `pub_id` INT(8) NOT NULL COMMENT 'Our internal database key in dblp_pub_new',     `author_id` INT(8) NOT NULL COMMENT 'Our internal database key in dblp_author_new',     `editor` BOOLEAN COMMENT 'Bool being true when the author is editor of the Book',     `author_num` INT(3) COMMENT 'The author number(from the implicit order in the dblp xml file)',     PRIMARY KEY (`pub_id`, `author_id`)  );
+--  -- Insert values for dblp_author_ref1:
+
+        INSERT INTO dblp_author_ref_new1(pub_id,author_id,editor,author_num)
+        SELECT dblp_author_ref_new.pub_id,dblp_author_new.id, editor,author_num
+        FROM dblp_author_new,dblp_author_ref_new
+        WHERE dblp_author_ref_new.author = dblp_author_new.author_name
+-- -- drop table dblp_author_ref_new
+        DROP TABLE `dblp_author_ref_new`;
+-- --rename table dblp_author_ref_new1 -> dblp_author_ref_new1
+        RENAME TABLE `dblp_author_ref_new1` TO `dblp_author_ref_new`;
+-- add index for table dblp_author_ref_new
+    ALTER TABLE `dblp_author_ref_new` ADD INDEX `dbpp_pub_idx` (`pub_id`);
+    ALTER TABLE `dblp_author_ref_new` ADD INDEX `dblp_author_id_idx` (`author_id`);
+-- end by Hung Nguyen
