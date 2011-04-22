@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="config.xsd">
+    <table table-alias="Publication">
+        <table-name>dblp_pub_new</table-name>
+        <field type="String" field-alias="author" visible="false" relation="related table">
+            <relation>
+                <relation-name>have author</relation-name>
+                <relation-name>have writer</relation-name>
+                <relation-name>have composer</relation-name>
+                <relation-name>be write by</relation-name>
+                <relation-name>be compose by</relation-name>
+                <related-table>author</related-table>
+                <mapping-table>pub_au</mapping-table>
+            </relation>
+        </field>
+        
+        <field type="String" field-alias="title" visible="true" relation="has attribute" presentation="true">
+            <relation>
+                <relation-name>have title</relation-name>
+                <relation-name>have heading</relation-name>
+            </relation>
+            <field-name>title</field-name>
+        </field>
+
+        <field type="String" field-alias="publisher" visible="true" relation="has attribute">
+            <relation>
+                <relation-name>have publisher</relation-name>
+                <relation-name>be publish by</relation-name>
+                <relation-name>be release by</relation-name>
+                <relation-name>for</relation-name>
+                <relation-name>from</relation-name>
+                <relation-name>in</relation-name>
+                <reversed-relation>publish</reversed-relation>
+                <reversed-relation>have publish</reversed-relation>
+                <reversed-relation>release</reversed-relation>
+                <reversed-relation>have release</reversed-relation>
+            </relation>
+            <field-name>publisher</field-name>
+        </field>
+        
+        <field type="String" field-alias="source" visible="true" relation="has attribute">
+            <relation>
+                <relation-name>have source</relation-name>
+                <relation-name>have source from</relation-name>
+                <relation-name>have source in</relation-name>
+                <relation-name>from</relation-name>
+                <relation-name>in</relation-name>
+                <relation-name>result from</relation-name>
+            </relation>
+            <field-name>source</field-name>
+        </field>
+              
+        <field type="Int" field-alias="year" visible="true" relation="has attribute">
+            <relation>
+                <relation-name value="&gt;=">have year from</relation-name>
+                <relation-name>have year in</relation-name>
+                <relation-name>in</relation-name>
+                <relation-name value="&gt;=">from</relation-name>
+                <relation-name value="&lt;=">to</relation-name>
+                <relation-name>be write in</relation-name>
+            </relation>
+            <field-name>year</field-name>
+            <pattern>[0-9][0-9][0-9][0-9]</pattern>
+        </field>
+
+        <field type="String" field-alias="isbn" visible="true" relation="has attribute">
+            <relation>
+                <relation-name>have isbn</relation-name>
+            </relation>
+            <field-name>isbn</field-name>
+            <pattern></pattern>
+        </field>
+
+        <field type="String" field-alias="doi" visible="true" relation="has attribute">
+            <relation>
+                <relation-name>have doi</relation-name>
+            </relation>
+            <field-name>doi</field-name>
+            <pattern></pattern>
+        </field>
+                      
+        <field type="String" field-alias="reference" visible="false" relation="mapping table">
+            <relation>
+                
+                <relation-name>cite</relation-name>
+                <relation-name>cite to</relation-name>
+                <relation-name>refer to</relation-name>
+                <relation-name>refer</relation-name>
+                <mapping-table>pub_ref</mapping-table>
+                <related-table>reference</related-table>
+            </relation>
+        </field>
+
+        <field type="String" field-alias="citation" visible="false" relation="mapping table">
+            <relation>
+
+
+                <reversed-relation>be cite by</reversed-relation>
+                <reversed-relation>be refer by</reversed-relation>
+               
+                <mapping-table>pub_ref</mapping-table>
+                <related-table>citation</related-table>
+            </relation>
+        </field>
+
+        <primary-key>id</primary-key>
+        
+    </table>
+
+    <table table-alias="Author">
+        <table-name>dblp_author_ref_new</table-name>
+
+        <field type="String" field-alias="publication" visible="false" relation="related table">
+            <relation>
+                <relation-name>write</relation-name>
+                <relation-name>have write</relation-name>
+                <relation-name>have compose</relation-name>
+                <related-table>publication</related-table>
+                <mapping-table>au_pub</mapping-table>
+            </relation>
+        </field>
+
+        <field type="String" field-alias="publisher" visible="false" relation="related table">
+            <relation>
+                <relation-name>write for</relation-name>
+                <relation-name>cooperate</relation-name>
+                <related-table>publication</related-table>
+                <mapping-table>au_pub</mapping-table>
+            </relation>
+            <field-name>publisher</field-name>
+        </field>
+        <field type="String" field-alias="name" visible="true" relation="has attribute" presentation="true">
+            <relation>
+                <relation-name>have name</relation-name>
+
+            </relation>
+            <field-name>author</field-name>
+        </field>
+        <primary-key>author</primary-key>
+    </table>
+
+
+<table table-alias="Reference">
+       <table-name>dblp_pub_new</table-name>
+        <field type="String" field-alias="author" visible="false" relation="related table">
+            <relation>
+                <relation-name>have author</relation-name>
+                <relation-name>have writer</relation-name>
+                <relation-name>have composer</relation-name>
+                <relation-name>be write by</relation-name>
+                <relation-name>be compose by</relation-name>
+                <related-table>author</related-table>
+                <mapping-table>pub_au</mapping-table>
+            </relation>
+        </field>
+
+        <field type="String" field-alias="title" visible="true" relation="has attribute" presentation="true">
+            <relation>
+                <relation-name>have title</relation-name>
+                <relation-name>have heading</relation-name>
+            </relation>
+            <field-name>title</field-name>
+        </field>
+
+        <field type="String" field-alias="publisher" visible="true" relation="has attribute">
+            <relation>
+                <relation-name>have publisher</relation-name>
+                <relation-name>be publish by</relation-name>
+                <relation-name>be release by</relation-name>
+                <relation-name>for</relation-name>
+                <reversed-relation>publish</reversed-relation>
+                <reversed-relation>have publish</reversed-relation>
+                <reversed-relation>release</reversed-relation>
+                <reversed-relation>have release</reversed-relation>
+            </relation>
+            <field-name>publisher</field-name>
+        </field>
+
+        <field type="String" field-alias="source" visible="true" relation="has attribute">
+            <relation>
+                <relation-name>have source</relation-name>
+                <relation-name>have source from</relation-name>
+                <relation-name>have source in</relation-name>
+                <relation-name>from</relation-name>
+                <relation-name>in</relation-name>
+                <relation-name>result from</relation-name>
+            </relation>
+            <field-name>source</field-name>
+        </field>
+
+        <field type="Int" field-alias="year" visible="true" relation="has attribute">
+            <relation>
+                 <relation-name value="&gt;=">have year from</relation-name>
+                <relation-name>have year in</relation-name>
+                <relation-name>in</relation-name>
+                <relation-name value="&gt;=">from</relation-name>
+                <relation-name value="&lt;=">to</relation-name>
+                <relation-name>be write in</relation-name>
+            </relation>
+            <field-name>year</field-name>
+            <pattern>[0-9][0-9][0-9][0-9]</pattern>
+        </field>
+
+        <field type="String" field-alias="isbn" visible="true" relation="has attribute">
+            <relation>
+                <relation-name>have isbn</relation-name>
+            </relation>
+            <field-name>isbn</field-name>
+            <pattern></pattern>
+        </field>
+
+        <field type="String" field-alias="doi" visible="true" relation="has attribute">
+            <relation>
+                <relation-name>have doi</relation-name>
+            </relation>
+            <field-name>doi</field-name>
+            <pattern></pattern>
+        </field>
+        <primary-key>dblp_key</primary-key>
+    </table>
+
+<table table-alias="Citation">
+       <table-name>dblp_pub_new</table-name>
+        <field type="String" field-alias="title" visible="true" relation="has attribute" presentation="true">
+            <relation>
+                <relation-name>have title</relation-name>
+                <relation-name>have heading</relation-name>
+            </relation>
+            <field-name>title</field-name>
+        </field>
+
+        <primary-key>dblp_key</primary-key>
+    </table>
+
+
+    <database-name>dblp</database-name>	    
+
+    <mapping-table name="ref_pub">
+        <table-key>dblp_key</table-key>
+        <related-table-key>id</related-table-key>
+        <mapping-table-name>dblp_ref_new</mapping-table-name>
+    </mapping-table>
+
+    <mapping-table name="pub_ref">
+        <table-key>id</table-key>
+        <related-table-key>dblp_key</related-table-key>
+        <mapping-table-name>dblp_ref_new</mapping-table-name>
+    </mapping-table>
+
+    <mapping-table name="pub_au">
+        <table-key>pub_id</table-key>
+        <related-table-key>author</related-table-key>
+        <mapping-table-name>dblp_author_ref_new</mapping-table-name>
+    </mapping-table>
+
+
+    <mapping-table name="au_pub">
+        <table-key>author</table-key>
+        <related-table-key>pub_id</related-table-key>
+        <mapping-table-name>dblp_author_ref_new</mapping-table-name>
+    </mapping-table>
+
+</database>
+

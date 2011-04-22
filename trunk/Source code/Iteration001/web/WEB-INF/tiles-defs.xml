@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+
+<!--
+     This is a blank Tiles definition file with a commented example.
+-->
+
+<tiles-definitions>
+
+    <definition name=".qadb-1" path="/public/layouts/qadb-1/layout.jsp">
+        <put name="title"  value="Question answer system base on Database" />
+        <put name="keywords"  value="question,answer,database" />
+        <put name="description"  value="Question answer system base on Database" />
+        <put name="header" value="/public/layouts/qadb-1/common/header.jsp" />
+        <put name="menu"   value="/public/layouts/qadb-1/common/menu.jsp" />
+        <put name="footer" value="/public/layouts/qadb-1//common/footer.jsp" />
+        <put name="content"   value="/public/layouts/qadb-1/common/content.jsp" />
+    </definition>
+
+    <definition name=".searchPage" extends=".qadb-1">
+        <put name="title"  value="Question answer system base on Database - Search Page" />
+        <put name="description"  value="Search Page" />
+        <put name="content"   value="/public/jsp/search.jsp" />
+    </definition>
+
+    <definition name=".advanceSearchPage" extends=".qadb-1">
+        <put name="title"  value="Question answer system base on Database - Search Page" />
+        <put name="description"  value="Search Page" />
+        <put name="content"   value="/public/jsp/advanceSearch.jsp" />
+    </definition>
+
+    <definition name=".pubsOfAuthorPage" extends=".qadb-1">
+        <put name="title"  value="Question answer system base on Database - Publication written by author papge" />
+        <put name="description"  value="Publication written by author papge" />
+        <put name="content"   value="/public/jsp/pubsOfAuthor.jsp" />
+    </definition>
+
+    <definition name=".pubsDetail" extends=".qadb-1">
+        <put name="title"  value="Question answer system base on Database - Publication" />
+        <put name="description"  value="Publication" />
+        <put name="content"   value="/public/jsp/publicationDetail.jsp" />
+    </definition>
+
+    <definition name=".publications" extends=".qadb-1">
+        <put name="title"  value="Question answer system base on Database - Publication" />
+        <put name="description"  value="Publication" />
+        <put name="content"   value="/public/jsp/publications.jsp" />
+    </definition>
+     <definition name=".authors" extends=".qadb-1">
+        <put name="title"  value="Question answer system base on Database - Author" />
+        <put name="description"  value="Author" />
+        <put name="content"   value="/public/jsp/authors.jsp" />
+    </definition>
+
+    <definition name=".qaSearchPage" extends=".qadb-1">
+        <put name="title"  value="Question answer system base on Database - Question Answering Search Page" />
+        <put name="description"  value="Question Answering Search Page" />
+        <put name="content"   value="/public/jsp/qa_search.jsp" />
+    </definition>
+
+    <definition name=".Contact" extends=".qadb-1">
+        <put name="title"  value="Question answer system base on Database - Contact Authors" />
+        <put name="description"  value="These are all authors of this web" />
+        <put name="content"   value="/public/jsp/contact.jsp" />
+    </definition>
+
+    <!-- sample tiles definitions
+    <definition name=".mainLayout" path="/common/layouts/classicLayout.jsp">
+        <put name="title"  value="Sample Page Title" />
+        <put name="header" value="/common/header.jsp" />
+        <put name="menu"   value=".mainMenu" />
+        <put name="footer" value="/common/footer.jsp" />
+        <put name="body"   value=".portal.body" />
+    </definition>
+
+    <definition name=".mainMenu" path="/common/layouts/vboxLayout.jsp" >
+        <putList name="list" >
+            <add value=".menu.links" />
+            <add value=".menu.taglib.references" />
+            <add value=".menu.printer.friendly" />
+            <add value=".menu.old.documents" />
+      </putList>
+    </definition>
+
+    <definition name="aPage" extends=".mainLayout">
+        <put name="title"  value="Another Title" />
+        <put name="body"   value=".aPage.body" />
+    </definition>
+
+    end samples -->
+
+    <definition name="${YOUR_DEFINITION_HERE}">
+    </definition>
+
+</tiles-definitions>
