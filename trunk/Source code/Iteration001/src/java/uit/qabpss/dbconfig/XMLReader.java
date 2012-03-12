@@ -77,7 +77,7 @@ public class XMLReader {
                         tbInf.setName(temp.getTextContent());
                     }
                     if(PRIMARYKEY.equals(temp.getNodeName())){
-                        tbInf.setPrimaryKey(temp.getTextContent());
+                        tbInf.setPrimaryKey(temp.getTextContent().trim());
                     }
                     if(FIELD.equals(temp.getNodeName())){
                         ColumnInfo colInf = new ColumnInfo();
@@ -94,7 +94,7 @@ public class XMLReader {
                         for (int k = 0; k < childFields.getLength(); k++) {
                             Node childField = childFields.item(k);
                             if(FIELD_NAME.equals(childField.getNodeName())){
-                                colInf.setName(childField.getTextContent());
+                                colInf.setName(childField.getTextContent().trim());
                             }
                             if(RELATION.equals(childField.getNodeName())){
                                 NodeList relList = childField.getChildNodes();                                
