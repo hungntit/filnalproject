@@ -277,10 +277,16 @@ public class GenSQLQuery {
         if(columnInfo.isRelatedField())
         {
             TableInfo   tableInfo   =   columnInfo.getRelatedTable();
+
             if(columnInfo.getName() == null)
                 return "`"+tableInfo.getAliasName()+"`"+".* ";
-            else
+            else{
+                if(columnInfo.getName().equals(tableInfo.getPrimaryKey())){
+                    return "`"+tableInfo.getAliasName()+"`"+".* ";
+                }else{
                 return tableInfo.getAliasName()+"."+columnInfo.getName();
+                }
+            }
         }
         else
         {
