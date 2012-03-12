@@ -4,15 +4,9 @@
  */
 package uit.qabpss.extracttriple;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import uit.qabpss.entityrecog.Recognizer;
 import uit.qabpss.generatequery.GenSQLQuery;
 import uit.qabpss.preprocess.EntityType;
@@ -28,38 +22,46 @@ public class Test {
 
     public static final String PATH = "src\\java\\uit\\qabpss\\util\\resources\\test\\test_question_29112010.txt";
 
-    public static String[] loadQuestions() {
+    public static List<String> loadQuestions() {
+        /*
         List<String> lst = new ArrayList<String>();
         int i = 0;
         BufferedReader input = null;
         try {
-            //use buffering, reading one line at a time
-            input = new BufferedReader(new FileReader(new File(PATH)));
-            String line = null;
-            while ((line = input.readLine()) != null) {
-                lst.add(line);
-                i++;
-            }
+        //use buffering, reading one line at a time
+        input = new BufferedReader(new FileReader(new File(PATH)));
+        String line = null;
+        while ((line = input.readLine()) != null) {
+        lst.add(line);
+        i++;
+        }
         } catch (IOException ex) {
-            Logger.getLogger(RuleReader.class.getName()).log(Level.SEVERE, null, ex);
+        Logger.getLogger(RuleReader.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            try {
-                if (input != null) {
-                    input.close();
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(RuleReader.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+        if (input != null) {
+        input.close();
+        }
+        } catch (IOException ex) {
+        Logger.getLogger(RuleReader.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
         return lst.toArray(new String[i]);
+         */
+        List<String> lst = new ArrayList<String>();
+        lst.add("Who published \"Question Classification using Head Words and their Hypernyms\"?");
+        lst.add("Which book was published by \"America often\" ?");
+        lst.add("Who wrote \"Question Classification using Head Words and their Hypernyms\"?");
+        lst.add("Which book was written by \"HCM\"?");
+        return lst;
     }
 
     public static void main(String[] args) {
         // List of test questions here
         List<Integer> errors = new ArrayList<Integer>();
         HibernateUtil.getSessionFactory();
-        String[] questions = loadQuestions();
-        System.out.println("nums test: " + questions.length);
+        List<String> questions = loadQuestions();
+        System.out.println("nums test: " + questions.size());
         ExtractTriple extract = new ExtractTriple();
         Recognizer reg = new Recognizer();
         int count = 1;
@@ -103,6 +105,6 @@ public class Test {
             e += " " + integer.toString();
         }
         System.out.println(e);
-        System.out.println("Rate :" + ((float) ((questions.length - errors.size()) * 100) / (float) (questions.length)));
+        System.out.println("Rate :" + ((float) ((questions.size() - errors.size()) * 100) / (float) (questions.size())));
     }
 }
